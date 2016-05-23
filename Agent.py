@@ -88,6 +88,7 @@ ERDOS    = 1; ERDOS_p = 0.5
 GRID2D   = 2
 GRID2DBAND = 3
 GRID2DBAND_p = 0.01
+BARABASI = 4; BARABASI_M = 4
 
 class Topology():
    def __init__(self, agent, id=COMPLETE):
@@ -96,6 +97,8 @@ class Topology():
 	 N = len(agent)
 	 if id == ERDOS:
 	    self.G = nx.erdos_renyi_graph(N, ERDOS_p)
+	 elif id == BARABASI:
+	 	self.G = nx.barabasi_albert_graph(N, BARABASI_M)
 	 elif id == GRID2D:
 	    L = sqrt(N)
 	    if (int(L) != L):
@@ -119,7 +122,9 @@ class Topology():
 	 for n in self.G:
 	    self.G.node[n]['agent'] = agent[i]
 	    i += 1
-      if id!= COMPLETE: nx.draw(self.G)
+      if id!= COMPLETE: 
+        pos=nx.spring_layout(self.G)
+        nx.draw(self.G)
 	    
 	 #agent_list = {x: agent[x] for x in range(N)}
 	 #nx.set_node_attributes(self.G, 'agent', agent_list)
