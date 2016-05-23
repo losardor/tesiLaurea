@@ -1,6 +1,9 @@
 import random
 import networkx as nx
 from math import sqrt
+import matplotlib.pyplot as plt
+from networkx.drawing.nx_agraph import graphviz_layout
+
 
 DEBUG = 0
 
@@ -61,7 +64,7 @@ class Folk():
       for i in range(N):
 	 self.agent.append(Agent(i))
       self.topology = Topology(self.agent, topology)
-
+        
    def __str__(self):
       ag = self.agent[0]
       s = "# Ndw:"+str(ag.ndw)+" Nw:"+str(ag.nw)+" Words:"+str(ag.words)+"\n"
@@ -116,6 +119,7 @@ class Topology():
 	 for n in self.G:
 	    self.G.node[n]['agent'] = agent[i]
 	    i += 1
+      if id!= COMPLETE: nx.draw(self.G)
 	    
 	 #agent_list = {x: agent[x] for x in range(N)}
 	 #nx.set_node_attributes(self.G, 'agent', agent_list)
