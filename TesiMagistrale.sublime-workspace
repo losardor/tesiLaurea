@@ -4,6 +4,34 @@
 		"selected_items":
 		[
 			[
+				"T",
+				"totalNum"
+			],
+			[
+				"lis",
+				"listOfNodes"
+			],
+			[
+				"li",
+				"listOfNodes"
+			],
+			[
+				"l",
+				"listOfNodes"
+			],
+			[
+				"po",
+				"positionFromIndex"
+			],
+			[
+				"c",
+				"coarsnes"
+			],
+			[
+				"pos",
+				"position"
+			],
+			[
 				"BARA",
 				"BARABASI_M"
 			],
@@ -24,10 +52,19 @@
 			}
 		},
 		{
-			"file": "Game.py",
+			"file": "gridItalia.py",
 			"settings":
 			{
-				"buffer_size": 1387,
+				"buffer_size": 724,
+				"line_ending": "Unix",
+				"name": "#Grid for italy"
+			}
+		},
+		{
+			"file": "Agent.py",
+			"settings":
+			{
+				"buffer_size": 4282,
 				"line_ending": "Unix"
 			}
 		}
@@ -72,9 +109,7 @@
 	},
 	"expanded_folders":
 	[
-		"/home/donrog/tesiLaurea",
-		"/home/donrog/Dropbox/tesiMagistrale",
-		"/home/donrog/Dropbox/NG_losardo"
+		"/home/donrog/tesiLaurea"
 	],
 	"file_history":
 	[
@@ -146,38 +181,64 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "Game.py",
-					"semi_transient": true,
+					"file": "gridItalia.py",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1387,
+						"buffer_size": 724,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								326,
+								326
 							]
 						],
 						"settings":
 						{
-							"color_scheme": "Packages/User/Color Highlighter/themes/Monokai.tmTheme",
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
+							"auto_name": "#Grid for italy",
+							"syntax": "Packages/Python/Python.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 57.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "Agent.py",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 4282,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2830,
+								2830
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 853.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
 					"type": "text"
 				}
 			]
