@@ -4,12 +4,44 @@
 		"selected_items":
 		[
 			[
-				"T",
-				"totalNum"
+				"pos",
+				"position"
+			],
+			[
+				"the",
+				"theFile"
+			],
+			[
+				"get",
+				"getHeight"
+			],
+			[
+				"po",
+				"position"
 			],
 			[
 				"lis",
+				"listOfPos"
+			],
+			[
+				"listOf",
+				"listOfPos"
+			],
+			[
+				"lit",
 				"listOfNodes"
+			],
+			[
+				"list",
+				"listOfPos"
+			],
+			[
+				"len",
+				"__length"
+			],
+			[
+				"T",
+				"totalNum"
 			],
 			[
 				"li",
@@ -20,16 +52,8 @@
 				"listOfNodes"
 			],
 			[
-				"po",
-				"positionFromIndex"
-			],
-			[
 				"c",
 				"coarsnes"
-			],
-			[
-				"pos",
-				"position"
 			],
 			[
 				"BARA",
@@ -55,7 +79,7 @@
 			"file": "gridItalia.py",
 			"settings":
 			{
-				"buffer_size": 724,
+				"buffer_size": 2009,
 				"line_ending": "Unix",
 				"name": "#Grid for italy"
 			}
@@ -76,7 +100,7 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 327.0,
+		"height": 392.0,
 		"last_filter": "",
 		"selected_items":
 		[
@@ -113,6 +137,7 @@
 	],
 	"file_history":
 	[
+		"/home/donrog/tesiLaurea/result.dat",
 		"/home/donrog/tesiLaurea/Game.py",
 		"/home/donrog/tesiLaurea/Agent.py",
 		"/home/donrog/tesiLaurea/NG.py",
@@ -121,7 +146,7 @@
 	],
 	"find":
 	{
-		"height": 26.0
+		"height": 35.0
 	},
 	"find_in_files":
 	{
@@ -135,6 +160,10 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"map",
+			"int(",
+			"int",
+			"75"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -142,6 +171,8 @@
 		"regex": false,
 		"replace_history":
 		[
+			"float",
+			"DELTAS"
 		],
 		"reverse": false,
 		"show_context": true,
@@ -190,24 +221,28 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 724,
+						"buffer_size": 2009,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								326,
-								326
+								1517,
+								1517
 							]
 						],
 						"settings":
 						{
 							"auto_name": "#Grid for italy",
+							"rulers":
+							[
+								78
+							],
 							"syntax": "Packages/Python/Python.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 57.0,
+						"translation.y": 147.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -235,7 +270,7 @@
 							"syntax": "Packages/Python/Python.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 853.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
@@ -287,7 +322,7 @@
 	"project": "TesiMagistrale.sublime-project",
 	"replace":
 	{
-		"height": 48.0
+		"height": 64.0
 	},
 	"save_all_on_build": true,
 	"select_file":
