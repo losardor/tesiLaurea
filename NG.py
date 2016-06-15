@@ -9,8 +9,8 @@ from Game import Play
 
 print "# GAME:"
 
-folk = Folk(100,GRID2DBAND)
-Play(folk,1000000)
+folk = Folk(500,GRIDONMAP)
+Play(folk,10000000)
 
 print folk
 

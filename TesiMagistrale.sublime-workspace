@@ -4,6 +4,26 @@
 		"selected_items":
 		[
 			[
+				"for",
+				"for	For Loop"
+			],
+			[
+				"node",
+				"nodes"
+			],
+			[
+				"s",
+				"self"
+			],
+			[
+				"no",
+				"nodes"
+			],
+			[
+				"map",
+				"mapInfo"
+			],
+			[
 				"lin",
 				"listOfNodes"
 			],
@@ -80,35 +100,35 @@
 	"buffers":
 	[
 		{
-			"file": "README.md",
-			"settings":
-			{
-				"buffer_size": 52,
-				"line_ending": "Unix"
-			}
-		},
-		{
 			"file": "gridItalia.py",
 			"settings":
 			{
-				"buffer_size": 3037,
+				"buffer_size": 3747,
 				"line_ending": "Unix",
 				"name": "#Grid for italy"
 			}
 		},
 		{
-			"file": "getline.py",
+			"file": "Agent2.py",
 			"settings":
 			{
-				"buffer_size": 176,
+				"buffer_size": 4464,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "result.dat",
+			"file": "Agent.py",
 			"settings":
 			{
-				"buffer_size": 35143,
+				"buffer_size": 4391,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "NG.py",
+			"settings":
+			{
+				"buffer_size": 171,
 				"line_ending": "Unix"
 			}
 		}
@@ -157,6 +177,7 @@
 	],
 	"file_history":
 	[
+		"/home/donrog/tesiLaurea/README.md",
 		"/home/donrog/tesiLaurea/result.dat",
 		"/home/donrog/tesiLaurea/result",
 		"/home/donrog/tesiLaurea/Game.py",
@@ -181,6 +202,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"as",
 			"map",
 			"int(",
 			"int",
@@ -204,30 +226,70 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "README.md",
+					"file": "gridItalia.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 52,
+						"buffer_size": 3747,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								52,
-								52
+								2059,
+								2059
 							]
 						],
 						"settings":
 						{
-							"color_scheme": "Packages/User/Color Highlighter/themes/Monokai.tmTheme",
-							"syntax": "Packages/Markdown/Markdown.sublime-syntax"
+							"auto_name": "#Grid for italy",
+							"color_scheme": "Packages/User/Color Highlighter/themes/Solarized (Dark).tmTheme",
+							"rulers":
+							[
+								78
+							],
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 684.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 2,
+			"sheets":
+			[
+				{
+					"buffer": 1,
+					"file": "Agent2.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4464,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								145,
+								145
+							]
+						],
+						"settings":
+						{
+							"color_scheme": "Packages/User/Color Highlighter/themes/Solarized (Dark).tmTheme",
+							"syntax": "Packages/Python/Python.sublime-syntax"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -237,61 +299,29 @@
 					"type": "text"
 				},
 				{
-					"buffer": 1,
-					"file": "gridItalia.py",
+					"buffer": 2,
+					"file": "Agent.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3037,
+						"buffer_size": 4391,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2746,
-								2746
+								1606,
+								1606
 							]
 						],
 						"settings":
 						{
-							"auto_name": "#Grid for italy",
-							"rulers":
-							[
-								78
-							],
+							"color_scheme": "Packages/User/Color Highlighter/themes/Solarized (Dark).tmTheme",
 							"syntax": "Packages/Python/Python.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 622.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "getline.py",
-					"semi_transient": true,
-					"settings":
-					{
-						"buffer_size": 176,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								119,
-								119
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 1033.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
@@ -299,27 +329,28 @@
 				},
 				{
 					"buffer": 3,
-					"file": "result.dat",
+					"file": "NG.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 35143,
+						"buffer_size": 171,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								134,
-								134
+								125,
+								125
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
+							"color_scheme": "Packages/User/Color Highlighter/themes/Solarized (Dark).tmTheme",
+							"syntax": "Packages/Python/Python.sublime-syntax"
 						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.x": -0.0,
+						"translation.y": 57.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
@@ -345,11 +376,18 @@
 				0,
 				1,
 				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
 			]
 		],
 		"cols":
 		[
 			0.0,
+			0.5,
 			1.0
 		],
 		"rows":

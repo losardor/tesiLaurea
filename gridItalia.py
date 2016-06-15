@@ -6,7 +6,7 @@ import tailer as tl
 HEIGHT=6
 WIDTH=5
 DELTAS=75
-
+ORDINE=1
 
 class mapInfo():
  	"""This object takes a text formatted Dem grid mapInfo"""
@@ -52,12 +52,31 @@ class mapInfo():
 		return out
 
 	
+def topologyInit(N):
+	FRACTION=0.2796296296296296
+	M=mapInfo("files/Grid.xyz")
+	coarsnes = int(((float(N)/FRACTION)/(WIDTH*HEIGHT))**(0.5))
+	print "Coarsness is : " + str(coarsnes)
+	G = nx.grid_2d_graph(HEIGHT*coarsnes, WIDTH*coarsnes, True)
+	listOfNodes = G.nodes()
+	totalNum = len(listOfNodes)
+	listOfHeights = M.getallHeights(G, coarsnes)
+	for x in listOfNodes:
+		G.node[x]['position']=M.positionFromIndex(x, coarsnes)
+	for x in range(len(listOfNodes)):
+		G.node[listOfNodes[x]]['height']=listOfHeights[x]
+	listOfNodes=[x for x in listOfNodes if int(G.node[x]['height']) == 0]
+	G.remove_nodes_from(listOfNodes)
+	for edge in G.edges():
+		G[edge[0]][edge[1]]['weight']=ORDINE*abs(G.node[edge[0]]['height']- G.node[edge[1]]['height'])
 
+	print "The actual number of agents in this simulation will be " + str(len(G.nodes()))
+	return G
 
 def main():
 	fraction=[]
 	M = mapInfo("files/Grid.xyz")
-	for coarsnes in range(1,2):
+	for coarsnes in range(6,7):
 		print "#- Map for coarsnes: " + str(coarsnes)
 		G = nx.grid_2d_graph(HEIGHT*coarsnes, WIDTH*coarsnes, True)
 		listOfNodes = G.nodes()
