@@ -4,6 +4,18 @@
 		"selected_items":
 		[
 			[
+				"list",
+				"listOfHeights"
+			],
+			[
+				"ed",
+				"edgeWeights"
+			],
+			[
+				"e",
+				"edge"
+			],
+			[
 				"for",
 				"for	For Loop"
 			],
@@ -72,10 +84,6 @@
 				"listOfNodes"
 			],
 			[
-				"list",
-				"listOfPos"
-			],
-			[
 				"T",
 				"totalNum"
 			],
@@ -103,32 +111,33 @@
 			"file": "gridItalia.py",
 			"settings":
 			{
-				"buffer_size": 3747,
+				"buffer_size": 4188,
 				"line_ending": "Unix",
 				"name": "#Grid for italy"
-			}
-		},
-		{
-			"file": "Agent2.py",
-			"settings":
-			{
-				"buffer_size": 4464,
-				"line_ending": "Unix"
 			}
 		},
 		{
 			"file": "Agent.py",
 			"settings":
 			{
-				"buffer_size": 4391,
+				"buffer_size": 5595,
 				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "randomWightChoice.py",
+			"settings":
+			{
+				"buffer_size": 553,
+				"line_ending": "Unix",
+				"name": "#Random weightes choice try"
 			}
 		},
 		{
 			"file": "NG.py",
 			"settings":
 			{
-				"buffer_size": 171,
+				"buffer_size": 172,
 				"line_ending": "Unix"
 			}
 		}
@@ -177,6 +186,8 @@
 	],
 	"file_history":
 	[
+		"/home/donrog/.config/sublime-text-3/Packages/Default/Preferences.sublime-settings",
+		"/home/donrog/tesiLaurea/Agent2.py",
 		"/home/donrog/tesiLaurea/README.md",
 		"/home/donrog/tesiLaurea/result.dat",
 		"/home/donrog/tesiLaurea/result",
@@ -235,15 +246,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3747,
+						"buffer_size": 4188,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2059,
-								2059
+								2925,
+								2925
 							]
 						],
 						"settings":
@@ -257,33 +268,87 @@
 							"syntax": "Packages/Python/Python.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 684.0,
+						"translation.y": 912.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
 					"type": "text"
-				}
-			]
-		},
-		{
-			"selected": 2,
-			"sheets":
-			[
+				},
 				{
 					"buffer": 1,
-					"file": "Agent2.py",
+					"file": "Agent.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4464,
+						"buffer_size": 5595,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								145,
-								145
+								3905,
+								3905
+							]
+						],
+						"settings":
+						{
+							"color_scheme": "Packages/User/Color Highlighter/themes/Solarized (Dark).tmTheme",
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 3,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2394.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "randomWightChoice.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 553,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								540,
+								540
+							]
+						],
+						"settings":
+						{
+							"auto_name": "#Random weightes choice try",
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "NG.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 172,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								126,
+								126
 							]
 						],
 						"settings":
@@ -295,65 +360,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "Agent.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4391,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1606,
-								1606
-							]
-						],
-						"settings":
-						{
-							"color_scheme": "Packages/User/Color Highlighter/themes/Solarized (Dark).tmTheme",
-							"syntax": "Packages/Python/Python.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 1033.0,
-						"zoom_level": 1.0
-					},
 					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "NG.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 171,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								125,
-								125
-							]
-						],
-						"settings":
-						{
-							"color_scheme": "Packages/User/Color Highlighter/themes/Solarized (Dark).tmTheme",
-							"syntax": "Packages/Python/Python.sublime-syntax"
-						},
-						"translation.x": -0.0,
-						"translation.y": 57.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
 					"type": "text"
 				}
 			]
@@ -376,18 +383,11 @@
 				0,
 				1,
 				1
-			],
-			[
-				1,
-				0,
-				2,
-				1
 			]
 		],
 		"cols":
 		[
 			0.0,
-			0.5,
 			1.0
 		],
 		"rows":

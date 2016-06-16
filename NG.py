@@ -9,8 +9,8 @@ from Game import Play
 
 print "# GAME:"
 
-folk = Folk(500,GRIDONMAP)
-Play(folk,10000000)
+folk = Folk(1000,GRIDONMAP)
+Play(folk,5000000)
 
 print folk
 

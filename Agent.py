@@ -4,7 +4,7 @@ from math import sqrt
 import matplotlib.pyplot as plt
 from networkx.drawing.nx_agraph import graphviz_layout
 import gridItalia as gi
-
+import pandas as pnd
 
 DEBUG = 0
 
@@ -127,9 +127,20 @@ class Topology():
          self.G.node[n]['agent'] = agent[i]
          i += 1
       if id!= COMPLETE: 
-         pos=nx.spring_layout(self.G)
-         nx.draw(self.G)
-	    
+         edgeWeights=pnd.Series([d['weight'] for (u,v,d) in self.G.edges(data=True)])
+         print edgeWeights
+         edgeWeights.hist()
+         '''
+         elarge=[(u,v) for (u,v,d) in self.G.edges(data=True) if d['weight'] >0.25]
+         esmall=[(u,v) for (u,v,d) in self.G.edges(data=True) if d['weight'] <=0.25]
+         pos=nx.random_layout(self.G)
+         nx.draw_networkx_nodes(self.G,pos,node_size=100)
+         nx.draw_networkx_edges(self.G,pos,edgelist=elarge, width=6)
+         nx.draw_networkx_edges(self.G,pos,edgelist=esmall, width=6,alpha=0.5,edge_color='b',style='dashed')
+         plt.axis('off')
+         plt.savefig("weighted_graph.png") # save as png
+         plt.show() # display
+	    '''
 	 #agent_list = {x: agent[x] for x in range(N)}
 	 #nx.set_node_attributes(self.G, 'agent', agent_list)
       
@@ -161,6 +172,7 @@ class Topology():
             return [None, None]
          mapping={key[:2]: key[2] for key in self.G.edges(s, data='weight')}
          link=nx.utils.random_sequence.weighted_choice(mapping)
+         print link
          if link[0]==s:
             h = link[1]
          else:

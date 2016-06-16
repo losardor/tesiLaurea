@@ -2,6 +2,8 @@
 import networkx as nx
 import getline as gl
 import tailer as tl
+import math as mt
+import matplotlib.pyplot as plt
 
 HEIGHT=6
 WIDTH=5
@@ -61,16 +63,22 @@ def topologyInit(N):
 	listOfNodes = G.nodes()
 	totalNum = len(listOfNodes)
 	listOfHeights = M.getallHeights(G, coarsnes)
+	print listOfHeights
 	for x in listOfNodes:
 		G.node[x]['position']=M.positionFromIndex(x, coarsnes)
 	for x in range(len(listOfNodes)):
 		G.node[listOfNodes[x]]['height']=listOfHeights[x]
-	listOfNodes=[x for x in listOfNodes if int(G.node[x]['height']) == 0]
+	listOfNodes=[x for x in listOfNodes if float(G.node[x]['height']) == 0]
 	G.remove_nodes_from(listOfNodes)
 	for edge in G.edges():
-		G[edge[0]][edge[1]]['weight']=ORDINE*abs(G.node[edge[0]]['height']- G.node[edge[1]]['height'])
+		G[edge[0]][edge[1]]['weight']=mt.exp(-ORDINE*abs(float(G.node[edge[0]]['height']) - float(G.node[edge[1]]['height'])))
 
 	print "The actual number of agents in this simulation will be " + str(len(G.nodes()))
+	print len(G.edges())
+	nx.draw_networkx_edges(G, pos={i:i for i in G.nodes()})
+	nx.draw_networkx_nodes(G, pos={i:i for i in G.nodes()}, node_size=20)
+	plt.savefig("the_grid.png") # save as png
+	plt.show() # display
 	return G
 
 def main():
