@@ -8,7 +8,8 @@ import matplotlib.pyplot as plt
 HEIGHT=6
 WIDTH=5
 DELTAS=75
-ORDINE=1
+ALTEZZAZ=500
+ORDINE=1/ALTEZZAZ
 
 class mapInfo():
  	"""This object takes a text formatted Dem grid mapInfo"""
@@ -63,20 +64,26 @@ def topologyInit(N):
 	listOfNodes = G.nodes()
 	totalNum = len(listOfNodes)
 	listOfHeights = M.getallHeights(G, coarsnes)
-	print listOfHeights
 	for x in listOfNodes:
 		G.node[x]['position']=M.positionFromIndex(x, coarsnes)
+	nodeColor=[]
 	for x in range(len(listOfNodes)):
 		G.node[listOfNodes[x]]['height']=listOfHeights[x]
 	listOfNodes=[x for x in listOfNodes if float(G.node[x]['height']) == 0]
+	print "The actual number of agents in this simulation will be " + str(len(G.nodes()))
 	G.remove_nodes_from(listOfNodes)
 	for edge in G.edges():
-		G[edge[0]][edge[1]]['weight']=mt.exp(-ORDINE*abs(float(G.node[edge[0]]['height']) - float(G.node[edge[1]]['height'])))
-
-	print "The actual number of agents in this simulation will be " + str(len(G.nodes()))
+		G[edge[0]][edge[1]]['weight']=((1.0+abs(G.node[edge[0]]['height'] - G.node[edge[1]]['height']))**(-1))/0.325
+		print G[edge[0]][edge[1]]['weight']
+		#print str(edge) + "\t" + str(G[edge[0]][edge[1]]['weight']) + str(G.node[edge[0]]['height']) + "\t" + str(G.node[edge[1]]['height'])
 	print len(G.edges())
-	nx.draw_networkx_edges(G, pos={i:i for i in G.nodes()})
-	nx.draw_networkx_nodes(G, pos={i:i for i in G.nodes()}, node_size=20)
+	for x in G.nodes():
+		nodeColor.append(int(G.node[x]['height']))
+	elarge=[(u,v) for (u,v,d) in G.edges(data=True) if d['weight'] >=0.05]
+	esmall=[(u,v) for (u,v,d) in G.edges(data=True) if d['weight'] <0.05]
+	nx.draw_networkx_edges(G, pos={i:i for i in G.nodes()}, edgelist=elarge, width=2)
+	nx.draw_networkx_edges(G, pos={i:i for i in G.nodes()}, edgelist=esmall, width=2, alpha=0.5,edge_color='b',style='dashed')
+	nx.draw_networkx_nodes(G, pos={i:i for i in G.nodes()}, node_color=nodeColor, node_cmap=plt.cm.gist_earth, node_size=20)
 	plt.savefig("the_grid.png") # save as png
 	plt.show() # display
 	return G

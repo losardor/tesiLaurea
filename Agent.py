@@ -128,8 +128,9 @@ class Topology():
          i += 1
       if id!= COMPLETE: 
          edgeWeights=pnd.Series([d['weight'] for (u,v,d) in self.G.edges(data=True)])
-         print edgeWeights
+         #print edgeWeights
          edgeWeights.hist()
+         plt.show()
          '''
          elarge=[(u,v) for (u,v,d) in self.G.edges(data=True) if d['weight'] >0.25]
          esmall=[(u,v) for (u,v,d) in self.G.edges(data=True) if d['weight'] <=0.25]
@@ -172,7 +173,6 @@ class Topology():
             return [None, None]
          mapping={key[:2]: key[2] for key in self.G.edges(s, data='weight')}
          link=nx.utils.random_sequence.weighted_choice(mapping)
-         print link
          if link[0]==s:
             h = link[1]
          else:
