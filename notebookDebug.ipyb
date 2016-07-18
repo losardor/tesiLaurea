@@ -1,0 +1,186 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 29,
+   "metadata": {
+    "collapsed": false
+   },
+   "outputs": [],
+   "source": [
+    "import tailer as tl\n",
+    "import math as mt\n",
+    "import networkx as nx\n",
+    "import matplotlib.pyplot as plt\n",
+    "%matplotlib inline"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 30,
+   "metadata": {
+    "collapsed": false
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "310630.5\n",
+      "5227502.5\n"
+     ]
+    }
+   ],
+   "source": [
+    "theFile=\"files/Grid.xyz\"\n",
+    "first =tl.head(open(theFile),1)[0].split()\n",
+    "print first[0]\n",
+    "print first[1]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 66,
+   "metadata": {
+    "collapsed": false
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "['1320280.5', '3924002.5', '0']\n",
+      "13462\n",
+      "17380\n"
+     ]
+    }
+   ],
+   "source": [
+    "last=tl.tail(open(theFile),1)[0].split()\n",
+    "print last\n",
+    "xrange=int(abs((float(last[0])-float(first[0]))/75))\n",
+    "print xrange\n",
+    "yrange=int(abs((float(last[1])-float(first[1]))/75))\n",
+    "print yrange"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 83,
+   "metadata": {
+    "collapsed": false
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "3\n"
+     ]
+    }
+   ],
+   "source": [
+    "coarsness=int(((100/0.28)/(30))**(0.5))\n",
+    "print coarsness"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 84,
+   "metadata": {
+    "collapsed": false
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "<matplotlib.collections.PathCollection at 0x7f31c5106c10>"
+      ]
+     },
+     "execution_count": 84,
+     "metadata": {},
+     "output_type": "execute_result"
+    },
+    {
+     "data": {
+      "image/png": "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\nIYTIjP8HSpZJOz/dlDIAAAAASUVORK5CYII=\n",
+      "text/plain": [
+       "<matplotlib.figure.Figure at 0x7f31c446f990>"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "G=nx.grid_2d_graph(6*coarsness, 5*coarsness, True)\n",
+    "nx.draw_networkx_edges(G, pos={i:i for i in G.nodes()}, width=2)\n",
+    "nx.draw_networkx_nodes(G, pos={i:i for i in G.nodes()}, node_size=20) "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 88,
+   "metadata": {
+    "collapsed": false
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "233969560.0\n",
+      "270.0\n",
+      "[-35, -34, -33, -32, -31, -30, -29, -28, -27, -26, -25, -24, -23, -22, -21, -20, -19, -18, -17, -16, -15, -14, -13, -12, -11, -10, -9, -8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234]\n",
+      "[(7, 3), (6, 9), (17, 11), (12, 1), (11, 11), (16, 6), (7, 12), (14, 4), (13, 4), (12, 12), (0, 7), (15, 1), (1, 6), (0, 10), (17, 13), (3, 7), (2, 5), (1, 11), (8, 5), (5, 8), (4, 0), (10, 8), (9, 0), (16, 3), (6, 7), (5, 5), (11, 5), (10, 7), (7, 6), (6, 10), (12, 6), (17, 2), (15, 11), (14, 1), (13, 7), (0, 4), (15, 4), (1, 1), (4, 10), (3, 2), (2, 6), (9, 14), (8, 2), (5, 11), (4, 5), (10, 13), (9, 3), (6, 0), (11, 0), (7, 5), (12, 11), (16, 5), (15, 14), (14, 2), (13, 10), (0, 1), (3, 12), (1, 12), (8, 12), (16, 8), (3, 1), (2, 11), (9, 9), (5, 14), (10, 14), (6, 13), (7, 8), (14, 8), (13, 0), (12, 8), (16, 0), (15, 13), (13, 13), (0, 14), (3, 11), (2, 1), (8, 9), (4, 12), (2, 12), (9, 4), (16, 14), (5, 1), (10, 3), (7, 2), (6, 14), (12, 2), (11, 10), (17, 6), (16, 10), (14, 5), (13, 3), (12, 13), (16, 4), (15, 0), (1, 5), (0, 11), (3, 6), (2, 2), (1, 10), (8, 6), (4, 1), (10, 9), (9, 7), (6, 4), (5, 4), (11, 4), (10, 4), (7, 1), (6, 11), (12, 7), (11, 9), (17, 1), (15, 10), (14, 6), (13, 6), (0, 5), (15, 7), (1, 0), (0, 8), (4, 11), (3, 5), (2, 7), (9, 13), (8, 3), (5, 10), (4, 6), (10, 10), (9, 2), (16, 13), (6, 1), (5, 7), (11, 3), (7, 4), (14, 12), (12, 4), (17, 12), (15, 9), (14, 3), (13, 9), (0, 2), (1, 3), (8, 13), (4, 8), (3, 0), (2, 8), (9, 8), (8, 0), (5, 13), (6, 2), (11, 14), (7, 11), (14, 9), (12, 9), (15, 12), (13, 12), (3, 10), (1, 14), (8, 10), (4, 13), (2, 13), (9, 11), (5, 0), (17, 7), (10, 0), (16, 12), (16, 9), (12, 3), (11, 13), (17, 5), (7, 14), (14, 10), (13, 2), (12, 14), (17, 10), (15, 3), (17, 8), (1, 4), (0, 12), (3, 9), (2, 3), (1, 9), (8, 7), (4, 2), (2, 14), (9, 6), (6, 5), (5, 3), (11, 7), (10, 5), (7, 0), (6, 8), (12, 0), (11, 8), (17, 0), (7, 13), (14, 7), (13, 5), (0, 6), (15, 6), (1, 7), (0, 9), (16, 1), (3, 4), (2, 4), (9, 12), (8, 4), (5, 9), (4, 7), (10, 11), (9, 1), (6, 6), (5, 6), (11, 2), (10, 6), (7, 7), (14, 13), (12, 5), (17, 3), (15, 8), (14, 0), (13, 8), (16, 2), (0, 3), (15, 5), (3, 14), (1, 2), (8, 14), (4, 9), (3, 3), (2, 9), (8, 1), (5, 12), (4, 4), (10, 12), (6, 3), (11, 1), (16, 7), (7, 10), (14, 14), (12, 10), (17, 14), (13, 11), (0, 0), (3, 13), (1, 13), (8, 11), (16, 11), (4, 14), (2, 10), (9, 10), (10, 1), (6, 12), (11, 12), (17, 4), (7, 9), (14, 11), (13, 1), (17, 9), (15, 2), (13, 14), (0, 13), (3, 8), (2, 0), (1, 8), (8, 8), (4, 3), (9, 5), (5, 2), (11, 6), (10, 2)]\n",
+      "[-31311910, -30442134, -29572359, -28702584, -27832808, -26963033, -26093258, -25223483, -24353707, -23483932, -22614157, -21744381, -20874606, -20004831, -19135055, -18265280, -17395505, -16525729, -15655954, -14786179, -13916403, -13046628, -12176853, -11307078, -10437302, -9567527, -8697752, -7827976, -6958201, -6088426, -5218650, -4348875, -3479100, -2609324, -1739549, -869774, 1, 869776, 1739551, 2609326, 3479102, 4348877, 5218652, 6088428, 6958203, 7827978, 8697754, 9567529, 10437304, 11307080, 12176855, 13046630, 13916405, 14786181, 15655956, 16525731, 17395507, 18265282, 19135057, 20004833, 20874608, 21744383, 22614159, 23483934, 24353709, 25223485, 26093260, 26963035, 27832810, 28702586, 29572361, 30442136, 31311912, 32181687, 33051462, 33921238, 34791013, 35660788, 36530564, 37400339, 38270114, 39139890, 40009665, 40879440, 41749215, 42618991, 43488766, 44358541, 45228317, 46098092, 46967867, 47837643, 48707418, 49577193, 50446969, 51316744, 52186519, 53056295, 53926070, 54795845, 55665620, 56535396, 57405171, 58274946, 59144722, 60014497, 60884272, 61754048, 62623823, 63493598, 64363374, 65233149, 66102924, 66972700, 67842475, 68712250, 69582025, 70451801, 71321576, 72191351, 73061127, 73930902, 74800677, 75670453, 76540228, 77410003, 78279779, 79149554, 80019329, 80889105, 81758880, 82628655, 83498430, 84368206, 85237981, 86107756, 86977532, 87847307, 88717082, 89586858, 90456633, 91326408, 92196184, 93065959, 93935734, 94805510, 95675285, 96545060, 97414835, 98284611, 99154386, 100024161, 100893937, 101763712, 102633487, 103503263, 104373038, 105242813, 106112589, 106982364, 107852139, 108721915, 109591690, 110461465, 111331240, 112201016, 113070791, 113940566, 114810342, 115680117, 116549892, 117419668, 118289443, 119159218, 120028994, 120898769, 121768544, 122638320, 123508095, 124377870, 125247645, 126117421, 126987196, 127856971, 128726747, 129596522, 130466297, 131336073, 132205848, 133075623, 133945399, 134815174, 135684949, 136554725, 137424500, 138294275, 139164050, 140033826, 140903601, 141773376, 142643152, 143512927, 144382702, 145252478, 146122253, 146992028, 147861804, 148731579, 149601354, 150471130, 151340905, 152210680, 153080455, 153950231, 154820006, 155689781, 156559557, 157429332, 158299107, 159168883, 160038658, 160908433, 161778209, 162647984, 163517759, 164387535, 165257310, 166127085, 166996860, 167866636, 168736411, 169606186, 170475962, 171345737, 172215512, 173085288, 173955063, 174824838, 175694614, 176564389, 177434164, 178303940, 179173715, 180043490, 180913265, 181783041, 182652816, 183522591, 184392367, 185262142, 186131917, 187001693, 187871468, 188741243, 189611019, 190480794, 191350569, 192220345, 193090120, 193959895, 194829670, 195699446, 196569221, 197438996, 198308772, 199178547, 200048322, 200918098, 201787873, 202657648]\n"
+     ]
+    }
+   ],
+   "source": [
+    "listOfNodes = G.nodes()\n",
+    "totalNum = len(listOfNodes)\n",
+    "listof_nodes=[[(coarsness*5-int(item[0]+1))*xrange*75/(5*coarsness),(int(item[1]+1)*yrange*75/(6*coarsness))] for item in G.nodes()]\n",
+    "bigN=float(yrange*xrange)\n",
+    "print bigN\n",
+    "smallM=float(30*coarsness*coarsness)\n",
+    "print smallM\n",
+    "lines1=[int(float(((5-1)*coarsness-place[1])*coarsness*6+place[0]+1)) for place in G.nodes()]\n",
+    "print sorted(lines1)\n",
+    "lines= [int(float(((5-1)*coarsness-place[1])*coarsness*6+place[0]+1)*((1-bigN)/(1-smallM))+((bigN-smallM)/(1-smallM))) for place in G.nodes()]\n",
+    "print G.nodes()\n",
+    "print sorted(lines)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "collapsed": true
+   },
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 2",
+   "language": "python",
+   "name": "python2"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 2
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython2",
+   "version": "2.7.11"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 0
+}

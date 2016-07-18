@@ -5,6 +5,7 @@ import tailer as tl
 import math as mt
 import matplotlib.pyplot as plt
 
+DEBUG = 0
 HEIGHT=6
 WIDTH=5
 DELTAS=75
@@ -33,14 +34,16 @@ class mapInfo():
 
 	def getHeight(self, position):
 		self.place=position
-		line=int((float(self.place[0])/DELTAS)*float(self.place[1])/DELTAS + float(place[0]/DELTAS))-1
+		line=int(self.xrange*float(self.place[1])/DELTAS + float(place[0]/DELTAS))-1
 		self.height=gl.getline(self.theFile, line).split()[2]
 		return self.height
 
 	def getallHeights(self, grid, coarsnes):
 		listof_nodes=grid.nodes()
 		listof_nodes=[self.positionFromIndex(item, coarsnes) for item in listof_nodes]
-		lines=[int((float(place[0])/DELTAS)*float(place[1])/DELTAS + float(place[0]/DELTAS))-1 for place in listof_nodes]
+		bigN=float(self.xrange*self.yrange) #numero di righe nel file
+		smallM=float(WIDTH*HEIGHT*coarsnes**2) #numero di nodi nella griglia
+		lines=[int(float(((5-1)*coarsnes-place[1])*coarsnes*6+place[0]+1)*((1-bigN)/(1-smallM))+((bigN-smallM)/(1-smallM))) for place in grid.nodes()]#questa riga non scala bene
 		linesdict = {lines[i]:i for i in range(len(lines))}
 		out = [0 for i in range(len(lines))]
 		values = linesdict.keys()
@@ -56,6 +59,13 @@ class mapInfo():
 
 	
 def topologyInit(N):
+	'''Initializes a grid with N nodes distributed evenly on the map. The 
+	map-file is files/Grid.xyz.
+	The procedure evaluates the best possible coarsness to fit the desired
+	number of nodes. Generates the full grid, associates height and position
+	to the nodes and removes the node from the grid if it has 0 height. It then
+	associates a weight with every link proportinal to 1+|Delta H|^(-40/13)
+	Finally the resulting grid is out'''
 	FRACTION=0.2796296296296296
 	M=mapInfo("files/Grid.xyz")
 	coarsnes = int(((float(N)/FRACTION)/(WIDTH*HEIGHT))**(0.5))
@@ -70,11 +80,12 @@ def topologyInit(N):
 	for x in range(len(listOfNodes)):
 		G.node[listOfNodes[x]]['height']=listOfHeights[x]
 	listOfNodes=[x for x in listOfNodes if float(G.node[x]['height']) == 0]
-	print "The actual number of agents in this simulation will be " + str(len(G.nodes()))
 	G.remove_nodes_from(listOfNodes)
+	print "The actual number of agents in this simulation will be " + str(len(G.nodes()))
 	for edge in G.edges():
 		G[edge[0]][edge[1]]['weight']=((1.0+abs(G.node[edge[0]]['height'] - G.node[edge[1]]['height']))**(-1))/0.325
-		print G[edge[0]][edge[1]]['weight']
+		if DEBUG:
+		   print G[edge[0]][edge[1]]['weight']
 		#print str(edge) + "\t" + str(G[edge[0]][edge[1]]['weight']) + str(G.node[edge[0]]['height']) + "\t" + str(G.node[edge[1]]['height'])
 	print len(G.edges())
 	for x in G.nodes():
