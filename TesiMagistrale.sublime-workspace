@@ -4,6 +4,26 @@
 		"selected_items":
 		[
 			[
+				"lis",
+				"listOfValues"
+			],
+			[
+				"list",
+				"listOfValues"
+			],
+			[
+				"li",
+				"listOfPositions"
+			],
+			[
+				"item",
+				"itemgetter"
+			],
+			[
+				"le",
+				"length"
+			],
+			[
 				"file",
 				"files"
 			],
@@ -18,18 +38,6 @@
 			[
 				"lo",
 				"listOfNodes"
-			],
-			[
-				"lis",
-				"listOfHeights"
-			],
-			[
-				"li",
-				"listOfNodes"
-			],
-			[
-				"list",
-				"listOfHeights"
 			],
 			[
 				"ed",
@@ -123,7 +131,7 @@
 			"file": "gridItalia.py",
 			"settings":
 			{
-				"buffer_size": 5409,
+				"buffer_size": 6622,
 				"line_ending": "Unix",
 				"name": "#Grid for italy"
 			}
@@ -149,7 +157,7 @@
 			"file": "NG.py",
 			"settings":
 			{
-				"buffer_size": 168,
+				"buffer_size": 167,
 				"line_ending": "Unix"
 			}
 		}
@@ -198,8 +206,8 @@
 	],
 	"file_history":
 	[
-		"/home/donrog/.config/sublime-text-3/Packages/Default/Preferences.sublime-settings",
 		"/home/donrog/tesiLaurea/Agent2.py",
+		"/home/donrog/.config/sublime-text-3/Packages/Default/Preferences.sublime-settings",
 		"/home/donrog/tesiLaurea/README.md",
 		"/home/donrog/tesiLaurea/result.dat",
 		"/home/donrog/tesiLaurea/result",
@@ -225,6 +233,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"Wid",
 			"as",
 			"map",
 			"int(",
@@ -258,15 +267,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5409,
+						"buffer_size": 6622,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1813,
-								1813
+								1426,
+								1426
 							]
 						],
 						"settings":
@@ -279,8 +288,8 @@
 							],
 							"syntax": "Packages/Python/Python.sublime-syntax"
 						},
-						"translation.x": 0.0,
-						"translation.y": 137.0,
+						"translation.x": 64.0,
+						"translation.y": 1653.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -311,7 +320,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 2903.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
@@ -352,15 +361,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 168,
+						"buffer_size": 167,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								126,
-								126
+								124,
+								124
 							]
 						],
 						"settings":

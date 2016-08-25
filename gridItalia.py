@@ -4,6 +4,7 @@ import getline as gl
 import tailer as tl
 import math as mt
 import matplotlib.pyplot as plt
+from operator import itemgetter
 
 DEBUG = 0
 HEIGHT=6
@@ -21,8 +22,10 @@ class mapInfo():
  		self.last = tl.tail(open(theFile),1)[0].split()
  		print "the bottom right corner has position: " + self.last[0] + "\t" + self.last[1]
 		self.yrange=abs((float(self.last[1])-float(self.first[1]))/DELTAS)
+		self.height=self.yrange*75
 		print "the  y-range of our map in boxes: " + str(self.yrange)
 		self.xrange=abs((float(self.last[0])-float(self.first[0]))/DELTAS)
+		self.length=self.xrange*75
 		print "the  x-range of our map in boxes: " + str(self.xrange)
 
 	def positionFromIndex(self, index, coarsnes):
@@ -38,12 +41,29 @@ class mapInfo():
 		self.height=gl.getline(self.theFile, line).split()[2]
 		return self.height
 
+	def getAll3dPos(self, grid, coarsnes):
+		listOfNodes = grid.nodes()
+		listPositions = [[float(int(item[0]*(float(self.length)/(coarsnes*WIDTH-1))+float(self.first[0])))+0.5,float(int(float(self.first[1])-item[1]*float((self.height)/(coarsnes*HEIGHT-1))))+0.5] for item in grid.nodes()]
+		listOfValues=sorted(sorted(listPositions, key=itemgetter(0)), key=itemgetter(1), reverse=True)
+		ind=0
+		values=listOfValues[ind]
+		for currentline, line in enumerate(open(self.theFile, "rU")):
+			if ((float( line.split()[1] )+37.5 >= float( values[1] )) and ((float( line.split()[1] )-37.5 < float( values[1] )))) and ((float( line.split()[0] )+37.5 >= float( values[0] )) and ((float( line.split()[0] )-37.5 < float( values[0] )))):
+				listOfValues[ind].append(int(line.split()[2]))
+				if (ind != len(listOfValues)-1):
+					ind+=1
+					values=listOfValues[ind]
+				else:
+					break
+		print listOfValues
+		return listOfValues
+
 	def getallHeights(self, grid, coarsnes):
 		listof_nodes=grid.nodes()
 		listof_nodes=[self.positionFromIndex(item, coarsnes) for item in listof_nodes]
 		bigN=float(self.xrange*self.yrange) #numero di righe nel file
 		smallM=float(WIDTH*HEIGHT*coarsnes**2) #numero di nodi nella griglia
-		lines=[int(float(((5-1)*coarsnes-place[1])*coarsnes*6+place[0]+1)*((1-bigN)/(1-smallM))+((bigN-smallM)/(1-smallM))) for place in grid.nodes()]#questa riga non scala bene
+		lines = [ int(place[1]*float(self.yrange)/(coarsnes*HEIGHT)*self.xrange + 1 + (place[0]+1)*float(1-self.xrange)/(1-WIDTH*coarsnes)+float(self.xrange-WIDTH*coarsnes)/(1-WIDTH*coarsnes)) for place in grid.nodes()]
 		linesdict = {lines[i]:i for i in range(len(lines))}
 		out = [0 for i in range(len(lines))]
 		values = linesdict.keys()
@@ -70,15 +90,16 @@ def topologyInit(N):
 	M=mapInfo("files/Grid.xyz")
 	coarsnes = int(((float(N)/FRACTION)/(WIDTH*HEIGHT))**(0.5))
 	print "Coarsness is : " + str(coarsnes)
-	G = nx.grid_2d_graph(HEIGHT*coarsnes, WIDTH*coarsnes, True)
+	G = nx.grid_2d_graph(WIDTH*coarsnes, HEIGHT*coarsnes, True)
 	listOfNodes = G.nodes()
 	totalNum = len(listOfNodes)
-	listOfHeights = M.getallHeights(G, coarsnes)
-	for x in listOfNodes:
-		G.node[x]['position']=M.positionFromIndex(x, coarsnes)
+	listOfPositions = M.getAll3dPos(G, coarsnes)
+	listofGPS=[[element[0],element[1]] for element in listOfPositions]
+	listOfHeights=[element[2] for element in listOfPositions]
+	for i,x in enumerate(sorted(sorted(listOfNodes, key=itemgetter(0)), key=itemgetter(1), reverse=True)):
+		G.node[x]['position']=listofGPS[i]
+		G.node[x]['height']=listOfHeights[i]
 	nodeColor=[]
-	for x in range(len(listOfNodes)):
-		G.node[listOfNodes[x]]['height']=listOfHeights[x]
 	listOfNodes=[x for x in listOfNodes if float(G.node[x]['height']) == 0]
 	G.remove_nodes_from(listOfNodes)
 	print "The actual number of agents in this simulation will be " + str(len(G.nodes()))
