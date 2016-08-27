@@ -1,3 +1,4 @@
+
 #Grid for italy
 import networkx as nx
 import getline as gl
@@ -7,6 +8,7 @@ import matplotlib.pyplot as plt
 from operator import itemgetter
 
 DEBUG = 0
+SHOW = 0
 HEIGHT=6
 WIDTH=5
 DELTAS=75
@@ -55,7 +57,6 @@ class mapInfo():
 					values=listOfValues[ind]
 				else:
 					break
-		print listOfValues
 		return listOfValues
 
 	def getallHeights(self, grid, coarsnes):
@@ -108,16 +109,17 @@ def topologyInit(N):
 		if DEBUG:
 		   print G[edge[0]][edge[1]]['weight']
 		#print str(edge) + "\t" + str(G[edge[0]][edge[1]]['weight']) + str(G.node[edge[0]]['height']) + "\t" + str(G.node[edge[1]]['height'])
-	print len(G.edges())
+	print "the number of edges in this simularion will be" + str(len(G.edges()))
 	for x in G.nodes():
 		nodeColor.append(int(G.node[x]['height']))
-	elarge=[(u,v) for (u,v,d) in G.edges(data=True) if d['weight'] >=0.05]
-	esmall=[(u,v) for (u,v,d) in G.edges(data=True) if d['weight'] <0.05]
-	nx.draw_networkx_edges(G, pos={i:i for i in G.nodes()}, edgelist=elarge, width=2)
-	nx.draw_networkx_edges(G, pos={i:i for i in G.nodes()}, edgelist=esmall, width=2, alpha=0.5,edge_color='b',style='dashed')
-	nx.draw_networkx_nodes(G, pos={i:i for i in G.nodes()}, node_color=nodeColor, node_cmap=plt.cm.gist_earth, node_size=20)
-	plt.savefig("the_grid.png") # save as png
-	plt.show() # display
+	if SHOW == 1:
+		elarge=[(u,v) for (u,v,d) in G.edges(data=True) if d['weight'] >=0.05]
+		esmall=[(u,v) for (u,v,d) in G.edges(data=True) if d['weight'] <0.05]
+		nx.draw_networkx_edges(G, pos={i:i for i in G.nodes()}, edgelist=elarge, width=2)
+		nx.draw_networkx_edges(G, pos={i:i for i in G.nodes()}, edgelist=esmall, width=2, alpha=0.5,edge_color='b',style='dashed')
+		nx.draw_networkx_nodes(G, pos={i:i for i in G.nodes()}, node_color=nodeColor, node_cmap=plt.cm.gist_earth, node_size=20)
+		plt.savefig("the_grid.png") # save as png
+		plt.show() # display
 	return G
 
 def main():

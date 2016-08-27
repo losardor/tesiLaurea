@@ -47,4 +47,5 @@ def Play(f, T=1000000):
             break
     plt.figure(figsize = (16,8))
     figure = plt.scatter(time, different_words)
+    plt.show()
         

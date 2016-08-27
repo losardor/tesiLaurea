@@ -8,8 +8,8 @@ from Game import Play
 #random.seed();
 
 print "# GAME:"
-folk = Folk(1000000,GRIDONMAP)
-Play(folk,50000)
+folk = Folk(1000,GRIDONMAP)
+Play(folk,500000)
 
 print folk
 
