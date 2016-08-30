@@ -128,10 +128,13 @@
 	"buffers":
 	[
 		{
+			"contents": "\n#Grid for italy\nimport networkx as nx\nimport getline as gl\nimport tailer as tl\nimport math as mt\nimport matplotlib.pyplot as plt\nfrom operator import itemgetter\n\nDEBUG = 0\nSHOW = 0\nHEIGHT=6\nWIDTH=5\nDELTAS=75\nALTEZZAZ=500\nORDINE=1/ALTEZZAZ\n\nclass mapInfo():\n 	\"\"\"This object takes a text formatted Dem grid mapInfo\"\"\"\n 	def __init__(self, theFile):\n 		self.theFile = theFile\n 		self.first = tl.head(open(theFile),1)[0].split()\n 		print \"the top left corner has position: \" + self.first[0] + \"\\t\"+ self.first[1]\n 		self.last = tl.tail(open(theFile),1)[0].split()\n 		print \"the bottom right corner has position: \" + self.last[0] + \"\\t\" + self.last[1]\n		self.yrange=abs((float(self.last[1])-float(self.first[1]))/DELTAS)\n		self.height=self.yrange*75\n		print \"the  y-range of our map in boxes: \" + str(self.yrange)\n		self.xrange=abs((float(self.last[0])-float(self.first[0]))/DELTAS)\n		self.length=self.xrange*75\n		print \"the  x-range of our map in boxes: \" + str(self.xrange)\n\n	def positionFromIndex(self, index, coarsnes):\n	\n		self.positionx = (int(index[0])+1)*self.xrange*DELTAS/(WIDTH*coarsnes)\n		self.positiony = (int(index[1])+1)*self.yrange*DELTAS/(HEIGHT*coarsnes)\n		self.position = [self.positionx, self.positiony]\n		return self.position\n\n	def getHeight(self, position):\n		self.place=position\n		line=int(self.xrange*float(self.place[1])/DELTAS + float(place[0]/DELTAS))-1\n		self.height=gl.getline(self.theFile, line).split()[2]\n		return self.height\n\n	def getAll3dPos(self, grid, coarsnes):\n		listOfNodes = grid.nodes()\n		listPositions = [[float(int(item[0]*(float(self.length)/(coarsnes*WIDTH-1))+float(self.first[0])))+0.5,float(int(float(self.first[1])-item[1]*float((self.height)/(coarsnes*HEIGHT-1))))+0.5] for item in grid.nodes()]\n		listOfValues=sorted(sorted(listPositions, key=itemgetter(0)), key=itemgetter(1), reverse=True)\n		ind=0\n		values=listOfValues[ind]\n		for currentline, line in enumerate(open(self.theFile, \"rU\")):\n			if ((float( line.split()[1] )+37.5 >= float( values[1] )) and ((float( line.split()[1] )-37.5 < float( values[1] )))) and ((float( line.split()[0] )+37.5 >= float( values[0] )) and ((float( line.split()[0] )-37.5 < float( values[0] )))):\n				listOfValues[ind].append(int(line.split()[2]))\n				if (ind != len(listOfValues)-1):\n					ind+=1\n					values=listOfValues[ind]\n				else:\n					break\n		return listOfValues\n\n	def getallHeights(self, grid, coarsnes):\n		listof_nodes=grid.nodes()\n		listof_nodes=[self.positionFromIndex(item, coarsnes) for item in listof_nodes]\n		bigN=float(self.xrange*self.yrange) #numero di righe nel file\n		smallM=float(WIDTH*HEIGHT*coarsnes**2) #numero di nodi nella griglia\n		lines = [ int(place[1]*float(self.yrange)/(coarsnes*HEIGHT)*self.xrange + 1 + (place[0]+1)*float(1-self.xrange)/(1-WIDTH*coarsnes)+float(self.xrange-WIDTH*coarsnes)/(1-WIDTH*coarsnes)) for place in grid.nodes()]\n		linesdict = {lines[i]:i for i in range(len(lines))}\n		out = [0 for i in range(len(lines))]\n		values = linesdict.keys()\n		values.sort()\n		ind=0\n		for currentline, line in enumerate(open(self.theFile, \"rU\")):\n			if currentline == values[ind]:\n				out[linesdict[currentline]] = int(line.split()[2])\n				if(ind!=len(values)-1): \n					ind+=1\n				else: break\n		return out\n\n	\ndef topologyInit(N):\n	'''Initializes a grid with N nodes distributed evenly on the map. The \n	map-file is files/Grid.xyz.\n	The procedure evaluates the best possible coarsness to fit the desired\n	number of nodes. Generates the full grid, associates height and position\n	to the nodes and removes the node from the grid if it has 0 height. It then\n	associates a weight with every link proportinal to 1+|Delta H|^(-40/13)\n	Finally the resulting grid is out'''\n	FRACTION=0.2796296296296296\n	M=mapInfo(\"files/Grid.xyz\")\n	coarsnes = int(((float(N)/FRACTION)/(WIDTH*HEIGHT))**(0.5))\n	print \"Coarsness is : \" + str(coarsnes)\n	G = nx.grid_2d_graph(WIDTH*coarsnes, HEIGHT*coarsnes, True)\n	listOfNodes = G.nodes()\n	totalNum = len(listOfNodes)\n	listOfPositions = M.getAll3dPos(G, coarsnes)\n	listofGPS=[[element[0],element[1]] for element in listOfPositions]\n	listOfHeights=[element[2] for element in listOfPositions]\n	for i,x in enumerate(sorted(sorted(listOfNodes, key=itemgetter(0)), key=itemgetter(1), reverse=True)):\n		G.node[x]['position']=listofGPS[i]\n		G.node[x]['height']=listOfHeights[i]\n	nodeColor=[]\n	listOfNodes=[x for x in listOfNodes if float(G.node[x]['height']) == 0]\n	G.remove_nodes_from(listOfNodes)\n	print \"The actual number of agents in this simulation will be \" + str(len(G.nodes()))\n	for edge in G.edges():\n		G[edge[0]][edge[1]]['weight']=((1.0+abs(G.node[edge[0]]['height'] - G.node[edge[1]]['height']))**(-1))/0.325\n		if DEBUG:\n		   print G[edge[0]][edge[1]]['weight']\n		#print str(edge) + \"\\t\" + str(G[edge[0]][edge[1]]['weight']) + str(G.node[edge[0]]['height']) + \"\\t\" + str(G.node[edge[1]]['height'])\n	print \"the number of edges in this simularion will be \" + str(len(G.edges()))\n	for x in G.nodes():\n		nodeColor.append(int(G.node[x]['height']))\n	if SHOW == 1:\n		fig=plt.figure()\n		elarge=[(u,v) for (u,v,d) in G.edges(data=True) if d['weight'] >=0.05]\n		esmall=[(u,v) for (u,v,d) in G.edges(data=True) if d['weight'] <0.05]\n		nx.draw_networkx_edges(G, pos={i:i for i in G.nodes()}, edgelist=elarge, width=2)\n		nx.draw_networkx_edges(G, pos={i:i for i in G.nodes()}, edgelist=esmall, width=2, alpha=0.5,edge_color='b',style='dashed')\n		nx.draw_networkx_nodes(G, pos={i:i for i in G.nodes()}, node_color=nodeColor, node_cmap=plt.cm.summer, node_size=20)\n		plt.xlabel('X_grid identifier')\n		plt.ylabel('Y_grid identifier')\n		plt.title('The grid\\nGenerated on the basis of given DEM')\n		plt.show() # display\n	return G\n\ndef main():\n	fraction=[]\n	M = mapInfo(\"files/Grid.xyz\")\n	for coarsnes in range(6,7):\n		print \"#- Map for coarsnes: \" + str(coarsnes)\n		G = nx.grid_2d_graph(HEIGHT*coarsnes, WIDTH*coarsnes, True)\n		listOfNodes = G.nodes()\n		totalNum = len(listOfNodes)\n		listOfHeights=M.getallHeights(G, coarsnes)\n		for x in listOfNodes:\n			G.node[x]['position']=M.positionFromIndex(x, coarsnes)\n		for x in range(len(listOfNodes)):\n			G.node[listOfNodes[x]]['height']=listOfHeights[x]\n		for x in listOfNodes:\n			print \"--Node ({0}, {1}):\\t {2}\\t{3}\\t{4}\".format(x[0],\n			 x[1], G.node[x]['position'][0], G.node[x]['position'][1], \n			 G.node[x]['height']) \n		listOfNodes=[x for x in listOfNodes if int(G.node[x]['height']) == 0]\n		print listOfNodes\n		G.remove_nodes_from(listOfNodes)\n		len(G.nodes())\n		fraction.append(float(len(G.nodes()))/totalNum)\n	print \"For each coarsnes the respective fraction of existing nodes is:\"\n	print fraction\n\ndef test():\n	M=mapInfo(\"files/Grid.xyz\")\n	coarsness=1\n	G = nx.grid_2d_graph(HEIGHT*coarsness, WIDTH*coarsness, True)\n	print M.getallHeights(G, coarsness)\n\n\nif __name__ == \"__main__\": main()",
 			"file": "gridItalia.py",
+			"file_size": 6785,
+			"file_write_time": 131169420186457514,
 			"settings":
 			{
-				"buffer_size": 6667,
+				"buffer_size": 6768,
 				"line_ending": "Unix",
 				"name": "#Grid for italy"
 			}
@@ -140,27 +143,15 @@
 			"file": "Agent.py",
 			"settings":
 			{
-				"buffer_size": 5596,
+				"buffer_size": 5884,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "randomWightChoice.py",
-			"settings":
-			{
-				"buffer_size": 553,
-				"line_ending": "Unix",
-				"name": "#Random weightes choice try"
-			}
-		},
-		{
-			"contents": "#! /usr/bin/python\n\nimport random\n\nfrom Agent import *\nfrom Game import Play\n\n#random.seed();\n\nprint \"# GAME:\"\nfolk = Folk(1000,GRIDONMAP)\nPlay(folk,5000m	00)\n\nprint folk\n\n",
 			"file": "NG.py",
-			"file_size": 170,
-			"file_write_time": 131165915425074802,
 			"settings":
 			{
-				"buffer_size": 172,
+				"buffer_size": 169,
 				"line_ending": "Unix"
 			}
 		},
@@ -168,15 +159,15 @@
 			"file": "Game.py",
 			"settings":
 			{
-				"buffer_size": 1402,
+				"buffer_size": 1578,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "outpud.dat",
+			"file": "/home/donrog/basemap.py",
 			"settings":
 			{
-				"buffer_size": 42621,
+				"buffer_size": 363,
 				"line_ending": "Unix"
 			}
 		}
@@ -241,8 +232,9 @@
 	],
 	"file_history":
 	[
-		"/home/donrog/tesiLaurea/outpud.dat",
+		"/home/donrog/tesiLaurea/randomWightChoice.py",
 		"/home/donrog/tesiLaurea/Agent",
+		"/home/donrog/tesiLaurea/outpud.dat",
 		"/home/donrog/tesiLaurea/Agent2.py",
 		"/home/donrog/.config/sublime-text-3/Packages/Default/Preferences.sublime-settings",
 		"/home/donrog/tesiLaurea/README.md",
@@ -295,7 +287,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 4,
 			"sheets":
 			[
 				{
@@ -304,15 +296,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 6667,
+						"buffer_size": 6768,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4997,
-								4997
+								5621,
+								5621
 							]
 						],
 						"settings":
@@ -326,10 +318,10 @@
 							"syntax": "Packages/Python/Python.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 1824.0,
+						"translation.y": 1596.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
@@ -338,15 +330,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5596,
+						"buffer_size": 5884,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4226,
-								4226
+								246,
+								246
 							]
 						],
 						"settings":
@@ -357,36 +349,6 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 2280.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "randomWightChoice.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 553,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								553,
-								553
-							]
-						],
-						"settings":
-						{
-							"auto_name": "#Random weightes choice try",
-							"color_scheme": "Packages/User/Color Highlighter/themes/Material-Theme-Lighter.tmTheme",
-							"syntax": "Packages/Python/Python.sublime-syntax"
-						},
-						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
@@ -394,20 +356,20 @@
 					"type": "text"
 				},
 				{
-					"buffer": 3,
+					"buffer": 2,
 					"file": "NG.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 172,
+						"buffer_size": 169,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								155,
-								155
+								76,
+								76
 							]
 						],
 						"settings":
@@ -419,24 +381,24 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
+					"buffer": 3,
 					"file": "Game.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1402,
+						"buffer_size": 1578,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1392,
-								1392
+								1410,
+								1410
 							]
 						],
 						"settings":
@@ -454,32 +416,32 @@
 					"type": "text"
 				},
 				{
-					"buffer": 5,
-					"file": "outpud.dat",
+					"buffer": 4,
+					"file": "/home/donrog/basemap.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 42621,
+						"buffer_size": 363,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								276,
+								276
 							]
 						],
 						"settings":
 						{
 							"color_scheme": "Packages/User/Color Highlighter/themes/Material-Theme-Lighter.tmTheme",
-							"syntax": "Packages/Text/Plain text.tmLanguage"
+							"syntax": "Packages/Python/Python.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 12730.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 0,
 					"type": "text"
 				}
 			]

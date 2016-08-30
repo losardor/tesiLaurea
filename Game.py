@@ -12,8 +12,8 @@ def Play(f, T=1000000):
         [speaker, hearer] = f.Select()
         if(hearer==None): 
             continue
-        if (speaker.ndw==1 and i>f.N): 
-            break
+        #if (speaker.ndw==1 and i>f.N): 
+        #    break
         if DEBUG: 
             print "speaker:",
             str(speaker.dict),
@@ -43,9 +43,14 @@ def Play(f, T=1000000):
         time.append(i+1)
         different_words.append(speaker.ndw)
         #print "%d %d" %(i+1, speaker.ndw)
-        if (speaker.ndw==1 and i>f.N):
-            break
-    plt.figure(figsize = (16,8))
-    figure = plt.scatter(time, different_words)
+        #if (speaker.ndw==1 and i>f.N):
+        #    break
+    fig=plt.figure()
+    ax1=plt.subplot2grid((1,1),(0,0))
+    plt.scatter(time, different_words, label='NDW')
+    plt.xlabel('Time Step')
+    plt.ylabel('Number of Different Words')
+    plt.title('Number of Different Words in Time')
+    ax1.grid(True)
     plt.show()
         

@@ -5,6 +5,9 @@ import matplotlib.pyplot as plt
 from networkx.drawing.nx_agraph import graphviz_layout
 import gridItalia as gi
 import pandas as pnd
+from matplotlib import style
+
+style.use('fivethirtyeight')
 
 DEBUG = 0
 
@@ -127,9 +130,12 @@ class Topology():
          self.G.node[n]['agent'] = agent[i]
          i += 1
       if id!= COMPLETE: 
-         edgeWeights=pnd.Series([d['weight'] for (u,v,d) in self.G.edges(data=True)])
-         #print edgeWeights
-         edgeWeights.hist()
+         edgeWeights=[d['weight'] for (u,v,d) in self.G.edges(data=True)]
+         bins=range(1,5)
+         plt.hist(edgeWeights, bins, histtype='bar', rwidth=0.8, label='Edge Weights')
+         plt.xlabel('Edge Weights')
+         plt.ylabel('Frequency')
+         plt.title('Edge Weights\nThe frequency with witch a given weight is assigned given this DEM distribution')
          plt.show()
          '''
          elarge=[(u,v) for (u,v,d) in self.G.edges(data=True) if d['weight'] >0.25]
