@@ -4,7 +4,7 @@ from math import sqrt
 import matplotlib.pyplot as plt
 from networkx.drawing.nx_agraph import graphviz_layout
 import gridItalia as gi
-import pandas as pnd
+import numpy as np
 from matplotlib import style
 
 style.use('fivethirtyeight')
@@ -131,12 +131,19 @@ class Topology():
          i += 1
       if id!= COMPLETE: 
          edgeWeights=[d['weight'] for (u,v,d) in self.G.edges(data=True)]
-         bins=range(1,5)
+         bins=np.arange(0,1,0.1)
          plt.hist(edgeWeights, bins, histtype='bar', rwidth=0.8, label='Edge Weights')
          plt.xlabel('Edge Weights')
          plt.ylabel('Frequency')
          plt.title('Edge Weights\nThe frequency with witch a given weight is assigned given this DEM distribution')
          plt.show()
+         if DEBUG==1:
+            orderedWeights=sorted(edgeWeights)
+            xs=range(len(edgeWeights))
+            fig2=plt.figure()
+            plt.scatter(xs, orderedWeights)
+            plt.show()
+
          '''
          elarge=[(u,v) for (u,v,d) in self.G.edges(data=True) if d['weight'] >0.25]
          esmall=[(u,v) for (u,v,d) in self.G.edges(data=True) if d['weight'] <=0.25]

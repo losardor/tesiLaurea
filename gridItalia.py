@@ -14,6 +14,7 @@ WIDTH=5
 DELTAS=75
 ALTEZZAZ=500
 ORDINE=1/ALTEZZAZ
+PESO=0.007
 
 class mapInfo():
  	"""This object takes a text formatted Dem grid mapInfo"""
@@ -105,13 +106,16 @@ def topologyInit(N):
 	G.remove_nodes_from(listOfNodes)
 	print "The actual number of agents in this simulation will be " + str(len(G.nodes()))
 	for edge in G.edges():
-		G[edge[0]][edge[1]]['weight']=((1.0+abs(G.node[edge[0]]['height'] - G.node[edge[1]]['height']))**(-1))/0.325
+		G[edge[0]][edge[1]]['weight']=  2.7**(-PESO*abs(G.node[edge[0]]['height'] - G.node[edge[1]]['height']))
 		if DEBUG:
 		   print G[edge[0]][edge[1]]['weight']
 		#print str(edge) + "\t" + str(G[edge[0]][edge[1]]['weight']) + str(G.node[edge[0]]['height']) + "\t" + str(G.node[edge[1]]['height'])
-	print "the number of edges in this simularion will be " + str(len(G.edges()))
+	print "the number of edges in this simulation will be " + str(len(G.edges()))
 	for x in G.nodes():
 		nodeColor.append(int(G.node[x]['height']))
+	target = open("node_height", "w")
+	for x in range(len(nodeColor)):
+		target.write(str(x)+"\t"+str(nodeColor[x])+"\n")
 	if SHOW == 1:
 		fig=plt.figure()
 		elarge=[(u,v) for (u,v,d) in G.edges(data=True) if d['weight'] >=0.05]
@@ -122,7 +126,6 @@ def topologyInit(N):
 		plt.xlabel('X_grid identifier')
 		plt.ylabel('Y_grid identifier')
 		plt.title('The grid\nGenerated on the basis of given DEM')
-		fig.grid(true)
 		plt.show() # display
 	return G
 
