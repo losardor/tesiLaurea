@@ -15,6 +15,7 @@ DELTAS=75
 ALTEZZAZ=500
 ORDINE=1/ALTEZZAZ
 PESO=0.007
+WEIGHTED = 1
 
 class mapInfo():
  	"""This object takes a text formatted Dem grid mapInfo"""
@@ -80,7 +81,7 @@ class mapInfo():
 		return out
 
 	
-def topologyInit(N):
+def topologyInit(N, choice):
 	'''Initializes a grid with N nodes distributed evenly on the map. The 
 	map-file is files/Grid.xyz.
 	The procedure evaluates the best possible coarsness to fit the desired
@@ -88,6 +89,8 @@ def topologyInit(N):
 	to the nodes and removes the node from the grid if it has 0 height. It then
 	associates a weight with every link proportinal to 1+|Delta H|^(-40/13)
 	Finally the resulting grid is out'''
+	
+
 	FRACTION=0.2796296296296296
 	M=mapInfo("files/Grid.xyz")
 	coarsnes = int(((float(N)/FRACTION)/(WIDTH*HEIGHT))**(0.5))
@@ -95,6 +98,8 @@ def topologyInit(N):
 	G = nx.grid_2d_graph(WIDTH*coarsnes, HEIGHT*coarsnes, True)
 	listOfNodes = G.nodes()
 	totalNum = len(listOfNodes)
+	
+
 	listOfPositions = M.getAll3dPos(G, coarsnes)
 	listofGPS=[[element[0],element[1]] for element in listOfPositions]
 	listOfHeights=[element[2] for element in listOfPositions]
@@ -105,12 +110,20 @@ def topologyInit(N):
 	listOfNodes=[x for x in listOfNodes if float(G.node[x]['height']) == 0]
 	G.remove_nodes_from(listOfNodes)
 	print "The actual number of agents in this simulation will be " + str(len(G.nodes()))
-	for edge in G.edges():
-		G[edge[0]][edge[1]]['weight']=  2.7**(-PESO*abs(G.node[edge[0]]['height'] - G.node[edge[1]]['height']))
-		if DEBUG:
-		   print G[edge[0]][edge[1]]['weight']
-		#print str(edge) + "\t" + str(G[edge[0]][edge[1]]['weight']) + str(G.node[edge[0]]['height']) + "\t" + str(G.node[edge[1]]['height'])
+	
+
+	if choice == WIGHTED:
+		for edge in G.edges():
+			G[edge[0]][edge[1]]['weight']=  2.7**(-PESO*abs(G.node[edge[0]]['height'] - G.node[edge[1]]['height']))
+			if DEBUG:
+		   		print G[edge[0]][edge[1]]['weight']
+			#print str(edge) + "\t" + str(G[edge[0]][edge[1]]['weight']) + str(G.node[edge[0]]['height']) + "\t" + str(G.node[edge[1]]['height'])
+	else:
+		for edge in G.edges():
+			G[edge[0]][edge[1]]['weight']=1
 	print "the number of edges in this simulation will be " + str(len(G.edges()))
+	
+	
 	for x in G.nodes():
 		nodeColor.append(int(G.node[x]['height']))
 	target = open("node_height", "w")
