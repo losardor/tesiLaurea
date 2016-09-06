@@ -131,7 +131,7 @@ class Topology():
          i += 1
       if id!= COMPLETE: 
          edgeWeights=[d['weight'] for (u,v,d) in self.G.edges(data=True)]
-         bins=np.arange(0,1,0.1)
+         bins=np.arange(0,1.1,0.1)
          plt.hist(edgeWeights, bins, histtype='bar', rwidth=0.8, label='Edge Weights')
          plt.xlabel('Edge Weights')
          plt.ylabel('Frequency')

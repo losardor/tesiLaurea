@@ -3,12 +3,11 @@ import matplotlib.pyplot as plt
 
 DEBUG = 0
 
-def Play(f, T=1000000):
+def Play(f, T=1000000, name="game.dat"):
     # folk f, play rounds T
     time=[]
     different_words=[]
     for i in range(T):
-
         [speaker, hearer] = f.Select()
         if(hearer==None): 
             continue
@@ -40,11 +39,14 @@ def Play(f, T=1000000):
             if DEBUG: 
                 print "w:",str(w), "failure"
             hearer.AddWord(w)
-        time.append(i+1)
-        different_words.append(speaker.ndw)
         #print "%d %d" %(i+1, speaker.ndw)
         #if (speaker.ndw==1 and i>f.N):
         #    break
+        time.append(i+1)
+        if speaker.ndw :
+            different_words.append(speaker.ndw)
+        else:
+            print ("problems with this NDW: " + str(speaker.ndw))
     fig=plt.figure()
     ax1=plt.subplot2grid((1,1),(0,0))
     plt.scatter(time, different_words, label='NDW')
@@ -53,4 +55,8 @@ def Play(f, T=1000000):
     plt.title('Number of Different Words in Time')
     ax1.grid(True)
     plt.show()
+    target = open(name, "w")
+    for x in range(len(time)):
+        target.write(str(time[x])+"\t"+str(different_words[x])+"\n")
+
         

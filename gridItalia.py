@@ -14,7 +14,7 @@ WIDTH=5
 DELTAS=75
 ALTEZZAZ=500
 ORDINE=1/ALTEZZAZ
-PESO=0.007
+PESO=0.1
 WEIGHTED = 1
 
 class mapInfo():
@@ -112,7 +112,7 @@ def topologyInit(N, choice):
 	print "The actual number of agents in this simulation will be " + str(len(G.nodes()))
 	
 
-	if choice == WIGHTED:
+	if choice == WEIGHTED:
 		for edge in G.edges():
 			G[edge[0]][edge[1]]['weight']=  2.7**(-PESO*abs(G.node[edge[0]]['height'] - G.node[edge[1]]['height']))
 			if DEBUG:
@@ -126,9 +126,9 @@ def topologyInit(N, choice):
 	
 	for x in G.nodes():
 		nodeColor.append(int(G.node[x]['height']))
-	target = open("node_height", "w")
-	for x in range(len(nodeColor)):
-		target.write(str(x)+"\t"+str(nodeColor[x])+"\n")
+	#target = open("node_height", "w")
+	#for x in range(len(nodeColor)):
+	#	target.write(str(x)+"\t"+str(nodeColor[x])+"\n")
 	if SHOW == 1:
 		fig=plt.figure()
 		elarge=[(u,v) for (u,v,d) in G.edges(data=True) if d['weight'] >=0.05]
