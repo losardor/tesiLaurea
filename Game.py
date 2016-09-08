@@ -9,10 +9,22 @@ def Play(f, T=1000000, name="game.dat"):
     different_words=[]
     for i in range(T):
         [speaker, hearer] = f.Select()
-        if(hearer==None): 
+        if(hearer==None):
+            time.append(i+1)
+            different_words.append(different_words[-1])
             continue
         #if (speaker.ndw==1 and i>f.N): 
         #    break
+        if(speaker==None):
+            time.append(i+1)
+            if speaker.ndw:
+                different_words.append(speaker.ndw)
+            else:
+                different_words.append(different_words[-1])
+            continue
+        #if (speaker.ndw==1 and i>f.N): 
+        #    break
+        
         if DEBUG: 
             print "speaker:",
             str(speaker.dict),
@@ -21,6 +33,8 @@ def Play(f, T=1000000, name="game.dat"):
         if(len(speaker.dict) == 1 and speaker.dict==hearer.dict): 
             # trivial case
             #print "%d %d" %(i, speaker.ndw)
+            time.append(i+1)
+            different_words.append(different_words[-1])
             continue
         
         #print speaker.id, hearer.id
@@ -43,10 +57,7 @@ def Play(f, T=1000000, name="game.dat"):
         #if (speaker.ndw==1 and i>f.N):
         #    break
         time.append(i+1)
-        if speaker.ndw :
-            different_words.append(speaker.ndw)
-        else:
-            print ("problems with this NDW: " + str(speaker.ndw))
+        different_words.append(speaker.ndw)
     fig=plt.figure()
     ax1=plt.subplot2grid((1,1),(0,0))
     plt.scatter(time, different_words, label='NDW')

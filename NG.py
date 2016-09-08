@@ -11,7 +11,7 @@ import numpy as np
 print "# GAME:"
 
 #GAME1
-folk=Folk(1000, GRIDONMAP, choice = 0)
-Play(folk, 1000000, name="gameBeta_un.dat")
+folk=Folk(1000, GRIDONMAP, choice = 1)
+Play(folk, 1000000, name="gameBeta.dat")
 
 
