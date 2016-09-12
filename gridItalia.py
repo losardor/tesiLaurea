@@ -14,7 +14,6 @@ WIDTH=5
 DELTAS=75
 ALTEZZAZ=500
 ORDINE=1/ALTEZZAZ
-PESO=0.1
 WEIGHTED = 1
 
 class mapInfo():
@@ -81,7 +80,7 @@ class mapInfo():
 		return out
 
 	
-def topologyInit(N, choice):
+def topologyInit(N, choice, Beta):
 	'''Initializes a grid with N nodes distributed evenly on the map. The 
 	map-file is files/Grid.xyz.
 	The procedure evaluates the best possible coarsness to fit the desired
@@ -114,7 +113,7 @@ def topologyInit(N, choice):
 
 	if choice == WEIGHTED:
 		for edge in G.edges():
-			G[edge[0]][edge[1]]['weight']=  2.7**(-PESO*abs(G.node[edge[0]]['height'] - G.node[edge[1]]['height']))
+			G[edge[0]][edge[1]]['weight']=  2.7**(-Beta*abs(G.node[edge[0]]['height'] - G.node[edge[1]]['height']))
 			if DEBUG:
 		   		print G[edge[0]][edge[1]]['weight']
 			#print str(edge) + "\t" + str(G[edge[0]][edge[1]]['weight']) + str(G.node[edge[0]]['height']) + "\t" + str(G.node[edge[1]]['height'])

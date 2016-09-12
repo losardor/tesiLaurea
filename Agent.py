@@ -62,12 +62,12 @@ class Agent():
       
 class Folk():
    
-   def __init__(self, N=10, topology=0, choice = 0):
+   def __init__(self, N=10, topology=0, choice = 0, Beta = 0.1):
       self.N = N
       self.agent = []
       for i in range(N):
 	 self.agent.append(Agent(i))
-      self.topology = Topology(self.agent, topology, choice)
+      self.topology = Topology(self.agent, topology, choice, Beta)
         
    def __str__(self):
       ag = self.agent[0]
@@ -96,7 +96,7 @@ BARABASI = 4; BARABASI_M = 4
 GRIDONMAP = 5
 
 class Topology():
-   def __init__(self, agent, id=COMPLETE, choice=0):
+   def __init__(self, agent, id=COMPLETE, choice=0, Beta = 0.1):
       self.tipo = id
       if id != COMPLETE:
 	 N = len(agent)
@@ -122,7 +122,7 @@ class Topology():
             else:
                self.G[a[0]][a[1]]['weight'] = 1.0
       elif id == GRIDONMAP:
-         self.G = gi.topologyInit(N, choice)
+         self.G = gi.topologyInit(N, choice, Beta)
          self.len=len(self.G.nodes())
 
       i = 0
@@ -131,7 +131,7 @@ class Topology():
          i += 1
       if id!= COMPLETE: 
          edgeWeights=[d['weight'] for (u,v,d) in self.G.edges(data=True)]
-         bins=np.arange(0,1.1,0.1)
+         bins=np.arange(0,1.1,0.05)
          plt.hist(edgeWeights, bins, histtype='bar', rwidth=0.8, label='Edge Weights')
          plt.xlabel('Edge Weights')
          plt.ylabel('Frequency')
