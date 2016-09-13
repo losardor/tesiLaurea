@@ -113,7 +113,7 @@ def topologyInit(N, choice, Beta):
 
 	if choice == WEIGHTED:
 		for edge in G.edges():
-			G[edge[0]][edge[1]]['weight']=  2.7**(-Beta*abs(G.node[edge[0]]['height'] - G.node[edge[1]]['height']))
+			G[edge[0]][edge[1]]['weight'] =  2.7**(-Beta*abs(G.node[edge[0]]['height'] - G.node[edge[1]]['height']))
 			if DEBUG:
 		   		print G[edge[0]][edge[1]]['weight']
 			#print str(edge) + "\t" + str(G[edge[0]][edge[1]]['weight']) + str(G.node[edge[0]]['height']) + "\t" + str(G.node[edge[1]]['height'])
