@@ -1,6 +1,7 @@
 import cPickle as pk
 import gridItalia as grd
 import networkx as nx
+from operator import itemgetter
 
 DEBUG = 0
 SHOW = 0
@@ -26,6 +27,6 @@ for N in lisofrelevantsizes:
 		G.node[x]['height']=listOfHeights[i]
 	listOfNodes=[x for x in listOfNodes if float(G.node[x]['height']) == 0]
 	G.remove_nodes_from(listOfNodes)
-	filename = "topolgy"+str(N)+".pk"
+	filename = "files/topolgy"+str(N)+".pk"
 	with open(filename, 'wb') as output:
 		pk.dump(G, output, pk.HIGHEST_PROTOCOL)
