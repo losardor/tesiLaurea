@@ -92,7 +92,7 @@ GRID2DBAND = 3
 GRID2DBAND_p = 0.01
 BARABASI = 4; BARABASI_M = 4
 GRIDONMAP = 5
-SHOW=1
+SHOW=0
 WEIGHTED = 1
 
 class Topology():
@@ -134,14 +134,12 @@ class Topology():
 			with open(filename, 'rb') as input:
 				self.G = pk.load(input)
 			if choice == WEIGHTED:
-				print "i'm out"
 				for edge in self.G.edges():
 					self.G[edge[0]][edge[1]]['weight'] =  2.7**(-Beta*abs(self.G.node[edge[0]]['height'] - self.G.node[edge[1]]['height']))
 					if DEBUG:
 						print self.G[edge[0]][edge[1]]['weight']
 					#print str(edge) + "\t" + str(G[edge[0]][edge[1]]['weight']) + str(G.node[edge[0]]['height']) + "\t" + str(G.node[edge[1]]['height'])
 			else:
-				print "i'm in"
 				for edge in self.G.edges():
 					self.G[edge[0]][edge[1]]['weight']=1
 					print "the number of edges in this simulation will be " + str(len(self.G.edges())) + " And the number of agents will be " + str(len(self.G.nodes()))
@@ -192,27 +190,25 @@ class Topology():
 				return [None, None]
 			w = self.G.degree(s,'weight')
 			r = random.uniform(0.0,w)
-	        E = self.G.edges(s)
-	        sum = 0.0
-	        for a in E:
-	        	sum += self.G[a[0]][a[1]]['weight']
-	        	if sum >= r:
-	        		break
-	        if s == a[0]:
-	        	h = a[1]
-	        else:
-	        	h = a[0]
-	        return [ self.G.node[s]['agent'], self.G.node[h]['agent']]
-	    else:
-	    	s = random.choice(self.G.nodes())
-        	if(not self.G.neighbors(s)): # if no neighs
-        		return [None, None]
-        	mapping={key[:2]: key[2] for key in self.G.edges(s, data='weight')}
-        	link=nx.utils.random_sequence.weighted_choice(mapping)
-        	if link[0]==s:
-        		h = link[1]
-        	else:
-        		h = link[0]
-        	#h = random.choice(self.G.neighbors(s))
-        	return [ self.G.node[s]['agent'], self.G.node[h]['agent'] ]
-	 #return [agent[s],agent[h]
+			E = self.G.edges(s)
+			sum = 0.0
+			for a in E:
+				sum += self.G[a[0]][a[1]]['weight']
+				if sum >= r:
+					break
+			if s == a[0]:
+				h = a[1]
+			else:
+				h = a[0]
+			return [ self.G.node[s]['agent'], self.G.node[h]['agent']]
+		else:
+			s = random.choice(self.G.nodes())
+			if(not self.G.neighbors(s)):
+				return [None, None]
+			mapping={key[:2]: key[2] for key in self.G.edges(s, data='weight')}
+			link=nx.utils.random_sequence.weighted_choice(mapping)
+			if link[0]==s:
+				h = link[1]
+			else:
+				h = link[0]
+			return [ self.G.node[s]['agent'], self.G.node[h]['agent'] ]
