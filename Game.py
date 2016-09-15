@@ -10,7 +10,7 @@ def Play(f, T=1000000, name="game.dat"):
     for i in range(T):
         [speaker, hearer] = f.Select()
         if(hearer==None):
-            print "Che rumore fa un albero che cade in una foresta disabitata?"
+            #print "Che rumore fa un albero che cade in una foresta disabitata?"
             time.append(i+1)
             different_words.append(different_words[-1])
             continue
@@ -32,7 +32,8 @@ def Play(f, T=1000000, name="game.dat"):
             str(speaker.dict),
             " hearer:",
             str(hearer.dict)
-        if(len(speaker.dict) == 1 and speaker.dict==hearer.dict): 
+            
+        if(len(speaker.dict) == 1 and speaker.dict == hearer.dict): 
             # trivial case
             #print "%d %d" %(i, speaker.ndw)
             time.append(i+1)
@@ -60,7 +61,6 @@ def Play(f, T=1000000, name="game.dat"):
         #    break
         time.append(i+1)
         different_words.append(speaker.ndw)
-    print len(different_words)
     fig=plt.figure()
     ax1=plt.subplot2grid((1,1),(0,0))
     plt.scatter(time, different_words, label='NDW')
