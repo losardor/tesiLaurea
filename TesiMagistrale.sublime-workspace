@@ -4,6 +4,18 @@
 		"selected_items":
 		[
 			[
+				"ma",
+				"maxes"
+			],
+			[
+				"la",
+				"lastY1"
+			],
+			[
+				"max",
+				"maxY5"
+			],
+			[
 				"edg",
 				"edgeWeights"
 			],
@@ -209,7 +221,7 @@
 			"file": "analisys.py",
 			"settings":
 			{
-				"buffer_size": 1587,
+				"buffer_size": 2503,
 				"line_ending": "Unix"
 			}
 		},
@@ -310,7 +322,7 @@
 	],
 	"find":
 	{
-		"height": 35.0
+		"height": 34.0
 	},
 	"find_in_files":
 	{
@@ -324,6 +336,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"float",
+			"scatter",
 			"Wid",
 			"as",
 			"map",
@@ -337,6 +351,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"plot",
 			"float",
 			"DELTAS"
 		],
@@ -481,15 +496,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1587,
+						"buffer_size": 2503,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								144,
-								144
+								1603,
+								1603
 							]
 						],
 						"settings":
@@ -498,7 +513,7 @@
 							"syntax": "Packages/Python/Python.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 408.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -610,7 +625,7 @@
 	"project": "TesiMagistrale.sublime-project",
 	"replace":
 	{
-		"height": 64.0
+		"height": 62.0
 	},
 	"save_all_on_build": true,
 	"select_file":
