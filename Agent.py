@@ -6,11 +6,13 @@ from networkx.drawing.nx_agraph import graphviz_layout
 import gridItalia as gi
 import numpy as np
 from matplotlib import style
+import matplotlib.cm as cm
 import cPickle as pk
 
 style.use('fivethirtyeight')
 
 DEBUG = 0
+
 class Agent():
 	nw = 0 # max id of different words
 	words = [] # occurrences of single words in the population
@@ -92,7 +94,7 @@ GRID2DBAND = 3
 GRID2DBAND_p = 0.01
 BARABASI = 4; BARABASI_M = 4
 GRIDONMAP = 5
-SHOW = 0
+SHOW = 1
 WEIGHTED = 1
 
 class Topology():
@@ -133,6 +135,41 @@ class Topology():
 			filename= "files/topolgy"+str(N)+".pk"
 			with open(filename, 'rb') as input:
 				self.G = pk.load(input)
+			
+			values = []
+			removinglist = []
+			with open('Comuni_altitudine','r') as file:
+				for n, line in enumerate(file):
+					if n != 0:
+						values.append(int(line.split('\t')[1]))
+			altitudini=np.array(values)
+			lookup={}
+			hist, bins = np.histogram(altitudini, bins=50, normed=1)
+			norm=hist.max()
+			for tupla in zip(*np.histogram(altitudini, bins=50, normed=1)):
+				lookup[tupla[1]]=tupla[0]/norm
+			for node in self.G.nodes():
+				x=np.random.uniform()
+				y=self.G.node[node]['height']
+				freq=lookup[min(list(lookup.keys()), key=lambda x:abs(x-y))]
+				if x>freq:
+					removinglist.append(node)
+			self.G.remove_nodes_from(removinglist)
+			'''
+			hist, bins = np.histogram(altitudini, bins = 50, normed = 1)
+			Hist=hist/hist.max()
+			for node in self.G.nodes():
+				x=np.random.uniform()
+				y=self.G.node[node]['height']
+				for n, bin in enumerate(bins):
+					if y> bin:
+						sec = n-1
+						continue
+				if x > Hist[sec]:
+					removinglist.append(node)
+			self.G.remove_nodes_from(removinglist)
+			'''
+
 			if choice == WEIGHTED:
 				for edge in self.G.edges():
 					self.G[edge[0]][edge[1]]['weight'] =  2.7**(-Beta*abs(self.G.node[edge[0]]['height'] - self.G.node[edge[1]]['height']))
@@ -142,7 +179,7 @@ class Topology():
 			else:
 				for edge in self.G.edges():
 					self.G[edge[0]][edge[1]]['weight']=1
-					print "the number of edges in this simulation will be " + str(len(self.G.edges())) + " And the number of agents will be " + str(len(self.G.nodes()))
+			print "the number of edges in this simulation will be " + str(len(self.G.edges())) + " And the number of agents will be " + str(len(self.G.nodes()))
 
 			for x in self.G.nodes():
 				nodeColor.append(int(self.G.node[x]['height']))
@@ -150,6 +187,7 @@ class Topology():
 			#for x in range(len(nodeColor)):
 				#target.write(str(x)+"\t"+str(nodeColor[x])+"\n")
 			if SHOW == 1:
+				colors = cm.rainbow(np.linspace(0, 1, len(nodeColor)))
 				fig=plt.figure()
 				elarge=[(u,v) for (u,v,d) in self.G.edges(data=True) if d['weight'] >=0.05]
 				esmall=[(u,v) for (u,v,d) in self.G.edges(data=True) if d['weight'] <0.05]

@@ -1,6 +1,8 @@
 #def 
 import matplotlib.pyplot as plt
 import networkx as nx
+import matplotlib.cm as cm
+import numpy as np
 
 DEBUG = 0
 SHOW = 1
@@ -79,6 +81,7 @@ def Play(f, T=1000000, name="game.dat"):
                 else:
                     nodeColor.append(0)
         fig2=plt.figure()
+        colors = cm.rainbow(np.linspace(0, 1, len(nodeColor)))
         elarge=[(u,v) for (u,v,d) in f.topology.G.edges(data=True) if d['weight'] >=0.05]
         esmall=[(u,v) for (u,v,d) in f.topology.G.edges(data=True) if d['weight'] <0.05]
         nx.draw_networkx_edges(f.topology.G, pos={i:i for i in f.topology.G.nodes()}, edgelist=elarge, width=1, alpha = 0.5)
