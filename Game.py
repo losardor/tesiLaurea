@@ -1,7 +1,9 @@
 #def 
 import matplotlib.pyplot as plt
+import networkx as nx
 
 DEBUG = 0
+SHOW = 1
 
 def Play(f, T=1000000, name="game.dat"):
     # folk f, play rounds T
@@ -61,14 +63,31 @@ def Play(f, T=1000000, name="game.dat"):
         #    break
         time.append(i+1)
         different_words.append(speaker.ndw)
-    fig=plt.figure()
-    ax1=plt.subplot2grid((1,1),(0,0))
-    plt.scatter(time, different_words, label='NDW')
-    plt.xlabel('Time Step')
-    plt.ylabel('Number of Different Words')
-    plt.title('Number of Different Words in Time')
-    ax1.grid(True)
-    plt.show()
+    if SHOW==1:
+        fig=plt.figure()
+        ax1=plt.subplot2grid((1,1),(0,0))
+        plt.scatter(time, different_words, label='NDW')
+        plt.xlabel('Time Step')
+        plt.ylabel('Number of Different Words')
+        plt.title('Number of Different Words in Time')
+        ax1.grid(True)
+        plt.show()
+        nodeColor=[]
+        for x in f.topology.G.nodes():
+                if f.topology.G.node[x]['agent'].dict != []:
+                    nodeColor.append(int(f.topology.G.node[x]['agent'].dict[0]))
+                else:
+                    nodeColor.append(0)
+        fig2=plt.figure()
+        elarge=[(u,v) for (u,v,d) in f.topology.G.edges(data=True) if d['weight'] >=0.05]
+        esmall=[(u,v) for (u,v,d) in f.topology.G.edges(data=True) if d['weight'] <0.05]
+        nx.draw_networkx_edges(f.topology.G, pos={i:i for i in f.topology.G.nodes()}, edgelist=elarge, width=1, alpha = 0.5)
+        nx.draw_networkx_edges(f.topology.G, pos={i:i for i in f.topology.G.nodes()}, edgelist=esmall, width=1, alpha=0.5,edge_color='b',style='dashed')
+        nx.draw_networkx_nodes(f.topology.G, pos={i:i for i in f.topology.G.nodes()}, node_color=nodeColor, node_cmap=plt.cm.summer, node_size=20)
+        plt.xlabel('X_grid identifier')
+        plt.ylabel('Y_grid identifier')
+        plt.title('The grid\nGenerated on the basis of given DEM')
+        plt.show() # display
     target = open(name, "w")
     for x in range(len(time)):
         target.write(str(time[x])+"\t"+str(different_words[x])+"\n")

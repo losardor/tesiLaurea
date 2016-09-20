@@ -5,8 +5,8 @@ import matplotlib.cm as cm
 
 x=[]
 y=[]
-for i in range(10):
-	A, B=np.loadtxt("gameBeta"+str(float(i+1)/100)+".dat", delimiter='\t', unpack=True)
+for i in range(2,40):
+	A, B=np.loadtxt("gameBeta"+str(float(i+1)/4000)+".dat", delimiter='\t', unpack=True)
 	x.append(A)
 	y.append(B)
 fig=plt.figure()
@@ -26,7 +26,7 @@ plt.show()
 last=[]
 max=[]
 betaas=[]
-for i in range(10):
+for i in range(19):
 	last.append(y[i][-1])
 	max.append(y[i].max())
 	betaas.append(float(i+1)/100)
