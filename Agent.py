@@ -103,17 +103,34 @@ class Topology():
 		self.tipo = id
 		if id != COMPLETE:
 			N = len(agent)
+		
 		if id == ERDOS:
 			self.G = nx.erdos_renyi_graph(N, ERDOS_p)
+		
 		elif id == BARABASI:
 			self.G = nx.barabasi_albert_graph(N, BARABASI_M)
+		
 		elif id == THRESHOLD:
-			self.G = nx.geographical_threshold_graph(N, 50)
+			w = {i: random.expovariate(0.5) for i in range(N)}
+			self.G = nx.geographical_threshold_graph(N, 500)
+			removinglist=nx.isolates(self.G)
+			self.G.remove_nodes_from(removinglist)
+			fig2=plt.plot(nx.degree_histogram(self.G))
+			plt.show()
+			print nx.average_clustering(self.G)
+			print nx.diameter(self.G)
+			fig2=plt.figure()
+			positions=[self.G.node[n]['pos'] for n in self.G]
+			nx.draw(self.G, pos=positions)
+			plt.show() # display
+
+
 		elif id == GRID2D:
 			L = sqrt(N)
 			if (int(L) != L):
 				raise Exception("Number of Agents is not a square number")
 			self.G = nx.grid_2d_graph(int(L),int(L),True)
+		
 		elif id == GRID2DBAND:
 			L = sqrt(N)
 			if (int(L) != L):
@@ -126,6 +143,7 @@ class Topology():
 					self.G[a[0]][a[1]]['weight'] = GRID2DBAND_p
 				else:
 					self.G[a[0]][a[1]]['weight'] = 1.0
+		
 		elif id == GRIDONMAP:
 			nodeColor=[]
 			lisofrelevantsizes = [i*i*30 for i in range(1,30) if i*i < 10000]
@@ -189,6 +207,8 @@ class Topology():
 				plt.show() # display
 			self.len=len(self.G.nodes())
 		i = 0
+		
+
 		for n in self.G:
 			self.G.node[n]['agent'] = agent[i]
 			i += 1
@@ -210,6 +230,7 @@ class Topology():
 	#agent_list = {x: agent[x] for x in range(N)}
 	#nx.set_node_attributes(self.G, 'agent', agent_list)
 	'''
+	
 	def Select(self, agent):
 		if self.tipo == COMPLETE:
 			return random.sample(agent, 2)
