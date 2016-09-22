@@ -5,6 +5,13 @@ import matplotlib.cm as cm
 import numpy as np
 
 DEBUG = 0
+COMPLETE = 0
+ERDOS    = 1; ERDOS_p = 0.5
+GRID2D   = 2
+GRID2DBAND = 3
+GRID2DBAND_p = 0.01
+BARABASI = 4; BARABASI_M = 4
+GRIDONMAP = 5
 SHOW = 1
 
 def Play(f, T=1000000, name="game.dat"):
@@ -80,17 +87,24 @@ def Play(f, T=1000000, name="game.dat"):
                     nodeColor.append(int(f.topology.G.node[x]['agent'].dict[0]))
                 else:
                     nodeColor.append(0)
-        fig2=plt.figure()
-        colors = cm.rainbow(np.linspace(0, 1, len(nodeColor)))
-        elarge=[(u,v) for (u,v,d) in f.topology.G.edges(data=True) if d['weight'] >=0.05]
-        esmall=[(u,v) for (u,v,d) in f.topology.G.edges(data=True) if d['weight'] <0.05]
-        nx.draw_networkx_edges(f.topology.G, pos={i:i for i in f.topology.G.nodes()}, edgelist=elarge, width=1, alpha = 0.5)
-        nx.draw_networkx_edges(f.topology.G, pos={i:i for i in f.topology.G.nodes()}, edgelist=esmall, width=1, alpha=0.5,edge_color='b',style='dashed')
-        nx.draw_networkx_nodes(f.topology.G, pos={i:i for i in f.topology.G.nodes()}, node_color=nodeColor, node_cmap=plt.cm.summer, node_size=20)
-        plt.xlabel('X_grid identifier')
-        plt.ylabel('Y_grid identifier')
-        plt.title('The grid\nGenerated on the basis of given DEM')
-        plt.show() # display
+        if f.topology.tipo==GRIDONMAP:
+            fig2=plt.figure()
+            colors = cm.rainbow(np.linspace(0, 1, len(nodeColor)))
+            elarge=[(u,v) for (u,v,d) in f.topology.G.edges(data=True) if d['weight'] >=0.05]
+            esmall=[(u,v) for (u,v,d) in f.topology.G.edges(data=True) if d['weight'] <0.05]
+            nx.draw_networkx_edges(f.topology.G, pos={i:i for i in f.topology.G.nodes()}, edgelist=elarge, width=1, alpha = 0.5)
+            nx.draw_networkx_edges(f.topology.G, pos={i:i for i in f.topology.G.nodes()}, edgelist=esmall, width=1, alpha=0.5,edge_color='b',style='dashed')
+            nx.draw_networkx_nodes(f.topology.G, pos={i:i for i in f.topology.G.nodes()}, node_color=nodeColor, node_cmap=plt.cm.summer, node_size=20)
+            plt.xlabel('X_grid identifier')
+            plt.ylabel('Y_grid identifier')
+            plt.title('The grid\nGenerated on the basis of given DEM')
+            plt.show() # display
+        else:
+            fig2=plt.figure()
+            colors = cm.rainbow(np.linspace(0, 1, len(nodeColor)))
+            nx.draw(f.topology.G, pos=nx.spring_layout(f.topology.G))
+            plt.show() # display
+
     target = open(name, "w")
     for x in range(len(time)):
         target.write(str(time[x])+"\t"+str(different_words[x])+"\n")

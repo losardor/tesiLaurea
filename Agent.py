@@ -11,6 +11,16 @@ import cPickle as pk
 
 style.use('fivethirtyeight')
 
+COMPLETE = 0
+ERDOS    = 1; ERDOS_p = 0.5
+GRID2D   = 2
+GRID2DBAND = 3
+GRID2DBAND_p = 0.01
+BARABASI = 4; BARABASI_M = 4
+GRIDONMAP = 5
+THRESHOLD = 6
+SHOW = 1
+WEIGHTED = 1
 DEBUG = 0
 
 class Agent():
@@ -62,12 +72,12 @@ class Agent():
 
 class Folk():
 
-	def __init__(self, N=10, topology=0, choice = 1, Beta = 0.1):
+	def __init__(self, N=10, topology=0, choice = 1, Beta = 0.1, sparse = 0):
 		self.N = N
 		self.agent = []
 		for i in range(N):
 			self.agent.append(Agent(i))
-		self.topology = Topology(self.agent, topology, choice, Beta)
+		self.topology = Topology(self.agent, topology, choice, Beta, sparse)
 
 	def __str__(self):
 		ag = self.agent[0]
@@ -87,19 +97,9 @@ class Folk():
 		return self.topology.Select(self.agent)
 		#return random.sample(self.agent, 2)
 
-COMPLETE = 0
-ERDOS    = 1; ERDOS_p = 0.5
-GRID2D   = 2
-GRID2DBAND = 3
-GRID2DBAND_p = 0.01
-BARABASI = 4; BARABASI_M = 4
-GRIDONMAP = 5
-SHOW = 1
-WEIGHTED = 1
-
 class Topology():
 
-	def __init__(self, agent, id=COMPLETE, choice=1, Beta = 0.1):
+	def __init__(self, agent, id=COMPLETE, choice=1, Beta = 0.1, sparse = 0):
 		self.tipo = id
 		if id != COMPLETE:
 			N = len(agent)
@@ -107,6 +107,8 @@ class Topology():
 			self.G = nx.erdos_renyi_graph(N, ERDOS_p)
 		elif id == BARABASI:
 			self.G = nx.barabasi_albert_graph(N, BARABASI_M)
+		elif id == THRESHOLD:
+			self.G = nx.geographical_threshold_graph(N, 50)
 		elif id == GRID2D:
 			L = sqrt(N)
 			if (int(L) != L):
@@ -136,39 +138,26 @@ class Topology():
 			with open(filename, 'rb') as input:
 				self.G = pk.load(input)
 			
-			values = []
-			removinglist = []
-			with open('Comuni_altitudine','r') as file:
-				for n, line in enumerate(file):
-					if n != 0:
-						values.append(int(line.split('\t')[1]))
-			altitudini=np.array(values)
-			lookup={}
-			hist, bins = np.histogram(altitudini, bins=50, normed=1)
-			norm=hist.max()
-			for tupla in zip(*np.histogram(altitudini, bins=50, normed=1)):
-				lookup[tupla[1]]=tupla[0]/norm
-			for node in self.G.nodes():
-				x=np.random.uniform()
-				y=self.G.node[node]['height']
-				freq=lookup[min(list(lookup.keys()), key=lambda x:abs(x-y))]
-				if x>freq:
-					removinglist.append(node)
-			self.G.remove_nodes_from(removinglist)
-			'''
-			hist, bins = np.histogram(altitudini, bins = 50, normed = 1)
-			Hist=hist/hist.max()
-			for node in self.G.nodes():
-				x=np.random.uniform()
-				y=self.G.node[node]['height']
-				for n, bin in enumerate(bins):
-					if y> bin:
-						sec = n-1
-						continue
-				if x > Hist[sec]:
-					removinglist.append(node)
-			self.G.remove_nodes_from(removinglist)
-			'''
+			if sparse==True:
+				values = []
+				removinglist = []
+				with open('Comuni_altitudine','r') as file:
+					for n, line in enumerate(file):
+						if n != 0:
+							values.append(int(line.split('\t')[1]))
+				altitudini=np.array(values)
+				lookup={}
+				hist, bins = np.histogram(altitudini, bins=50, normed=1)
+				norm=hist.max()
+				for tupla in zip(*np.histogram(altitudini, bins=50, normed=1)):
+					lookup[tupla[1]]=tupla[0]/norm
+				for node in self.G.nodes():
+					x=np.random.uniform()
+					y=self.G.node[node]['height']
+					freq=lookup[min(list(lookup.keys()), key=lambda x:abs(x-y))]
+					if x>freq:
+						removinglist.append(node)
+				self.G.remove_nodes_from(removinglist)
 
 			if choice == WEIGHTED:
 				for edge in self.G.edges():
@@ -203,6 +192,7 @@ class Topology():
 		for n in self.G:
 			self.G.node[n]['agent'] = agent[i]
 			i += 1
+		'''
 		if id == GRIDONMAP:
 			edgeWeights=[d['weight'] for (u,v,d) in self.G.edges(data=True)]
 			bins=np.arange(0,1.1,0.05)
@@ -219,6 +209,7 @@ class Topology():
 	    		plt.show()
 	#agent_list = {x: agent[x] for x in range(N)}
 	#nx.set_node_attributes(self.G, 'agent', agent_list)
+	'''
 	def Select(self, agent):
 		if self.tipo == COMPLETE:
 			return random.sample(agent, 2)
@@ -239,7 +230,7 @@ class Topology():
 			else:
 				h = a[0]
 			return [ self.G.node[s]['agent'], self.G.node[h]['agent']]
-		else:
+		elif(self.tipo==GRIDONMAP):
 			s = random.choice(self.G.nodes())
 			if(not self.G.neighbors(s)):
 				return [None, None]
@@ -249,4 +240,10 @@ class Topology():
 				h = link[1]
 			else:
 				h = link[0]
+		else:
+			s = random.choice(self.G.nodes())
+			if(not self.G.neighbors(s)): # if no neighs
+				return [None, None]
+			h = random.choice(self.G.neighbors(s))
+			
 			return [ self.G.node[s]['agent'], self.G.node[h]['agent'] ]

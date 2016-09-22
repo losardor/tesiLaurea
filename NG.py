@@ -34,8 +34,8 @@ def main(argv):
 	if outputfile == '':
 		outputfile="gameBeta"+str(beta)+".dat"
 
-	folk=Folk(800000, GRIDONMAP, choice = choice, Beta = beta)
-	Play(folk, 1000000, name=outputfile)
+	folk=Folk(900, THRESHOLD, choice = choice, Beta = beta)
+	Play(folk, 100000, name=outputfile)
 
 if __name__=="__main__":
 	main(sys.argv[1:])
