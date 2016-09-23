@@ -4,6 +4,30 @@
 		"selected_items":
 		[
 			[
+				"pos",
+				"positions"
+			],
+			[
+				"list",
+				"listOfValues"
+			],
+			[
+				"lisofpon",
+				"listofpointsx"
+			],
+			[
+				"len",
+				"length"
+			],
+			[
+				"remov",
+				"remove_nodes_from"
+			],
+			[
+				"po",
+				"positions"
+			],
+			[
 				"remo",
 				"removinglist"
 			],
@@ -88,10 +112,6 @@
 				"deltaH"
 			],
 			[
-				"list",
-				"listOfValues"
-			],
-			[
 				"li",
 				"listOfPositions"
 			],
@@ -144,24 +164,12 @@
 				"getallHeights"
 			],
 			[
-				"len",
-				"linesdict"
-			],
-			[
 				"ps",
 				"positionFromIndex"
 			],
 			[
-				"pos",
-				"position"
-			],
-			[
 				"the",
 				"theFile"
-			],
-			[
-				"po",
-				"position"
 			],
 			[
 				"listOf",
@@ -208,15 +216,15 @@
 			"file": "Agent.py",
 			"settings":
 			{
-				"buffer_size": 7872,
+				"buffer_size": 8281,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "analisys.py",
+			"file": "gridItalia.py",
 			"settings":
 			{
-				"buffer_size": 1065,
+				"buffer_size": 7031,
 				"line_ending": "Unix"
 			}
 		},
@@ -224,7 +232,7 @@
 			"file": "NG.py",
 			"settings":
 			{
-				"buffer_size": 1085,
+				"buffer_size": 1086,
 				"line_ending": "Unix"
 			}
 		},
@@ -237,13 +245,18 @@
 			}
 		},
 		{
-			"contents": "\"\"\"\nRead graphs in Open Street Maps osm format\nBased on osm.py from brianw's osmgeocode\nhttp://github.com/brianw/osmgeocode, which is based on osm.py from\ncomes from Graphserver:\nhttp://github.com/bmander/graphserver/tree/master and is copyright (c)\n2007, Brandon Martin-Anderson under the BSD License\n\"\"\"\n\nimport xml.sax\nimport copy\nimport networkx\n\n#highway_cat = 'motorway|trunk|primary|secondary|tertiary|road|residential|service|motorway_link|trunk_link|primary_link|secondary_link|teriary_link'\n\ndef download_osm(left,bottom,right,top,highway_cat):\n    \"\"\"\n    Downloads OSM street (only highway-tagged) Data using a BBOX, \n    plus a specification of highway tag values to use\n\n    Parameters\n    ----------\n    left,bottom,right,top : BBOX of left,bottom,right,top coordinates in WGS84\n    highway_cat : highway tag values to use, separated by pipes (|), for instance 'motorway|trunk|primary'\n\n    Returns\n    ----------\n    stream object with osm xml data\n\n    \"\"\"\n\n    #Return a filehandle to the downloaded data.\"\"\"\n    from urllib import urlopen\n    #fp = urlopen( \"http://api.openstreetmap.org/api/0.6/map?bbox=%f,%f,%f,%f\"%(left,bottom,right,top) )\n    #fp = urlopen( \"http://www.overpass-api.de/api/xapi?way[highway=*][bbox=%f,%f,%f,%f]\"%(left,bottom,right,top) )\n    print \"trying to download osm data from \"+str(left),str(bottom),str(right),str(top)+\" with highways of categories\"+highway_cat\n    try:    \n        print \"downloading osm data from \"+str(left),str(bottom),str(right),str(top)+\" with highways of categories\"+highway_cat\n        fp = urlopen( \"http://www.overpass-api.de/api/xapi?way[highway=%s][bbox=%f,%f,%f,%f]\"%(highway_cat,left,bottom,right,top) )\n        #slooww only ways,and in ways only \"highways\" (i.e. roads)\n        #fp = urlopen( \"http://open.mapquestapi.com/xapi/api/0.6/way[highway=*][bbox=%f,%f,%f,%f]\"%(left,bottom,right,top) )\n        return fp\n    except:\n        print \"osm data download unsuccessful\"\n\ndef read_osm(filename_or_stream, only_roads=True):\n    \"\"\"Read graph in OSM format from file specified by name or by stream object.\n\n    Parameters\n    ----------\n    filename_or_stream : filename or stream object\n\n    Returns\n    -------\n    G : Graph\n\n    Examples\n    --------\n    >>> G=nx.read_osm(nx.download_osm(-122.33,47.60,-122.31,47.61))\n    >>> plot([G.node[n]['data'].lat for n in G], [G.node[n]['data'].lon for n in G], ',')\n\n    \"\"\"\n    osm = OSM(filename_or_stream)\n    G = networkx.DiGraph()\n \n    for w in osm.ways.itervalues():\n        if only_roads and 'highway' not in w.tags:\n            continue\n        G.add_path(w.nds, id=w.id, highway = w.tags['highway'])#{str(k): type(v) for k,v in w.tags.items()})\n        \n        if 'oneway' not in w.tags and  w.tags['highway'] != 'motorway':\n            G.add_path(reversed(w.nds), id=w.id, highway = w.tags['highway'])\n\n        elif w.tags['oneway'] != 'yes' and w.tags['oneway'] != '-1' and  w.tags['highway'] != 'motorway':\n            G.add_path(reversed(w.nds), id=w.id, highway = w.tags['highway'])\n\n        \n    for n_id in G.nodes_iter():\n        n = osm.nodes[n_id]\n        G.node[n_id] = dict(lon=n.lon,lat=n.lat)\n    return G\n        \n    \nclass Node:\n    def __init__(self, id, lon, lat):\n        self.id = id\n        self.lon = lon\n        self.lat = lat\n        self.tags = {}\n        \nclass Way:\n    def __init__(self, id, osm):\n        self.osm = osm\n        self.id = id\n        self.nds = []\n        self.tags = {}\n        \n    def split(self, dividers):\n        # slice the node-array using this nifty recursive function\n        def slice_array(ar, dividers):\n            for i in range(1,len(ar)-1):\n                if dividers[ar[i]]>1:\n                    #print \"slice at %s\"%ar[i]\n                    left = ar[:i+1]\n                    right = ar[i:]\n                    \n                    rightsliced = slice_array(right, dividers)\n                    \n                    return [left]+rightsliced\n            return [ar]\n            \n\n\n        slices = slice_array(self.nds, dividers)\n        \n        # create a way object for each node-array slice\n        ret = []\n        i=0\n        for slice in slices:\n            littleway = copy.copy( self )\n            littleway.id += \"-%d\"%i\n            littleway.nds = slice\n            ret.append( littleway )\n            i += 1\n            \n        return ret\n        \n        \n \nclass OSM:\n    def __init__(self, filename_or_stream):\n        \"\"\" File can be either a filename or stream/file object.\"\"\"\n        nodes = {}\n        ways = {}\n        \n        superself = self\n        \n        class OSMHandler(xml.sax.ContentHandler):\n            @classmethod\n            def setDocumentLocator(self,loc):\n                pass\n            \n            @classmethod\n            def startDocument(self):\n                pass\n                \n            @classmethod\n            def endDocument(self):\n                pass\n                \n            @classmethod\n            def startElement(self, name, attrs):\n                if name=='node':\n                    self.currElem = Node(attrs['id'], float(attrs['lon']), float(attrs['lat']))\n                elif name=='way':\n                    self.currElem = Way(attrs['id'], superself)\n                elif name=='tag':\n                    self.currElem.tags[attrs['k']] = attrs['v']\n                elif name=='nd':\n                    self.currElem.nds.append( attrs['ref'] )\n                \n            @classmethod\n            def endElement(self,name):\n                if name=='node':\n                    nodes[self.currElem.id] = self.currElem\n                elif name=='way':\n                    ways[self.currElem.id] = self.currElem\n                \n            @classmethod\n            def characters(self, chars):\n                pass\n \n        xml.sax.parse(filename_or_stream, OSMHandler)\n        \n        self.nodes = nodes\n        self.ways = ways\n        #\"\"\"   \n        #count times each node is used\n        node_histogram = dict.fromkeys( self.nodes.keys(), 0 )\n        for way in self.ways.values():\n            if len(way.nds) < 2:       #if a way has only one node, delete it out of the osm collection\n                del self.ways[way.id]\n            else:\n                for node in way.nds:\n                    node_histogram[node] += 1\n        \n        #use that histogram to split all ways, replacing the member set of ways\n        new_ways = {}\n        for id, way in self.ways.iteritems():\n            split_ways = way.split(node_histogram)\n            for split_way in split_ways:\n                new_ways[split_way.id] = split_way\n        self.ways = new_ways\n        #\"\"\"\n\n    ",
-			"file": "ccf65d4f5106c2cdc70e-012038da7049d7a723a8134e8eed9534903449d0/gistfile1.py",
-			"file_size": 6660,
-			"file_write_time": 130866950320000000,
+			"file": "objectDump.py",
 			"settings":
 			{
-				"buffer_size": 6660,
+				"buffer_size": 1076,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "threshhold_object_dump.py",
+			"settings":
+			{
+				"buffer_size": 2631,
 				"line_ending": "Unix"
 			}
 		}
@@ -308,6 +321,7 @@
 	],
 	"file_history":
 	[
+		"/home/donrog/tesiLaurea/ccf65d4f5106c2cdc70e-012038da7049d7a723a8134e8eed9534903449d0/gistfile1.py",
 		"/home/donrog/tesiLaurea/Agent.py",
 		"/home/donrog/tesiLaurea/NG.py",
 		"/home/donrog/tesiLaurea/objectDump.py",
@@ -346,6 +360,9 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"4",
+			"show",
+			"spars",
 			"altitudini",
 			"values",
 			"- ",
@@ -388,7 +405,7 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 6,
 			"sheets":
 			[
 				{
@@ -415,10 +432,10 @@
 							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 75995.0,
+						"translation.y": 64634.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
@@ -427,15 +444,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 7872,
+						"buffer_size": 8281,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								441,
-								441
+								8057,
+								8057
 							]
 						],
 						"settings":
@@ -445,36 +462,36 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 180.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "analisys.py",
-					"semi_transient": true,
+					"file": "gridItalia.py",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1065,
+						"buffer_size": 7031,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								104,
-								78
+								763,
+								763
 							]
 						],
 						"settings":
 						{
-							"color_scheme": "Packages/User/Color Highlighter/themes/Material-Theme-Lighter.tmTheme",
-							"syntax": "Packages/Python/Python.sublime-syntax"
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 156.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 4,
@@ -486,15 +503,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1085,
+						"buffer_size": 1086,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								941,
-								941
+								942,
+								942
 							]
 						],
 						"settings":
@@ -507,7 +524,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
@@ -523,8 +540,8 @@
 						"selection":
 						[
 							[
-								3848,
-								3848
+								3903,
+								3903
 							]
 						],
 						"settings":
@@ -535,40 +552,68 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 1003.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
 					"buffer": 5,
-					"file": "ccf65d4f5106c2cdc70e-012038da7049d7a723a8134e8eed9534903449d0/gistfile1.py",
-					"semi_transient": false,
+					"file": "objectDump.py",
+					"semi_transient": true,
 					"settings":
 					{
-						"buffer_size": 6660,
+						"buffer_size": 1076,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2390,
-								2390
+								1076,
+								1076
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/Python/Python.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 900.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "threshhold_object_dump.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2631,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								372,
+								372
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
 					"type": "text"
 				}
 			]
@@ -659,7 +704,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 150.0,
+	"side_bar_width": 218.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

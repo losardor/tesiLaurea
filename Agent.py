@@ -212,10 +212,10 @@ class Topology():
 		for n in self.G:
 			self.G.node[n]['agent'] = agent[i]
 			i += 1
-		'''
+		
 		if id == GRIDONMAP:
 			edgeWeights=[d['weight'] for (u,v,d) in self.G.edges(data=True)]
-			bins=np.arange(0,1.1,0.05)
+			bins=np.arange(0.1,1,0.05)
 	        plt.hist(edgeWeights, bins, histtype='bar', rwidth=0.8, label='Edge Weights')
 	        plt.xlabel('Edge Weights')
 	        plt.ylabel('Frequency')
@@ -229,7 +229,7 @@ class Topology():
 	    		plt.show()
 	#agent_list = {x: agent[x] for x in range(N)}
 	#nx.set_node_attributes(self.G, 'agent', agent_list)
-	'''
+	
 	
 	def Select(self, agent):
 		if self.tipo == COMPLETE:
@@ -267,4 +267,4 @@ class Topology():
 				return [None, None]
 			h = random.choice(self.G.neighbors(s))
 			
-			return [ self.G.node[s]['agent'], self.G.node[h]['agent'] ]
+		return [ self.G.node[s]['agent'], self.G.node[h]['agent'] ]
