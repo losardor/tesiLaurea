@@ -26,10 +26,10 @@ class mapInfo():
  		print "the bottom right corner has position: " + self.last[0] + "\t" + self.last[1]
 		self.yrange=abs((float(self.last[1])-float(self.first[1]))/DELTAS)
 		self.height=self.yrange*DELTAS
-		print "the  y-range of our map in boxes: " + str(self.yrange)
+		print "the  y-range of our map in boxes: " + str(self.yrange)+ " And the height in wg84 is "+str(self.height)
 		self.xrange=abs((float(self.last[0])-float(self.first[0]))/DELTAS)
 		self.length=self.xrange*DELTAS
-		print "the  x-range of our map in boxes: " + str(self.xrange)
+		print "the  x-range of our map in boxes: " + str(self.xrange)+ " And the length in wg84 is "+str(self.length)
 
 	def positionFromIndex(self, index, coarsnes):
 	

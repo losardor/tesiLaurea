@@ -9,19 +9,11 @@ def getAll3dPos(grid, M):
 	listOfNodes = grid.nodes()
 	positions=[G.node[n]['pos'] for n in grid]
 	positions=sorted(sorted(positions, key=itemgetter(0)), key=itemgetter(1), reverse=True)
-	print positions
-	print "\n"
-	plt.plot([item[0] for item in positions], [item[1] for item in positions])
-	plt.show()
-
 	calibratedpositions=[[item[0]*M.length+float(M.first[0]), float(M.first[1])-item[1]*M.height] for item in positions]
-	print sorted(sorted(calibratedpositions, key=itemgetter(0)), key=itemgetter(1), reverse=True)
-	print "\n"
-	listofpointsx=[float(M.first[0])+inc*75 for inc in range(int(M.xrange))]
-	listofpointsy=[float(M.first[1])-inc*75 for inc in range(int(M.yrange))]
-	listPositions = [[min(listofpointsx, key=lambda x:abs(x-item[0]*M.length+float(M.first[0]))), min(listofpointsy, key=lambda x:abs(x-float(M.first[1])-item[1]*M.height))] for item in positions]
+	listofpointsx=[float(M.first[0])+inc*75 for inc in range(int(M.xrange+1))]
+	listofpointsy=[float(M.first[1])-inc*75 for inc in range(int(M.yrange+1))]
+	listPositions = [[min(listofpointsx, key=lambda x:abs(x-item[0])), min(listofpointsy, key=lambda x:abs(x-item[1]))] for item in calibratedpositions]
 	listOfValues=sorted(sorted(listPositions, key=itemgetter(0)), key=itemgetter(1), reverse=True)
-	print listOfValues
 	ind=0
 	values=listOfValues[ind]
 	for currentline, line in enumerate(open(M.theFile, "rU")):
@@ -32,7 +24,7 @@ def getAll3dPos(grid, M):
 				values=listOfValues[ind]
 			else:
 				break
-	return listOfValues
+	return listOfValues, dict(zip(tuple(positions), listOfValues))
 
 DEBUG = 0
 SHOW = 0
@@ -51,12 +43,26 @@ for N in lisofrelevantsizes:
 	w = {i: random.expovariate(0.5) for i in range(N)}
 	G = nx.geographical_threshold_graph(N, 500)
 	listOfNodes = G.nodes()
-	listOfPositions = getAll3dPos(G, M)
+	listOfPositions, posconvert = getAll3dPos(G, M)
+	lookup={}
+	for item in listOfPositions:
+		if item[0] in lookup.keys():
+			lookup[str(item[0])][str[item[1]]]=item[2]
+		else:
+			lookup[str(item[0])]={str(item[1]): item[2]}
+	Xs, Ys, Zs = zip(*listOfPositions)
+	for node in G.node():
+		x, y=posconvert[tuple(G[node]['pos'])]
+		G[node]['height']=lookup[x][y]
+
+	'''
+	
 	listofGPS=[[element[0],element[1]] for element in listOfPositions]
 	listOfHeights=[element[2] for element in listOfPositions]
 	for i,x in enumerate(sorted(sorted(listOfNodes, key=itemgetter(0)), key=itemgetter(1), reverse=True)):
 		G.node[x]['position']=listofGPS[i]
 		G.node[x]['height']=listOfHeights[i]
+	'''
 	listOfNodes=[x for x in listOfNodes if float(G.node[x]['height']) == 0]
 	G.remove_nodes_from(listOfNodes)
 	filename = "files/topolgy_threshold"+str(N)+".pk"
