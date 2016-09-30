@@ -24,6 +24,7 @@ def getAll3dPos(grid, M):
 				values=listOfValues[ind]
 			else:
 				break
+	positions=[tuple(position) for position in positions]
 	return listOfValues, dict(zip(tuple(positions), listOfValues))
 
 DEBUG = 0
@@ -42,18 +43,26 @@ for N in lisofrelevantsizes:
 	M=grd.mapInfo("files/Grid.xyz")
 	w = {i: random.expovariate(0.5) for i in range(N)}
 	G = nx.geographical_threshold_graph(N, 500)
+	nx.draw(G, pos={i:G.node[i]['pos'] for i in G.nodes()})
+	plt.show()
 	listOfNodes = G.nodes()
 	listOfPositions, posconvert = getAll3dPos(G, M)
+	Xs, Ys, Zs = zip(*listOfPositions)
+	plt.scatter(Xs,Ys)
+	plt.show()
 	lookup={}
 	for item in listOfPositions:
 		if item[0] in lookup.keys():
 			lookup[str(item[0])][str[item[1]]]=item[2]
 		else:
 			lookup[str(item[0])]={str(item[1]): item[2]}
-	Xs, Ys, Zs = zip(*listOfPositions)
-	for node in G.node():
-		x, y=posconvert[tuple(G[node]['pos'])]
-		G[node]['height']=lookup[x][y]
+	for node in G.nodes():
+		x, y, z=posconvert[tuple(G.node[node]['pos'])]
+		try:
+			G.node[node]['height']=lookup[str(x)][str(y)]
+		except:
+			G.node[node]['height']=0
+			print "the lookup procedure didn't work for this node"+str(G.node[node]) + "\t"+ str(x) + "\t" + str(y) + "\n"
 
 	'''
 	
@@ -63,8 +72,15 @@ for N in lisofrelevantsizes:
 		G.node[x]['position']=listofGPS[i]
 		G.node[x]['height']=listOfHeights[i]
 	'''
-	listOfNodes=[x for x in listOfNodes if float(G.node[x]['height']) == 0]
+	listOfNodes=[x for x in G.nodes() if float(G.node[x]['height']) == 0]
 	G.remove_nodes_from(listOfNodes)
+	fig=plt.figure()
+	positions={n:G.node[n]['pos'] for n in G.nodes()}
+	nx.draw(G, pos=positions, node_size=20)
+	plt.xlabel('X_grid identifier')
+	plt.ylabel('Y_grid identifier')
+	plt.title('The grid\nGenerated on the basis of given DEM')
+	plt.show() # display
 	filename = "files/topolgy_threshold"+str(N)+".pk"
 	with open(filename, 'wb') as output:
 		pk.dump(G, output, pk.HIGHEST_PROTOCOL)
