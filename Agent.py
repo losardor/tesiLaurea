@@ -19,7 +19,7 @@ GRID2DBAND_p = 0.01
 BARABASI = 4; BARABASI_M = 4
 GRIDONMAP = 5
 THRESHOLD = 6
-SHOW = 1
+SHOW = 0
 WEIGHTED = 1
 DEBUG = 0
 
@@ -209,24 +209,26 @@ class Topology():
 		i = 0
 		
 
-		for n in self.G:
-			self.G.node[n]['agent'] = agent[i]
-			i += 1
+		if id != COMPLETE:
+			for n in self.G:
+				self.G.node[n]['agent'] = agent[i]
+				i += 1
 		
 		if id == GRIDONMAP:
-			edgeWeights=[d['weight'] for (u,v,d) in self.G.edges(data=True)]
-			bins=np.arange(0.1,1,0.05)
-	        plt.hist(edgeWeights, bins, histtype='bar', rwidth=0.8, label='Edge Weights')
-	        plt.xlabel('Edge Weights')
-	        plt.ylabel('Frequency')
-	        plt.title('Edge Weights\nThe frequency with witch a given weight is assigned given this DEM distribution')
-	        plt.show()
-	    	if DEBUG==1:
-	    		orderedWeights=sorted(edgeWeights)
-	    		xs=range(len(edgeWeights))
-	    		fig2=plt.figure()
-	    		plt.scatter(xs, orderedWeights)
-	    		plt.show()
+			if SHOW==1:
+				edgeWeights=[d['weight'] for (u,v,d) in self.G.edges(data=True)]
+				bins=np.arange(0.1,1,0.05)
+				plt.hist(edgeWeights, bins, histtype='bar', rwidth=0.8, label='Edge Weights')
+				plt.xlabel('Edge Weights')
+				plt.ylabel('Frequency')
+				plt.title('Edge Weights\nThe frequency with witch a given weight is assigned given this DEM distribution')
+				plt.show()
+				if DEBUG==1:
+					orderedWeights=sorted(edgeWeights)
+					xs=range(len(edgeWeights))
+					fig2=plt.figure()
+					plt.scatter(xs, orderedWeights)
+					plt.show()
 	#agent_list = {x: agent[x] for x in range(N)}
 	#nx.set_node_attributes(self.G, 'agent', agent_list)
 	

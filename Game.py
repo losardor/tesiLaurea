@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import networkx as nx
 import matplotlib.cm as cm
 import numpy as np
+import random
 
 DEBUG = 0
 COMPLETE = 0
@@ -14,7 +15,7 @@ BARABASI = 4; BARABASI_M = 4
 GRIDONMAP = 5
 SHOW = 1
 
-def Play(f, T=1000000, name="game.dat"):
+def Play(f, T=1000000, name="game.dat", prob=1):
     # folk f, play rounds T
     time=[]
     different_words=[]
@@ -59,10 +60,11 @@ def Play(f, T=1000000, name="game.dat"):
         if w in hearer.dict: # success
             if DEBUG: 
                 print "w:",str(w),"success"
-            speaker.EraseDict()
-            hearer.EraseDict()
-            speaker.AddWord(w)
-            hearer.AddWord(w)
+            if random.random() < prob:
+                speaker.EraseDict()
+                hearer.EraseDict()
+                speaker.AddWord(w)
+                hearer.AddWord(w)
         else:
             if DEBUG: 
                 print "w:",str(w), "failure"
@@ -99,6 +101,8 @@ def Play(f, T=1000000, name="game.dat"):
             plt.ylabel('Y_grid identifier')
             plt.title('The grid\nGenerated on the basis of given DEM')
             plt.show() # display
+        elif f.topology.tipo == COMPLETE:
+            print "finished game\n"
         else:
             fig2=plt.figure()
             colors = cm.rainbow(np.linspace(0, 1, len(nodeColor)))

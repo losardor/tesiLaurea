@@ -11,10 +11,11 @@ def main(argv):
 	outputfile = ''
 	choice = 1
 	beta=0.1
+	prob=1
 	try:
-		opts, args = getopt.getopt(argv,"ho:c:t:b:",["ofile=","choice=","topology=","beta="])
+		opts, args = getopt.getopt(argv,"ho:c:t:b:p:",["ofile=","choice=","topology=","beta=","prob="])
 	except getopt.GetoptError:
-		print 'NG.py -o <outputfile> -c <choice> -t <topology>'
+		print 'NG.py -o <outputfile> -c <choice> -t <topology> -p <probability>'
 		sys.exit(2)
 	for opt, arg in opts:
 		if opt == '-h':
@@ -30,12 +31,14 @@ def main(argv):
 			outputfile = arg
 		elif opt in ("-b", "--beta"):
 			beta=float(arg)
+		elif opt in ("-p", "--prob"):
+			prob=float(arg)
 
 	if outputfile == '':
-		outputfile="gameBeta"+str(beta)+".dat"
+		outputfile="gameBeta"+str(beta)+"Prob"+str(prob)+".dat"
 
-	folk=Folk(8000, THRESHOLD, choice = choice, Beta = beta)
-	Play(folk, 100000, name=outputfile)
+	folk=Folk(8000, COMPLETE, choice = choice, Beta = beta)
+	Play(folk, 1000000, name=outputfile, prob=prob)
 
 if __name__=="__main__":
 	main(sys.argv[1:])
