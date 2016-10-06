@@ -12,8 +12,8 @@ for i in range(len(tableau20)):
     r, g, b = tableau20[i]    
     tableau20[i] = (r / 255., g / 255., b / 255.)
 y=[]
-for i in range(1,10):
-	A, B=np.loadtxt("gameBeta0.1Prob"+str(float(i)/10)+".dat", delimiter='\t', unpack=True)
+for i in range(2,19):
+	A, B=np.loadtxt("gameBeta"+str(0.0005+0.0005*i)+"Prob1.dat", delimiter='\t', unpack=True)
 	x.append(A)
 	y.append(B)
 fig=plt.figure(figsize=(16,12))
@@ -37,10 +37,8 @@ plt.tick_params(axis="both", which="both", bottom="off", top="off", labelbottom=
 
 colors = cm.rainbow(np.linspace(0, 1, len(y)))
 X=list(x[0])
-i=0
 for rank,Y in enumerate(list(y)):
-	plt.scatter(X, Y, marker='.', color=tableau20[rank], label=str(float(i+1)/10))
-	i+=1
+	plt.scatter(X, Y, marker='.', color=tableau20[rank], label="beta= "+str(0.005+0.00025*(rank+3)))
 plt.xlabel('Time Step')
 plt.ylabel('Number of Different Words')
 plt.title('Number of Different Words in Time')

@@ -1,4 +1,5 @@
 #def 
+import cPickle as pk
 import matplotlib.pyplot as plt
 import networkx as nx
 import matplotlib.cm as cm
@@ -101,6 +102,9 @@ def Play(f, T=1000000, name="game.dat", prob=1):
             plt.ylabel('Y_grid identifier')
             plt.title('The grid\nGenerated on the basis of given DEM')
             plt.show() # display
+            filename="final_grid_"+name
+            with open(filename, "wb") as output:
+                pk.dump(f.topology.G, output, pk.HIGHEST_PROTOCOL)
         elif f.topology.tipo == COMPLETE:
             print "finished game\n"
         else:

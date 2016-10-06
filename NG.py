@@ -38,7 +38,7 @@ def main(argv):
 		outputfile="gameBeta"+str(beta)+"Prob"+str(prob)+".dat"
 
 	folk=Folk(8000, COMPLETE, choice = choice, Beta = beta)
-	Play(folk, 1000000, name=outputfile, prob=prob)
+	Play(folk, 100000, name=outputfile, prob=prob)
 
 if __name__=="__main__":
 	main(sys.argv[1:])
