@@ -20,12 +20,14 @@ def Play(f, T=1000000, name="game.dat", prob=1):
     # folk f, play rounds T
     time=[]
     different_words=[]
+    numberofWords=[]
     for i in range(T):
         [speaker, hearer] = f.Select()
         if(hearer==None):
             #print "Che rumore fa un albero che cade in una foresta disabitata?"
             time.append(i+1)
             different_words.append(different_words[-1])
+            numberofWords.append(numberofWords[-1])
             continue
         #if (speaker.ndw==1 and i>f.N): 
         #    break
@@ -36,6 +38,7 @@ def Play(f, T=1000000, name="game.dat", prob=1):
                 different_words.append(speaker.ndw)
             else:
                 different_words.append(different_words[-1])
+            numberofWords.append(numberofWords[-1])
             continue
         #if (speaker.ndw==1 and i>f.N): 
         #    break
@@ -45,12 +48,15 @@ def Play(f, T=1000000, name="game.dat", prob=1):
             str(speaker.dict),
             " hearer:",
             str(hearer.dict)
-            
+        speaker_number=len(speaker.dict)
+        hearer_number=len(hearer.dict)
+        sum_number=hearer_number+speaker_number
         if(len(speaker.dict) == 1 and speaker.dict == hearer.dict): 
             # trivial case
             #print "%d %d" %(i, speaker.ndw)
             time.append(i+1)
             different_words.append(different_words[-1])
+            numberofWords.append(numberofWords[-1])
             continue
         
         #print speaker.id, hearer.id
@@ -75,15 +81,48 @@ def Play(f, T=1000000, name="game.dat", prob=1):
         #    break
         time.append(i+1)
         different_words.append(speaker.ndw)
+        speaker_number_final=len(speaker.dict)
+        hearer_number_final=len(hearer.dict)
+        sum_number_final=hearer_number_final+speaker_number_final
+        if numberofWords==[]:
+        	numberofWords.append(sum_number_final - sum_number)
+        else:
+        	numberofWords.append(numberofWords[-1]+(sum_number_final-sum_number))
+
     if SHOW==1:
-        fig=plt.figure()
-        ax1=plt.subplot2grid((1,1),(0,0))
-        plt.scatter(time, different_words, label='NDW')
-        plt.xlabel('Time Step')
-        plt.ylabel('Number of Different Words')
-        plt.title('Number of Different Words in Time')
-        ax1.grid(True)
-        plt.show()
+    	fig=plt.figure(figsize=(16,12))
+    	ax=plt.subplot(111)
+    	ax.spines["top"].set_visible(False)
+    	ax.spines["bottom"].set_visible(False)
+    	ax.spines["right"].set_visible(False)
+    	ax.spines["left"].set_visible(False)
+    	ax.get_xaxis().tick_bottom()
+    	ax.get_yaxis().tick_left()
+    	plt.xticks(fontsize=14)
+    	plt.tick_params(axis="both", which="both", bottom="off", top="off", labelbottom="on", left="off", right="off", labelleft="on")
+    	plt.plot(time, different_words, label='NDW')
+    	plt.xlabel('Time Step')
+    	plt.ylabel('Number of Different Words')
+    	plt.title('Number of Different Words in Time')
+    	plt.show()
+    	fig2=plt.figure(figsize=(16,12))
+    	ax2=plt.subplot(111)
+    	ax2.spines["top"].set_visible(False)
+    	ax2.spines["bottom"].set_visible(False)
+    	ax2.spines["right"].set_visible(False)
+    	ax2.spines["left"].set_visible(False)
+    	ax2.get_xaxis().tick_bottom()
+    	ax2.get_yaxis().tick_left()
+    	plt.xticks(fontsize=14)
+    	plt.tick_params(axis="both", which="both", bottom="off", top="off", labelbottom="on", left="off", right="off", labelleft="on")
+    	plt.plot(time, numberofWords, label='NW')
+    	plt.plot(range(len(time)), [len(f.topology.G.nodes()) for i in range(len(time))], "--", lw=0.5, color="black", alpha=0.3) 
+    	plt.xlabel('Time Step')
+    	plt.ylabel('Number of Words')
+    	plt.title('Number of Words in Time')
+    	plt.show()
+    	
+    	plt.plot(time, numberofWords, label='NW')
         nodeColor=[]
         for x in f.topology.G.nodes():
                 if f.topology.G.node[x]['agent'].dict != []:

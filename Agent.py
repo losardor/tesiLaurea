@@ -9,7 +9,6 @@ from matplotlib import style
 import matplotlib.cm as cm
 import cPickle as pk
 
-style.use('fivethirtyeight')
 
 COMPLETE = 0
 ERDOS    = 1; ERDOS_p = 0.5

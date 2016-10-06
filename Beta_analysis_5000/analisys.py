@@ -1,6 +1,5 @@
 import numpy as np
 from matplotlib import pyplot as plt
-import matplotlib.cm as cm
 
 tableau20 = [(31, 119, 180), (174, 199, 232), (255, 127, 14), (255, 187, 120),    
              (44, 160, 44), (152, 223, 138), (214, 39, 40), (255, 152, 150),    
@@ -18,6 +17,7 @@ for i in range(2,19):
 	y.append(B)
 fig=plt.figure(figsize=(16,12))
 ax=plt.subplot(111)
+ax.grid(b=False)
 ax.spines["top"].set_visible(False)
 ax.spines["bottom"].set_visible(False)
 ax.spines["right"].set_visible(False)
@@ -34,8 +34,6 @@ plt.xticks(fontsize=14)
 #    plt.plot(range(1968, 2012), [y] * len(range(1968, 2012)), "--", lw=0.5, color="black", alpha=0.3)    
 plt.tick_params(axis="both", which="both", bottom="off", top="off", labelbottom="on", left="off", right="off", labelleft="on")
 
-
-colors = cm.rainbow(np.linspace(0, 1, len(y)))
 X=list(x[0])
 for rank,Y in enumerate(list(y)):
 	plt.scatter(X, Y, marker='.', color=tableau20[rank], label="beta= "+str(0.005+0.00025*(rank+3)))
