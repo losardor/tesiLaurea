@@ -21,8 +21,11 @@ def Play(f, T=1000000, name="game.dat", prob=1):
     time=[]
     different_words=[]
     numberofWords=[]
+    couples=[]
     for i in range(T):
         [speaker, hearer] = f.Select()
+        if f.topology.tipo==COMPLETE:
+        	couples.append([speaker.id,hearer.id])
         if(hearer==None):
             #print "Che rumore fa un albero che cade in una foresta disabitata?"
             time.append(i+1)
@@ -88,6 +91,8 @@ def Play(f, T=1000000, name="game.dat", prob=1):
         	numberofWords.append(sum_number_final - sum_number)
         else:
         	numberofWords.append(numberofWords[-1]+(sum_number_final-sum_number))
+        x,y=zip(*couples)
+        plt.scatter(x,y)
 
     if SHOW==1:
     	fig=plt.figure(figsize=(16,12))
@@ -116,20 +121,25 @@ def Play(f, T=1000000, name="game.dat", prob=1):
     	plt.xticks(fontsize=14)
     	plt.tick_params(axis="both", which="both", bottom="off", top="off", labelbottom="on", left="off", right="off", labelleft="on")
     	plt.plot(time, numberofWords, label='NW')
-    	plt.plot(range(len(time)), [len(f.topology.G.nodes()) for i in range(len(time))], "--", lw=0.5, color="black", alpha=0.3) 
+    	try:
+    		plt.plot(range(len(time)), [len(f.topology.G.nodes()) for i in range(len(time))], "--", lw=0.5, color="black", alpha=0.3) 
+    	except:
+    		plt.plot(range(len(time)), [8100 for i in range(len(time))], "--", lw=0.5, color="black", alpha=0.3)
     	plt.xlabel('Time Step')
     	plt.ylabel('Number of Words')
     	plt.title('Number of Words in Time')
     	plt.show()
-    	
-    	plt.plot(time, numberofWords, label='NW')
         nodeColor=[]
-        for x in f.topology.G.nodes():
-                if f.topology.G.node[x]['agent'].dict != []:
-                    nodeColor.append(int(f.topology.G.node[x]['agent'].dict[0]))
+        try:
+        	for x in f.topology.G.nodes():
+        		if f.topology.G.node[x]['agent'].dict != []:
+        			nodeColor.append(int(f.topology.G.node[x]['agent'].dict[0]))
                 else:
-                    nodeColor.append(0)
-        if f.topology.tipo==GRIDONMAP:
+                	nodeColor.append(0)
+        except:
+        	print "the topolgy is complete and has no grid to print"
+
+        if f.topology.tipo == GRIDONMAP:
             fig2=plt.figure()
             colors = cm.rainbow(np.linspace(0, 1, len(nodeColor)))
             elarge=[(u,v) for (u,v,d) in f.topology.G.edges(data=True) if d['weight'] >=0.05]
@@ -154,6 +164,6 @@ def Play(f, T=1000000, name="game.dat", prob=1):
 
     target = open(name, "w")
     for x in range(len(time)):
-        target.write(str(time[x])+"\t"+str(different_words[x])+"\n")
+        target.write(str(time[x])+"\t"+str(different_words[x])+"\t"+str(numberofWords[x])+"\n")
 
         

@@ -234,7 +234,10 @@ class Topology():
 	
 	def Select(self, agent):
 		if self.tipo == COMPLETE:
-			return random.sample(agent, 2)
+			couple= random.sample(agent,2)
+			#print couple[0].id, couple[1].id
+			return couple
+
 		elif(self.tipo == GRID2DBAND):
 			s = random.choice(self.G.nodes())
 			if(not self.G.neighbors(s)):

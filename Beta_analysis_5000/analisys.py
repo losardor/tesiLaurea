@@ -17,7 +17,6 @@ for i in range(2,19):
 	y.append(B)
 fig=plt.figure(figsize=(16,12))
 ax=plt.subplot(111)
-ax.grid(b=False)
 ax.spines["top"].set_visible(False)
 ax.spines["bottom"].set_visible(False)
 ax.spines["right"].set_visible(False)
