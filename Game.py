@@ -3,6 +3,7 @@ import cPickle as pk
 import matplotlib.pyplot as plt
 import networkx as nx
 import matplotlib.cm as cm
+import seaborn as sns
 import numpy as np
 import random
 
@@ -14,13 +15,13 @@ GRID2DBAND = 3
 GRID2DBAND_p = 0.01
 BARABASI = 4; BARABASI_M = 4
 GRIDONMAP = 5
-SHOW = 1
+SHOW = 0
 
 def Play(f, T=1000000, name="game.dat", prob=1):
     # folk f, play rounds T
     time=[]
     different_words=[]
-    numberofWords=[]
+    numberofWords=[0]
     couples=[]
     for i in range(T):
         [speaker, hearer] = f.Select()
@@ -58,7 +59,7 @@ def Play(f, T=1000000, name="game.dat", prob=1):
             # trivial case
             #print "%d %d" %(i, speaker.ndw)
             time.append(i+1)
-            different_words.append(different_words[-1])
+            different_words.append(speaker.ndw)
             numberofWords.append(numberofWords[-1])
             continue
         
@@ -91,10 +92,12 @@ def Play(f, T=1000000, name="game.dat", prob=1):
         	numberofWords.append(sum_number_final - sum_number)
         else:
         	numberofWords.append(numberofWords[-1]+(sum_number_final-sum_number))
-        x,y=zip(*couples)
-        plt.scatter(x,y)
+        
 
     if SHOW==1:
+        if f.topology.tipo==COMPLETE:
+            x,y=zip(*couples)
+            plt.scatter(x,y)
     	fig=plt.figure(figsize=(16,12))
     	ax=plt.subplot(111)
     	ax.spines["top"].set_visible(False)
@@ -131,11 +134,12 @@ def Play(f, T=1000000, name="game.dat", prob=1):
     	plt.show()
         nodeColor=[]
         try:
-        	for x in f.topology.G.nodes():
-        		if f.topology.G.node[x]['agent'].dict != []:
-        			nodeColor.append(int(f.topology.G.node[x]['agent'].dict[0]))
-                else:
-                	nodeColor.append(0)
+           for x in f.topology.G.nodes():
+              if f.topology.G.node[x]['agent'].dict != []:
+                 nodeColor.append(int(f.topology.G.node[x]['agent'].dict[0]))
+              else:
+                 nodeColor.append(0)
+           nodeColor=[color/max(nodeColor) for color in nodeColor]
         except:
         	print "the topolgy is complete and has no grid to print"
 
@@ -146,7 +150,7 @@ def Play(f, T=1000000, name="game.dat", prob=1):
             esmall=[(u,v) for (u,v,d) in f.topology.G.edges(data=True) if d['weight'] <0.05]
             nx.draw_networkx_edges(f.topology.G, pos={i:i for i in f.topology.G.nodes()}, edgelist=elarge, width=1, alpha = 0.5)
             nx.draw_networkx_edges(f.topology.G, pos={i:i for i in f.topology.G.nodes()}, edgelist=esmall, width=1, alpha=0.5,edge_color='b',style='dashed')
-            nx.draw_networkx_nodes(f.topology.G, pos={i:i for i in f.topology.G.nodes()}, node_color=nodeColor, node_cmap=plt.cm.summer, node_size=20)
+            nx.draw_networkx_nodes(f.topology.G, pos={i:i for i in f.topology.G.nodes()}, node_color=nodeColor, node_cmap=sns.color_palette("RdBu_r"), node_size=20)
             plt.xlabel('X_grid identifier')
             plt.ylabel('Y_grid identifier')
             plt.title('The grid\nGenerated on the basis of given DEM')
@@ -165,5 +169,7 @@ def Play(f, T=1000000, name="game.dat", prob=1):
     target = open(name, "w")
     for x in range(len(time)):
         target.write(str(time[x])+"\t"+str(different_words[x])+"\t"+str(numberofWords[x])+"\n")
+
+    return different_words, numberofWords
 
         

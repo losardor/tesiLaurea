@@ -4,6 +4,50 @@
 		"selected_items":
 		[
 			[
+				"Ne",
+				"Nephero_counter"
+			],
+			[
+				"fa",
+				"faliures"
+			],
+			[
+				"success",
+				"success_counter"
+			],
+			[
+				"top",
+				"topology"
+			],
+			[
+				"ave",
+				"averageNw"
+			],
+			[
+				"a",
+				"averageNdw"
+			],
+			[
+				"su",
+				"sumNDW"
+			],
+			[
+				"runs",
+				"runsNdw"
+			],
+			[
+				"run",
+				"runsNdw"
+			],
+			[
+				"n",
+				"ndws"
+			],
+			[
+				"ti",
+				"tipo"
+			],
+			[
 				"sum",
 				"sum_number_final"
 			],
@@ -222,20 +266,13 @@
 			[
 				"BARA",
 				"BARABASI_M"
-			],
-			[
-				"a",
-				"add_node"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"contents": "import numpy as np\nfrom matplotlib import pyplot as plt\n\ntableau20 = [(31, 119, 180), (174, 199, 232), (255, 127, 14), (255, 187, 120),    \n             (44, 160, 44), (152, 223, 138), (214, 39, 40), (255, 152, 150),    \n             (148, 103, 189), (197, 176, 213), (140, 86, 75), (196, 156, 148),    \n             (227, 119, 194), (247, 182, 210), (127, 127, 127), (199, 199, 199),    \n             (188, 189, 34), (219, 219, 141), (23, 190, 207), (158, 218, 229)]\nx=[]\nfor i in range(len(tableau20)):    \n    r, g, b = tableau20[i]    \n    tableau20[i] = (r / 255., g / 255., b / 255.)\ny=[]\nfor i in range(2,19):\n	A, B=np.loadtxt(\"gameBeta\"+str(0.0005+0.0005*i)+\"Prob1.dat\", delimiter='\\t', unpack=True)\n	x.append(A)\n	y.append(B)\nfig=plt.figure(figsize=(16,12))\nax=plt.subplot(111)\nax.spines[\"top\"].set_visible(False)\nax.spines[\"bottom\"].set_visible(False)\nax.spines[\"right\"].set_visible(False)\nax.spines[\"left\"].set_visible(False)\nax.get_xaxis().tick_bottom()\nax.get_yaxis().tick_left()\n#plt.yticks(range(beginning, end, icrement), [str(x)+\"%\" for x in range(beginning, end, increment)], fontsize=14)\nplt.xticks(fontsize=14)\n#\n# Provide tick lines across the plot to help your viewers trace along    \n# the axis ticks. Make sure that the lines are light and small so they    \n# don't obscure the primary data lines.    \n#for y in range(10, 91, 10):    \n#    plt.plot(range(1968, 2012), [y] * len(range(1968, 2012)), \"--\", lw=0.5, color=\"black\", alpha=0.3)    \nplt.tick_params(axis=\"both\", which=\"both\", bottom=\"off\", top=\"off\", labelbottom=\"on\", left=\"off\", right=\"off\", labelleft=\"on\")\n\nX=list(x[0])\nfor rank,Y in enumerate(list(y)):\n	plt.scatter(X, Y, marker='.', color=tableau20[rank], label=\"beta= \"+str(0.005+0.00025*(rank+3)))\nplt.xlabel('Time Step')\nplt.ylabel('Number of Different Words')\nplt.title('Number of Different Words in Time')\n\nplt.legend()\nplt.show()\n'''\nlast=[]\nmax=[]\nbetaas=[]\nfor i in range(19):\n	last.append(y[i][-1])\n	max.append(y[i].max())\n	betaas.append(float(i+1)/100)\nplt.scatter(betaas,last, marker='*', color='r', label='the last ndw')\n#plt.scatter(betaas, max, marker='.', color='b', label='The max ndw')\nplt.xlabel('Beta')\nplt.ylabel('Number of different words')\nplt.title('The maximum and last value of the number of different words as a function of the weight beta')\nplt.legend()\nplt.show()\n'''",
 			"file": "Beta_analysis_5000/analisys.py",
-			"file_size": 2350,
-			"file_write_time": 131202181389364928,
 			"settings":
 			{
 				"buffer_size": 2333,
@@ -243,21 +280,21 @@
 			}
 		},
 		{
-			"file": "Agent.py",
+			"contents": "import numpy as np\nfrom matplotlib import pyplot as plt\n\ntableau20 = [(31, 119, 180), (174, 199, 232), (255, 127, 14), (255, 187, 120),    \n             (44, 160, 44), (152, 223, 138), (214, 39, 40), (255, 152, 150),    \n             (148, 103, 189), (197, 176, 213), (140, 86, 75), (196, 156, 148),    \n             (227, 119, 194), (247, 182, 210), (127, 127, 127), (199, 199, 199),    \n             (188, 189, 34), (219, 219, 141), (23, 190, 207), (158, 218, 229)]\nx=[]\nfor i in range(len(tableau20)):    \n    r, g, b = tableau20[i]    \n    tableau20[i] = (r / 255., g / 255., b / 255.)\ny=[]\nz=[]\nA, B, C=np.loadtxt(\"complete.dat\", delimiter='\\t', unpack=True)\nx.append(A)\ny.append(B)\nz.append(C)\nA, B=np.loadtxt(\"grid2d.dat\", delimiter='\\t', unpack=True)\nx.append(A)\ny.append(B)\n\nfig=plt.figure(figsize=(16,12))\nax=plt.subplot(111)\nax.spines[\"top\"].set_visible(False)\nax.spines[\"bottom\"].set_visible(False)\nax.spines[\"right\"].set_visible(False)\nax.spines[\"left\"].set_visible(False)\nax.get_xaxis().tick_bottom()\nax.get_yaxis().tick_left()\nplt.tick_params(axis=\"both\", which=\"both\", bottom=\"off\", top=\"off\", labelbottom=\"on\", left=\"off\", right=\"off\", labelleft=\"on\")\n\nX=list(x[0])\nfor rank,Y in enumerate(list(y)):\n	if rank == 0:\n		plt.scatter(X, Y, marker='.', color=tableau20[rank], label=\"complete\")\n	else:\n		plt.scatter(X, Y, marker='.', color=tableau20[rank], label=\"grid2d\")\nplt.xlabel('Time Step')\nplt.ylabel('Number of Different Words')\nplt.title('Number of Different Words in Time')\n\nplt.legend()\nplt.show()",
+			"file": "Quick_plot.py",
+			"file_size": 1498,
+			"file_write_time": 131202382135882372,
 			"settings":
 			{
-				"buffer_size": 8256,
+				"buffer_size": 1518,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"contents": "",
-			"file": "singleplot.py",
-			"file_size": -1,
-			"file_write_time": -1,
+			"file": "Agent.py",
 			"settings":
 			{
-				"buffer_size": 0,
+				"buffer_size": 8311,
 				"line_ending": "Unix"
 			}
 		},
@@ -265,7 +302,31 @@
 			"file": "Game.py",
 			"settings":
 			{
-				"buffer_size": 6179,
+				"buffer_size": 6721,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/donrog/personal_python/Nephero_Game.py",
+			"settings":
+			{
+				"buffer_size": 3403,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "NG.py",
+			"settings":
+			{
+				"buffer_size": 1201,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "AverageCOMPLETEù.py",
+			"settings":
+			{
+				"buffer_size": 660,
 				"line_ending": "Unix"
 			}
 		}
@@ -330,6 +391,9 @@
 	],
 	"file_history":
 	[
+		"/mnt/New Volume/Downloads D/Game.py",
+		"/mnt/New Volume/Downloads D/NG.py",
+		"/home/donrog/tesiLaurea/singleplot.py",
 		"/home/donrog/tesiLaurea/NG.py",
 		"/home/donrog/tesiLaurea/runner_prob.sh",
 		"/home/donrog/tesiLaurea/runner.sh",
@@ -421,7 +485,7 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 4,
 			"sheets":
 			[
 				{
@@ -437,67 +501,8 @@
 						"selection":
 						[
 							[
-								1461,
-								1461
-							]
-						],
-						"settings":
-						{
-							"color_scheme": "Packages/User/Color Highlighter/themes/Material-Theme-Lighter.tmTheme",
-							"syntax": "Packages/Python/Python.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "Agent.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 8256,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								265,
-								265
-							]
-						],
-						"settings":
-						{
-							"color_scheme": "Packages/User/Color Highlighter/themes/Material-Theme-Lighter.tmTheme",
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 240.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "singleplot.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 0,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
+								2333,
+								2333
 							]
 						],
 						"settings":
@@ -513,20 +518,20 @@
 					"type": "text"
 				},
 				{
-					"buffer": 3,
-					"file": "Game.py",
+					"buffer": 1,
+					"file": "Quick_plot.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 6179,
+						"buffer_size": 1518,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4128,
-								4128
+								1518,
+								1518
 							]
 						],
 						"settings":
@@ -535,10 +540,159 @@
 							"syntax": "Packages/Python/Python.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 1800.0,
+						"translation.y": 180.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "Agent.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8311,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4103,
+								4103
+							]
+						],
+						"settings":
+						{
+							"color_scheme": "Packages/User/Color Highlighter/themes/Material-Theme-Lighter.tmTheme",
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2568.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "Game.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6721,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1885,
+								1885
+							]
+						],
+						"settings":
+						{
+							"color_scheme": "Packages/User/Color Highlighter/themes/Material-Theme-Lighter.tmTheme",
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 900.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "/home/donrog/personal_python/Nephero_Game.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3403,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2742,
+								2742
+							]
+						],
+						"settings":
+						{
+							"color_scheme": "Packages/User/Color Highlighter/themes/Material-Theme-Lighter.tmTheme",
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"word_wrap": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "NG.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1201,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1091,
+								1091
+							]
+						],
+						"settings":
+						{
+							"color_scheme": "Packages/User/Color Highlighter/themes/Material-Theme-Lighter.tmTheme",
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "AverageCOMPLETEù.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 660,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								489,
+								489
+							]
+						],
+						"settings":
+						{
+							"color_scheme": "Packages/User/Color Highlighter/themes/Material-Theme-Lighter.tmTheme",
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
 					"type": "text"
 				}
 			]
@@ -587,7 +741,7 @@
 	"project": "TesiMagistrale.sublime-project",
 	"replace":
 	{
-		"height": 62.0
+		"height": 66.0
 	},
 	"save_all_on_build": true,
 	"select_file":
