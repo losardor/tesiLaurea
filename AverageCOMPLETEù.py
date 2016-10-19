@@ -2,14 +2,14 @@ from Agent import *
 from Game import Play
 import matplotlib.pyplot as plt
 
-folk=Folk(1000, COMPLETE)
-runsNw=[]
-runsNdw=[]
 sumNDW=[]
 sumNW=[]
-iter=10000
+iter=10
 for i in range(iter):
-	runsNdw, runNw =Play(folk, 100000)
+	runsNdw=[]
+	runsNw=[]
+	folk=Folk(1000, COMPLETE)
+	runsNdw, runsNw =Play(folk, 100000)
 	if sumNDW==[]:
 		sumNDW=[Ndw for Ndw in runsNdw]
 	else:
@@ -22,11 +22,11 @@ for i in range(iter):
 
 averageNdw=[float(sumNdw)/iter for sumNdw in sumNDW]
 averageNw=[float(sumNw)/iter for sumNw in sumNW]
-print averageNw
 target = open("averageComplete.dat", "w")
 target.write("Time step\taverageNw\taverageNdw\n")
-for i in range(len(averageNw)):
+for i in range(len(averageNdw)):
 	target.write(str(i)+"\t"+str(averageNw[i])+"\t"+str(averageNdw[i])+"\n")
+target.close()
 plt.plot(range(len(averageNdw)), averageNdw, label="NDW")
 plt.plot(range(len(averageNw)), averageNw, color="red", label="NW")
 plt.legend()

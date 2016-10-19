@@ -12,7 +12,7 @@ for i in range(len(tableau20)):
     tableau20[i] = (r / 255., g / 255., b / 255.)
 y=[]
 z=[]
-A, B, C=np.loadtxt("complete.dat", delimiter='\t', unpack=True)
+A, B, C=np.loadtxt("gameBeta0.1Prob1.dat", delimiter='\t', unpack=True)
 x.append(A)
 y.append(B)
 z.append(C)

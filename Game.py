@@ -169,7 +169,6 @@ def Play(f, T=1000000, name="game.dat", prob=1):
     target = open(name, "w")
     for x in range(len(time)):
         target.write(str(time[x])+"\t"+str(different_words[x])+"\t"+str(numberofWords[x])+"\n")
-
-    return different_words, numberofWords
+    return (different_words, numberofWords)
 
         
