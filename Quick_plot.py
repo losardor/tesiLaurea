@@ -11,9 +11,11 @@ for i in range(len(tableau20)):
     r, g, b = tableau20[i]    
     tableau20[i] = (r / 255., g / 255., b / 255.)
 y=[]
-A, B=np.loadtxt("complete.dat", delimiter='\t', unpack=True)
+z=[]
+A, B, C=np.loadtxt("complete.dat", delimiter='\t', unpack=True)
 x.append(A)
 y.append(B)
+z.append(C)
 A, B=np.loadtxt("grid2d.dat", delimiter='\t', unpack=True)
 x.append(A)
 y.append(B)

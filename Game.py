@@ -67,7 +67,7 @@ def Play(f, T=1000000, name="game.dat", prob=1):
         if not speaker.dict: #if empty
             w = speaker.NewWord()
             speaker.AddWord(w)
-            w = speaker.ChooseWord()
+        w = speaker.ChooseWord()
         if w in hearer.dict: # success
             if DEBUG: 
                 print "w:",str(w),"success"

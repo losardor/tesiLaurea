@@ -95,6 +95,7 @@ if __name__ == '__main__':
         plt.figure(figsize=(8,8))
         # with nodes colored by degree sized by population
         node_color=[float(H.degree(v)) for v in H]
+        print node_color
         nx.draw(H,G.position,
              node_size=[G.population[v] for v in H],
              node_color=node_color,
@@ -104,6 +105,6 @@ if __name__ == '__main__':
         plt.xlim(-5000,500)
         plt.ylim(-2000,3500)
 
-        plt.savefig("knuth_miles.png")
+        plt.show()
     except:
         pass
