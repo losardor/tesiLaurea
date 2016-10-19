@@ -13,8 +13,7 @@ def main(argv):
 	beta=0.1
 	prob=1
 	try:
-		opts, args = getopt.getopt(argv,"ho:c:t:b:p:",["ofile=","choice=",
-			"topology=","beta=","prob="])
+		opts, args = getopt.getopt(argv,"ho:c:t:b:p:",["ofile=","choice=","topology=","beta=","prob="])
 	except getopt.GetoptError:
 		print 'NG.py -o <outputfile> -c <choice> -t <topology> -p <probability>'
 		sys.exit(2)

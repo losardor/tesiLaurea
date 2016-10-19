@@ -32,8 +32,7 @@ class Agent():
 		self.id = id
 	
 	def __str__(self):
-		return "ID:" + str(self.id)+ " L:" + str(len(self.dict)) + " D:" 
-			+ str(self.dict)
+		return "ID:" + str(self.id)+ " L:" + str(len(self.dict)) + " D:" + str(self.dict)
 	
 	def NewWord(self):
 		w = Agent.nw
@@ -139,8 +138,7 @@ class Topology():
 			Edge_list = self.G.edges()
 			middle = int(L/2)
 			for a in Edge_list:
-				if (a[0][0]==middle and a[1][0]==middle+1) or (a[1][0]==middle 
-					and a[0][0]==middle+1):
+				if (a[0][0]==middle and a[1][0]==middle+1) or (a[1][0]==middle and a[0][0]==middle+1):
 					self.G[a[0]][a[1]]['weight'] = GRID2DBAND_p
 				else:
 					self.G[a[0]][a[1]]['weight'] = 1.0
@@ -149,8 +147,7 @@ class Topology():
 			nodeColor=[]
 			lisofrelevantsizes = [i*i*30 for i in range(1,30) if i*i < 10000]
 			if N not in lisofrelevantsizes:
-				print "the number of agents doesn't fit the grid, changing to"
-				+" closest possibility\n"
+				print "the number of agents doesn't fit the grid, changing to closest possibility\n"
 				N=min(lisofrelevantsizes, key=lambda x:abs(x-N))
 				print "the closest number is: " + str(N) + "\n"
 				#self.G = gi.topologyInit(N, choice, Beta)
@@ -174,27 +171,21 @@ class Topology():
 				for node in self.G.nodes():
 					x=np.random.uniform()
 					y=self.G.node[node]['height']
-					freq=lookup[min(list(lookup.keys()), 
-						key=lambda x:abs(x-y))]
+					freq=lookup[min(list(lookup.keys()), key=lambda x:abs(x-y))]
 					if x>freq:
 						removinglist.append(node)
 				self.G.remove_nodes_from(removinglist)
 
 			if choice == WEIGHTED:
 				for edge in self.G.edges():
-					self.G[edge[0]][edge[1]]['weight'] =  \
-					2.7**(-Beta*abs(self.G.node[edge[0]]['height'] - \
-						self.G.node[edge[1]]['height']))
+					self.G[edge[0]][edge[1]]['weight'] =  2.7**(-Beta*abs(self.G.node[edge[0]]['height'] - self.G.node[edge[1]]['height']))
 					if DEBUG:
 						print self.G[edge[0]][edge[1]]['weight']
 					#print str(edge) + "\t" + str(G[edge[0]][edge[1]]['weight']) + str(G.node[edge[0]]['height']) + "\t" + str(G.node[edge[1]]['height'])
 			else:
 				for edge in self.G.edges():
 					self.G[edge[0]][edge[1]]['weight']=1
-			print "the number of edges in this simulation will be " + 
-				str(len(self.G.edges())) + 
-				" And the number of agents will be " + 
-				str(len(self.G.nodes()))
+			print "the number of edges in this simulation will be " + str(len(self.G.edges())) + " And the number of agents will be " + str(len(self.G.nodes()))
 
 			for x in self.G.nodes():
 				nodeColor.append(int(self.G.node[x]['height']))
@@ -204,21 +195,11 @@ class Topology():
 			if SHOW == 1:
 				colors = cm.rainbow(np.linspace(0, 1, len(nodeColor)))
 				fig=plt.figure()
-				elarge=[(u,v) for (u,v,d) in self.G.edges(data=True)\
-				 if d['weight'] >=0.05]
-				esmall=[(u,v) for (u,v,d) in self.G.edges(data=True)\
-				 if d['weight'] <0.05]
-				nx.draw_networkx_edges(self.G, 
-					pos={i:i for i in self.G.nodes()}, 
-					edgelist=elarge, 
-					width=2)
-				nx.draw_networkx_edges(self.G, 
-					pos={i:i for i in self.G.nodes()}, 
-					edgelist=esmall, width=2, alpha=0.5,edge_color='b',
-					style='dashed')
-				nx.draw_networkx_nodes(self.G, 
-					pos={i:i for i in self.G.nodes()}, node_color=nodeColor, 
-					node_cmap=plt.cm.summer, node_size=20)
+				elarge=[(u,v) for (u,v,d) in self.G.edges(data=True) if d['weight'] >=0.05]
+				esmall=[(u,v) for (u,v,d) in self.G.edges(data=True) if d['weight'] <0.05]
+				nx.draw_networkx_edges(self.G, pos={i:i for i in self.G.nodes()}, edgelist=elarge, width=2)
+				nx.draw_networkx_edges(self.G, pos={i:i for i in self.G.nodes()}, edgelist=esmall, width=2, alpha=0.5,edge_color='b',style='dashed')
+				nx.draw_networkx_nodes(self.G, pos={i:i for i in self.G.nodes()}, node_color=nodeColor, node_cmap=plt.cm.summer, node_size=20)
 				plt.xlabel('X_grid identifier')
 				plt.ylabel('Y_grid identifier')
 				plt.title('The grid\nGenerated on the basis of given DEM')
@@ -234,15 +215,12 @@ class Topology():
 		
 		if id == GRIDONMAP:
 			if SHOW==1:
-				edgeWeights=[d['weight'] for (u,v,d)\
-				 in self.G.edges(data=True)]
+				edgeWeights=[d['weight'] for (u,v,d) in self.G.edges(data=True)]
 				bins=np.arange(0.1,1,0.05)
-				plt.hist(edgeWeights, bins, histtype='bar', rwidth=0.8, 
-					label='Edge Weights')
+				plt.hist(edgeWeights, bins, histtype='bar', rwidth=0.8, label='Edge Weights')
 				plt.xlabel('Edge Weights')
 				plt.ylabel('Frequency')
-				plt.title('Edge Weights\nThe frequency with witch a given'+
-					' weight is assigned given this DEM distribution')
+				plt.title('Edge Weights\nThe frequency with witch a given weight is assigned given this DEM distribution')
 				plt.show()
 				if DEBUG==1:
 					orderedWeights=sorted(edgeWeights)
@@ -250,6 +228,9 @@ class Topology():
 					fig2=plt.figure()
 					plt.scatter(xs, orderedWeights)
 					plt.show()
+	#agent_list = {x: agent[x] for x in range(N)}
+	#nx.set_node_attributes(self.G, 'agent', agent_list)
+	
 	
 	def Select(self, agent):
 		if self.tipo == COMPLETE:
