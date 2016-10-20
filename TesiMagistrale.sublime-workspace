@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"nam",
+				"namegiving"
+			],
+			[
+				"name",
+				"name"
+			],
+			[
 				"sp",
 				"speaker"
 			],
@@ -283,7 +291,7 @@
 			"file": "NG.py",
 			"settings":
 			{
-				"buffer_size": 1204,
+				"buffer_size": 1201,
 				"line_ending": "Unix"
 			}
 		},
@@ -291,7 +299,7 @@
 			"file": "Game.py",
 			"settings":
 			{
-				"buffer_size": 6802,
+				"buffer_size": 7099,
 				"line_ending": "Unix"
 			}
 		},
@@ -299,7 +307,7 @@
 			"file": "Agent.py",
 			"settings":
 			{
-				"buffer_size": 8346,
+				"buffer_size": 8289,
 				"line_ending": "Unix"
 			}
 		}
@@ -420,6 +428,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"name",
 			"differen",
 			"choi",
 			"4",
@@ -467,7 +476,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -476,15 +485,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1204,
+						"buffer_size": 1201,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								257,
-								257
+								254,
+								254
 							]
 						],
 						"settings":
@@ -501,7 +510,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
@@ -510,15 +519,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 6802,
+						"buffer_size": 7099,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								6720,
-								6720
+								6999,
+								6999
 							]
 						],
 						"settings":
@@ -533,10 +542,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 60.0,
+						"translation.y": 3180.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
@@ -545,15 +554,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 8346,
+						"buffer_size": 8289,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								7015,
-								7015
+								8289,
+								8289
 							]
 						],
 						"settings":
@@ -567,7 +576,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 4765.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,

@@ -32,8 +32,7 @@ class Agent():
 		self.id = id
 	
 	def __str__(self):
-		return "ID:" + str(self.id)+ " L:" + str(len(self.dict)) + " D:" 
-			+ str(self.dict)
+		return "ID:" + str(self.id)+ " L:" + str(len(self.dict)) + " D:"+str(self.dict)
 	
 	def NewWord(self):
 		w = Agent.nw
@@ -149,8 +148,7 @@ class Topology():
 			nodeColor=[]
 			lisofrelevantsizes = [i*i*30 for i in range(1,30) if i*i < 10000]
 			if N not in lisofrelevantsizes:
-				print "the number of agents doesn't fit the grid, changing to"
-				+" closest possibility\n"
+				print "the number of agents doesn't fit the grid, changing to closest possibility\n"
 				N=min(lisofrelevantsizes, key=lambda x:abs(x-N))
 				print "the closest number is: " + str(N) + "\n"
 				#self.G = gi.topologyInit(N, choice, Beta)
@@ -182,19 +180,14 @@ class Topology():
 
 			if choice == WEIGHTED:
 				for edge in self.G.edges():
-					self.G[edge[0]][edge[1]]['weight'] =  \
-					2.7**(-Beta*abs(self.G.node[edge[0]]['height'] - \
-						self.G.node[edge[1]]['height']))
+					self.G[edge[0]][edge[1]]['weight'] = 2.7**(-Beta*abs(self.G.node[edge[0]]['height'] - self.G.node[edge[1]]['height']))
 					if DEBUG:
 						print self.G[edge[0]][edge[1]]['weight']
 					#print str(edge) + "\t" + str(G[edge[0]][edge[1]]['weight']) + str(G.node[edge[0]]['height']) + "\t" + str(G.node[edge[1]]['height'])
 			else:
 				for edge in self.G.edges():
 					self.G[edge[0]][edge[1]]['weight']=1
-			print "the number of edges in this simulation will be " + 
-				str(len(self.G.edges())) + 
-				" And the number of agents will be " + 
-				str(len(self.G.nodes()))
+			print "the number of edges in this simulation will be "+str(len(self.G.edges())) +" And the number of agents will be " + str(len(self.G.nodes()))
 
 			for x in self.G.nodes():
 				nodeColor.append(int(self.G.node[x]['height']))
@@ -241,8 +234,7 @@ class Topology():
 					label='Edge Weights')
 				plt.xlabel('Edge Weights')
 				plt.ylabel('Frequency')
-				plt.title('Edge Weights\nThe frequency with witch a given'+
-					' weight is assigned given this DEM distribution')
+				plt.title('Edge Weights\nThe frequency with witch a given weight is assigned given this DEM distribution')
 				plt.show()
 				if DEBUG==1:
 					orderedWeights=sorted(edgeWeights)

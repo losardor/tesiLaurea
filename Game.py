@@ -6,6 +6,7 @@ import matplotlib.cm as cm
 import seaborn as sns
 import numpy as np
 import random
+from pathlib2 import Path
 
 DEBUG = 0
 COMPLETE = 0
@@ -48,10 +49,7 @@ def Play(f, T=1000000, name="game.dat", prob=1):
         #    break
         
         if DEBUG: 
-            print "speaker:",
-            str(speaker.dict),
-            " hearer:",
-            str(hearer.dict)
+            print "speaker:", str(speaker.dict)," hearer:",str(hearer.dict)
         speaker_number=len(speaker.dict)
         hearer_number=len(hearer.dict)
         sum_number=hearer_number+speaker_number
@@ -171,11 +169,20 @@ def Play(f, T=1000000, name="game.dat", prob=1):
         colors = cm.rainbow(np.linspace(0, 1, len(nodeColor)))
         nx.draw(f.topology.G, pos=nx.spring_layout(f.topology.G))
         plt.show() # display
-
+    name=namegiving(name)
+    print name
     target = open(name, "w")
     for x in range(len(time)):
-        target.write(str(time[x])+"\t"+str(different_words[x])+"\t"+
-            str(numberofWords[x])+"\n")
+        target.write(str(time[x])+"\t"+str(different_words[x])+"\t"+str(numberofWords[x])+"\n")
     return (different_words, numberofWords)
 
-        
+def namegiving(name):
+    if Path(name).is_file():
+        if not name.endswith(')'):
+            name=name+'(2)'
+        else:
+            name=name[:-3]+'('+str(int(name[-2]+1))+')'
+            if Path(name).is_file():
+                return namegiving(name)
+    else:
+        return name

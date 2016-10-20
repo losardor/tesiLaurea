@@ -1,1 +1,8 @@
-for beta in $(LC_NUMERIC=C seq 0.0005 0.00025 0.01); do echo $beta ; python NG.py -b $beta; done
+for beta in $(LC_NUMERIC=C seq 0.001 0.001 0.01); 
+	do 
+	echo $beta ; 
+	for i in seq 1 10 1; 
+		do 
+		echo; python NG.py -b $beta; 
+	done
+done
