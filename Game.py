@@ -102,7 +102,6 @@ def Play(f, T=1000000, name="game.dat", prob=1):
         plt.plot(time, different_words, label='NDW')
         plt.xlabel('Time Step')
         plt.ylabel('Number of Different Words')
-        plt.title('Number of Different Words in Time')
         plt.show()
         fig2=plt.figure(figsize=(16,12))
         ax2=plt.subplot(111)
@@ -125,7 +124,6 @@ def Play(f, T=1000000, name="game.dat", prob=1):
                 "--", lw=0.5, color="black", alpha=0.3)
         plt.xlabel('Time Step')
         plt.ylabel('Number of Words')
-        plt.title('Number of Words in Time')
         plt.show()
         nodeColor=[]
         try:
@@ -156,7 +154,6 @@ def Play(f, T=1000000, name="game.dat", prob=1):
                 node_cmap=sns.color_palette("RdBu_r"), node_size=20)
             plt.xlabel('X_grid identifier')
             plt.ylabel('Y_grid identifier')
-            plt.title('The grid\nGenerated on the basis of given DEM')
             plt.show() # display
     if f.topology.tipo == GRIDONMAP:
         filename="final_grid_"+name
@@ -170,7 +167,6 @@ def Play(f, T=1000000, name="game.dat", prob=1):
         nx.draw(f.topology.G, pos=nx.spring_layout(f.topology.G))
         plt.show() # display
     name=namegiving(name)
-    print name
     target = open(name, "w")
     for x in range(len(time)):
         target.write(str(time[x])+"\t"+str(different_words[x])+"\t"+str(numberofWords[x])+"\n")
@@ -178,11 +174,10 @@ def Play(f, T=1000000, name="game.dat", prob=1):
 
 def namegiving(name):
     if Path(name).is_file():
-        if not name.endswith(')'):
-            name=name+'(2)'
-        else:
-            name=name[:-3]+'('+str(int(name[-2]+1))+')'
-            if Path(name).is_file():
-                return namegiving(name)
-    else:
-        return name
+    	if name.endswith(')'):
+    		name=name[:-3]+'('+str(int(name[-2])+1)+')'
+    	else:
+    		name=name+'(2)'
+    	if Path(name).is_file():
+    		return namegiving(name)
+    return name

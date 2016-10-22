@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 sumNDW=[]
 sumNW=[]
-iter=10
+iter=100
 for i in range(iter):
 	runsNdw=[]
 	runsNw=[]

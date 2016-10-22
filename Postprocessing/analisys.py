@@ -33,7 +33,6 @@ for rank,X in enumerate(list(x)):
 
 plt.xlabel('Time Step')
 plt.ylabel('Number of Different Words')
-plt.title('Number of Different Words in Time')
 
 plt.legend()
 plt.show()
@@ -49,7 +48,5 @@ for i in range(19):
 plt.scatter(betaas,last, marker='*', color='r', label='the last ndw')
 plt.xlabel('Beta')
 plt.ylabel('Number of different words')
-plt.title('The maximum and last value of the number of different words as'+
-	' a function of the weight beta')
 plt.legend()
 plt.show()
