@@ -50,15 +50,14 @@ def Play(f, T=1000000, name="game.dat", prob=1):
         
         if DEBUG: 
             print "speaker:", str(speaker.dict)," hearer:",str(hearer.dict)
-        speaker_number=len(speaker.dict)
-        hearer_number=len(hearer.dict)
-        sum_number=hearer_number+speaker_number
+
+        coupleWords=len(speaker.dict)+len(hearer.dict)
         if(len(speaker.dict) == 1 and speaker.dict == hearer.dict): 
             # trivial case
             #print "%d %d" %(i, speaker.ndw)
             time.append(i+1)
             different_words.append(speaker.ndw)
-            numberofWords.append(len([x for x in speaker.words if x != 0]))
+            numberofWords.append(numberofWords[-1]+len(speaker.dict)+len(hearer.dict)-coupleWords)
             continue
         
         #print speaker.id, hearer.id
@@ -83,7 +82,8 @@ def Play(f, T=1000000, name="game.dat", prob=1):
         #    break
         time.append(i+1)
         different_words.append(speaker.ndw)
-        numberofWords.append(len([x for x in speaker.words if x != 0]))
+        numberofWords.append(numberofWords[-1]+len(speaker.dict)+len(hearer.dict)-coupleWords)
+    numberofWords.pop(0)
     if SHOW==1:
         if f.topology.tipo==COMPLETE:
             x,y=zip(*couples)
@@ -100,6 +100,7 @@ def Play(f, T=1000000, name="game.dat", prob=1):
         plt.tick_params(axis="both", which="both", bottom="off", top="off", 
             labelbottom="on", left="off", right="off", labelleft="on")
         plt.plot(time, different_words, label='NDW')
+        plt.plot(time, numberofWords, label='NW')
         plt.xlabel('Time Step')
         plt.ylabel('Number of Different Words')
         plt.show()
