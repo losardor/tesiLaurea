@@ -130,7 +130,7 @@ def Play(f, T=1000000, name="game.dat", prob=1):
         try:
             for x in f.topology.G.nodes():
                 if f.topology.G.node[x]['agent'].dict != []:
-                    nodeColor.append(int(f.topoloSgy.G.node[x]['agent'].dict[0]))
+                    nodeColor.append(int(f.topology.G.node[x]['agent'].dict[0]))
                 else:
                     nodeColor.append(0)
             nodeColor=[color/max(nodeColor) for color in nodeColor]
@@ -163,14 +163,15 @@ def Play(f, T=1000000, name="game.dat", prob=1):
     elif f.topology.tipo == COMPLETE:
         print "finished game\n"
     else:
-        fig2=plt.figure()
-        colors = cm.rainbow(np.linspace(0, 1, len(nodeColor)))
-        nx.draw(f.topology.G, pos=nx.spring_layout(f.topology.G))
-        plt.show() # display
+        if SHOW==1:
+            fig2=plt.figure()
+            colors = cm.rainbow(np.linspace(0, 1, len(nodeColor)))
+            nx.draw(f.topology.G, pos=nx.spring_layout(f.topology.G))
+            plt.show() # display
     name=namegiving(name)
     target = open(name, "w")
-    for x in range(len(time)):
-        target.write(str(time[x])+"\t"+str(different_words[x])+"\t"+str(numberofWords[x])+"\n")
+    for x in range(len(time[::10])):
+        target.write(str(time[10*x])+"\t"+str(different_words[10*x])+"\t"+str(numberofWords[10*x])+"\n")
     return (different_words, numberofWords)
 
 def namegiving(name):

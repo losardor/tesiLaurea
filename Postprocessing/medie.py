@@ -49,16 +49,16 @@ for i in betas:
 	print maxtime
 	figure=plt.figure()
 	#fit=np.polyfit(np.log(time[1430:]), meanx[str(i)][1430:],1) Sistemare questa riga per fare il fil
-	fit_fn=np.poly1d(fit)
+	#fit_fn=np.poly1d(fit)
 	plt.errorbar(range(len(meanx[str(i)])), meanx[str(i)], yerr=stdx[str(i)],alpha=0.5, label="mean NDW")
-	plt.plot(time[1430:], np.exp(fit_fn(time[1430:])), label="estimated value")
+	#plt.plot(time[1430:], np.exp(fit_fn(time[1430:])), label="estimated value")
 	plt.show()
 
 
-plt.errorbar(betas,last, yerr=lasterror,fmt='none', color='r', label='the last ndw')
-fit = np.polyfit(betas,last,1)
-fit_fn = np.poly1d(fit) 
-plt.plot(betas, fit_fn(betas), label="estimated value")
+plt.plot(betas,max,fmt='none', color='r', label='the last ndw')
+#fit = np.polyfit(betas,last,1)
+#fit_fn = np.poly1d(fit) 
+#plt.plot(betas, fit_fn(betas), label="estimated value")
 plt.xlabel('Beta')
 plt.ylabel('Number of different words')
 plt.legend()
