@@ -12,7 +12,7 @@ def main(argv):
 	choice = 1
 	beta=0.05
 	prob=1
-	time=10000000
+	time=50000000
 	try:
 		opts, args = getopt.getopt(argv,"ho:c:t:b:p:",["ofile=","choice=", "time=","beta=","prob="])
 	except getopt.GetoptError:

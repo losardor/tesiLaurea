@@ -4,6 +4,22 @@
 		"selected_items":
 		[
 			[
+				"cls",
+				"clustering"
+			],
+			[
+				"cl",
+				"clustering"
+			],
+			[
+				"see",
+				"seentimes"
+			],
+			[
+				"seen",
+				"seentimese"
+			],
+			[
 				"nam",
 				"namegiving"
 			],
@@ -291,7 +307,16 @@
 			"file": "NG.py",
 			"settings":
 			{
-				"buffer_size": 1254,
+				"buffer_size": 1253,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Game.py",
+			"settings":
+			{
+				"buffer_size": 10142,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -323,10 +348,10 @@
 			}
 		},
 		{
-			"file": "Game.py",
+			"file": "clustreing.dat",
 			"settings":
 			{
-				"buffer_size": 6958,
+				"buffer_size": 387,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -393,13 +418,13 @@
 	],
 	"file_history":
 	[
+		"/home/donrog/tesiLaurea/Game.py",
 		"/home/donrog/tesiLaurea/plotter.py",
 		"/home/donrog/tesiLaurea/Quick_plot.py",
 		"/home/donrog/tesiLaurea/analisys.py",
 		"/home/donrog/tesiLaurea/Script_palettes.py",
 		"/home/donrog/tesiLaurea/AverageCOMPLETEù.py",
 		"/home/donrog/tesiLaurea/NG.py",
-		"/home/donrog/tesiLaurea/Game.py",
 		"/home/donrog/tesiLaurea/examplegraph.py",
 		"/home/donrog/tesiLaurea/Agent.py",
 		"/home/donrog/tesiLaurea/CompleteNDW8000.png",
@@ -496,7 +521,7 @@
 	"groups":
 	[
 		{
-			"selected": 4,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -505,15 +530,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1254,
+						"buffer_size": 1253,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								194,
-								194
+								553,
+								553
 							]
 						],
 						"settings":
@@ -527,7 +552,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 60.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
@@ -535,6 +560,37 @@
 				},
 				{
 					"buffer": 1,
+					"file": "Game.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 10142,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1029,
+								1029
+							]
+						],
+						"settings":
+						{
+							"color_scheme": "Packages/User/Color Highlighter/themes/Material-Theme-Lighter.tmTheme",
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 601.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
 					"file": "runner.sh",
 					"semi_transient": false,
 					"settings":
@@ -552,17 +608,18 @@
 						],
 						"settings":
 						{
+							"color_scheme": "Packages/User/Color Highlighter/themes/Material-Theme-Lighter.tmTheme",
 							"syntax": "Packages/ShellScript/Shell-Unix-Generic.sublime-syntax"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
-					"buffer": 2,
+					"buffer": 3,
 					"file": "Agent.py",
 					"semi_transient": false,
 					"settings":
@@ -596,7 +653,7 @@
 					"type": "text"
 				},
 				{
-					"buffer": 3,
+					"buffer": 4,
 					"file": "Postprocessing/medie.py",
 					"semi_transient": false,
 					"settings":
@@ -614,48 +671,43 @@
 						],
 						"settings":
 						{
+							"color_scheme": "Packages/User/Color Highlighter/themes/Material-Theme-Lighter.tmTheme",
 							"syntax": "Packages/Python/Python.sublime-syntax"
 						},
 						"translation.x": 0.0,
 						"translation.y": 840.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 5,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
-					"file": "Game.py",
+					"buffer": 5,
+					"file": "clustreing.dat",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 6958,
+						"buffer_size": 387,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								340,
-								340
+								373,
+								373
 							]
 						],
 						"settings":
 						{
 							"color_scheme": "Packages/User/Color Highlighter/themes/Material-Theme-Lighter.tmTheme",
-							"rulers":
-							[
-								78
-							],
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 2,
 					"type": "text"
 				}
 			]
