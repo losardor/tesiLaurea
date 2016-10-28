@@ -26,9 +26,13 @@ def Play(f, T=1000000, name="game.dat", prob=1):
     '''
 
 
+    name=namegiving(name)
+    target = open(name, "w")
+    #for x in range(len(time[::10])):
+    #    target.write(str(time[10*x])+"\t"+str(different_words[10*x])+"\t"+str(numberofWords[10*x])+"\n")
     time=[]
-    different_words=[]
-    numberofWords=[0]
+    different_words=0
+    numberofWords=0
     couples=[]
     clustering=[]
     seentimes=[100, 1000, 10000, 100000, 1000000, 1000000, 2000000, 3000000, 4000000, 5000000, 6000000, 7000000, 8000000, 9000000, 10000000, 20000000, 30000000, 40000000, 49999999]
@@ -240,10 +244,6 @@ def Play(f, T=1000000, name="game.dat", prob=1):
     plt.show()
 
 
-    name=namegiving(name)
-    target = open(name, "w")
-    for x in range(len(time[::10])):
-        target.write(str(time[10*x])+"\t"+str(different_words[10*x])+"\t"+str(numberofWords[10*x])+"\n")
     return (different_words, numberofWords)
 
 
