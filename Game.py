@@ -30,12 +30,15 @@ def Play(f, T=1000000, name="game.dat", prob=1):
     target = open(name, "w")
     #for x in range(len(time[::10])):
     #    target.write(str(time[10*x])+"\t"+str(different_words[10*x])+"\t"+str(numberofWords[10*x])+"\n")
-    time=[]
+    time=0
+    target.write(str(0)+"\t")
     different_words=0
+    target.write(str(different_words)+"\t")
     numberofWords=0
+    target.write(str(numberofWords)+"\n")
     couples=[]
     clustering=[]
-    seentimes=[100, 1000, 10000, 100000, 1000000, 1000000, 2000000, 3000000, 4000000, 5000000, 6000000, 7000000, 8000000, 9000000, 10000000, 20000000, 30000000, 40000000, 49999999]
+    seentimes=[100, 1000, 10000, 100000, 1000000, 1000000, 2000000, 3000000, 4000000, 5000000, 6000000, 7000000, 8000000, 9000000, 10000000, 20000000, 30000000, 40000000, 99999999]
 
 
     for i in range(T):
@@ -73,7 +76,7 @@ def Play(f, T=1000000, name="game.dat", prob=1):
                         node_size=60)
                     plt.xlabel('X_grid identifier')
                     plt.ylabel('Y_grid identifier')
-                    plt.show() # display
+                    plt.savefig("word_on_grid_time_"+str(i)) # display
             lunghezze=[len(component) for component in sorted(word_clusters(f.topology), key=len, reverse=True)]
             if len(lunghezze):
                 clustering.append(float(sum(lunghezze))/len(lunghezze))
@@ -87,20 +90,21 @@ def Play(f, T=1000000, name="game.dat", prob=1):
         	couples.append([speaker.id,hearer.id])
         if(hearer==None):
             #print "Che rumore fa un albero che cade in una foresta disabitata?"
-            time.append(i+1)
-            different_words.append(different_words[-1])
-            numberofWords.append(numberofWords[-1])
+            target.write(str(i+1)+"\t")
+            target.write(str(different_words)+"\t")
+            target.write(str(numberofWords)+"\n")
             continue
 
 
         if(speaker==None):
             print "che rumore fa il battito di una mano sola?"
-            time.append(i+1)
+            target.write(str(i+1)+"\t")
             if speaker.ndw:
-                different_words.append(speaker.ndw)
+                different_words=speaker.ndw
+                target.write(str(speaker.ndw)+"\t")
             else:
-                different_words.append(different_words[-1])
-            numberofWords.append(numberofWords[-1])
+                targe.write(str(different_words)+"\t")
+            target.write(str(numberofWords)+"\n")
             continue
 
 
@@ -111,9 +115,11 @@ def Play(f, T=1000000, name="game.dat", prob=1):
         if(len(speaker.dict) == 1 and speaker.dict == hearer.dict): 
             # trivial case
             #print "%d %d" %(i, speaker.ndw)
-            time.append(i+1)
-            different_words.append(speaker.ndw)
-            numberofWords.append(numberofWords[-1]+len(speaker.dict)+len(hearer.dict)-coupleWords)
+            target.write(str(i+1)+"\t")
+            different_words=speaker.ndw
+            target.write(str(different_words)+"\t")
+            numberofWords+=len(speaker.dict)+len(hearer.dict)-coupleWords
+            target.write(str(numberofWords)+"\n")
             continue
         
 
@@ -135,12 +141,21 @@ def Play(f, T=1000000, name="game.dat", prob=1):
             hearer.AddWord(w)
 
 
-        time.append(i+1)
-        different_words.append(speaker.ndw)
-        numberofWords.append(numberofWords[-1]+len(speaker.dict)+len(hearer.dict)-coupleWords)
+        target.write(str(i+1)+"\t")
+        different_words=speaker.ndw
+        target.write(str(different_words)+"\t")
+        numberofWords+=len(speaker.dict)+len(hearer.dict)-coupleWords
+        target.write(str(numberofWords)+"\n")
        
-    numberofWords.pop(0)
+    target.close()
 
+    differentWords=[]
+    numberWords=[]
+    for line in open(name, "r"):
+        differentWords.append(int(line.split("\t")[1]))
+        numberWords.append(int(line.split("\t")[2]))
+
+    print len(differentWords), len(numberWords)
 
     if SHOW==1:
         if f.topology.tipo==COMPLETE:
@@ -160,10 +175,11 @@ def Play(f, T=1000000, name="game.dat", prob=1):
         plt.tick_params(axis="both", which="both", bottom="off", top="off", 
             labelbottom="on", left="off", right="off", labelleft="on")
     
-        plt.plot(time, different_words, label='NDW')
-        plt.plot(time, numberofWords, label='NW')
+        plt.plot(range(len(differentWords)), differentWords, label='NDW')
+        plt.plot(range(len(numberWords)) , numberWords, label='NW')
         plt.xlabel('Time Step')
         plt.ylabel('Number of Different Words')
+        plt.legend()
         plt.show()
     
         fig2=plt.figure(figsize=(16,12))
@@ -178,13 +194,13 @@ def Play(f, T=1000000, name="game.dat", prob=1):
         plt.tick_params(axis="both", which="both", bottom="off", top="off", 
             labelbottom="on", left="off", right="off", labelleft="on")
     
-        plt.plot(time, numberofWords, label='NW')
+        plt.plot(range(len(numberWords)) , numberWords, label='NW')
         try:
-            plt.plot(range(len(time)), 
-                [len(f.topology.G.nodes()) for i in range(len(time))], 
+            plt.plot(range(len(numberWords)), 
+                [len(f.topology.G.nodes()) for i in range(len(numberWords))], 
                 "--", lw=0.5, color="black", alpha=0.3)
         except:
-            plt.plot(range(len(time)), [8100 for i in range(len(time))], 
+            plt.plot(range(len(numberWords)), [8100 for i in range(len(numberWords))], 
                 "--", lw=0.5, color="black", alpha=0.3)
         plt.xlabel('Time Step')
         plt.ylabel('Number of Words')
@@ -198,14 +214,13 @@ def Play(f, T=1000000, name="game.dat", prob=1):
                     nodeColor.append(int(f.topology.G.node[x]['agent'].dict[0]))
                 else:
                     nodeColor.append(0)
-            nodeColor=[color/max(nodeColor) for color in nodeColor]
+            nodeColor=[float(color)/max(nodeColor) for color in nodeColor]
         except:
             print "the topolgy is complete and has no grid to print"
 
         
         if f.topology.tipo == GRIDONMAP:
             fig2=plt.figure()
-            colors = cm.rainbow(np.linspace(0, 1, len(nodeColor)))
             elarge=[(u,v) for (u,v,d) in f.topology.G.edges(data=True)\
              if d['weight'] >=0.05]
             esmall=[(u,v) for (u,v,d) in f.topology.G.edges(data=True)\
@@ -218,7 +233,7 @@ def Play(f, T=1000000, name="game.dat", prob=1):
                  width=1, alpha=0.5,edge_color='b',style='dashed')
             nx.draw_networkx_nodes(f.topology.G, 
                 pos={i:i for i in f.topology.G.nodes()}, node_color=nodeColor, 
-                node_cmap=sns.color_palette("RdBu_r"), node_size=20)
+                node_cmap=cm.Colormap("Accent"), node_size=20)
             plt.xlabel('X_grid identifier')
             plt.ylabel('Y_grid identifier')
             plt.show() # display
@@ -235,7 +250,6 @@ def Play(f, T=1000000, name="game.dat", prob=1):
     else:
         if SHOW==1:
             fig2=plt.figure()
-            colors = cm.rainbow(np.linspace(0, 1, len(nodeColor)))
             nx.draw(f.topology.G, pos=nx.spring_layout(f.topology.G))
             plt.show() # display
         
@@ -244,7 +258,7 @@ def Play(f, T=1000000, name="game.dat", prob=1):
     plt.show()
 
 
-    return (different_words, numberofWords)
+    return (differentWords, numberWords)
 
 
 
