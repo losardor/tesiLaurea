@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"no",
+				"nodeColor"
+			],
+			[
 				"nu",
 				"numberWords"
 			],
@@ -110,10 +114,6 @@
 			[
 				"sho",
 				"SHOW"
-			],
-			[
-				"no",
-				"nodes"
 			],
 			[
 				"pos",
@@ -307,16 +307,7 @@
 			"file": "NG.py",
 			"settings":
 			{
-				"buffer_size": 1255,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Game.py",
-			"settings":
-			{
-				"buffer_size": 10771,
+				"buffer_size": 1268,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -326,6 +317,41 @@
 			"settings":
 			{
 				"buffer_size": 7127,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "objectDump.py",
+			"settings":
+			{
+				"buffer_size": 1836,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Game.py",
+			"settings":
+			{
+				"buffer_size": 10867,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "runner.sh",
+			"settings":
+			{
+				"buffer_size": 99,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Postprocessing/examplegraph.py",
+			"settings":
+			{
+				"buffer_size": 2951,
 				"line_ending": "Unix"
 			}
 		},
@@ -399,6 +425,7 @@
 	],
 	"file_history":
 	[
+		"/home/donrog/tesiLaurea/NG",
 		"/home/donrog/tesiLaurea/runner.sh",
 		"/home/donrog/tesiLaurea/Postprocessing/medie.py",
 		"/home/donrog/tesiLaurea/clustreing.dat",
@@ -517,7 +544,7 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 6,
 			"sheets":
 			[
 				{
@@ -526,15 +553,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1255,
+						"buffer_size": 1268,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								188,
-								188
+								209,
+								209
 							]
 						],
 						"settings":
@@ -551,44 +578,13 @@
 						"translation.y": 120.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "Game.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 10771,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								250,
-								250
-							]
-						],
-						"settings":
-						{
-							"color_scheme": "Packages/User/Color Highlighter/themes/Material-Theme-Lighter.tmTheme",
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 126.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
 					"file": "gridItalia.py",
-					"semi_transient": true,
+					"semi_transient": false,
 					"settings":
 					{
 						"buffer_size": 7127,
@@ -604,11 +600,41 @@
 						],
 						"settings":
 						{
+							"color_scheme": "Packages/User/Color Highlighter/themes/Material-Theme-Lighter.tmTheme",
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": -0.0,
+						"translation.y": 2040.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "objectDump.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1836,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1612,
+								1612
+							]
+						],
+						"settings":
+						{
+							"color_scheme": "Packages/User/Color Highlighter/themes/Material-Theme-Lighter.tmTheme",
 							"syntax": "Packages/Python/Python.sublime-syntax",
 							"translate_tabs_to_spaces": false
 						},
-						"translation.x": -0.0,
-						"translation.y": 480.0,
+						"translation.x": 0.0,
+						"translation.y": 240.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
@@ -616,6 +642,97 @@
 				},
 				{
 					"buffer": 3,
+					"file": "Game.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 10867,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								81,
+								81
+							]
+						],
+						"settings":
+						{
+							"color_scheme": "Packages/User/Color Highlighter/themes/Material-Theme-Lighter.tmTheme",
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": -0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "runner.sh",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 99,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								36,
+								36
+							]
+						],
+						"settings":
+						{
+							"color_scheme": "Packages/User/Color Highlighter/themes/Material-Theme-Lighter.tmTheme",
+							"syntax": "Packages/ShellScript/Shell-Unix-Generic.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "Postprocessing/examplegraph.py",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 2951,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"color_scheme": "Packages/User/Color Highlighter/themes/Material-Theme-Lighter.tmTheme",
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
 					"file": "Agent.py",
 					"semi_transient": false,
 					"settings":
@@ -642,10 +759,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 4745.0,
+						"translation.y": 4085.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 0,
 					"type": "text"
 				}
 			]

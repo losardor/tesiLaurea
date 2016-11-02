@@ -1,4 +1,4 @@
-for beta in $(LC_NUMERIC=C seq 1000000 1000000 5000000); 
+for beta in $(LC_NUMERIC=C seq 0.003 0.001 0.01); 
 	do 
-	echo $beta ; python NG.py -t $beta; 
+	echo $beta ; python NG.py -b $beta; 
 done

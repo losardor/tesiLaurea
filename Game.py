@@ -43,7 +43,7 @@ def Play(f, T=1000000, name="game.dat", prob=1):
 
     for i in range(T):
         
-        if i in seentimes:
+        if i in seentimes and f.topology.tipo != COMPLETE:
             print i
             if SHOW==2:
                 try:
@@ -151,9 +151,10 @@ def Play(f, T=1000000, name="game.dat", prob=1):
 
     differentWords=[]
     numberWords=[]
-    for line in open(name, "r"):
-        differentWords.append(int(line.split("\t")[1]))
-        numberWords.append(int(line.split("\t")[2]))
+    for k, line in enumerate(open(name, "r")):
+        if k%100==0:
+            differentWords.append(int(line.split("\t")[1]))
+            numberWords.append(int(line.split("\t")[2]))
 
     print len(differentWords), len(numberWords)
 
@@ -253,7 +254,7 @@ def Play(f, T=1000000, name="game.dat", prob=1):
             nx.draw(f.topology.G, pos=nx.spring_layout(f.topology.G))
             plt.show() # display
         
-
+    fig9=plt.figure()
     plt.plot(seentimes[:len(clustering)], clustering)
     plt.show()
 
