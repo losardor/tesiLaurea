@@ -15,7 +15,7 @@ GRID2DBAND = 3
 GRID2DBAND_p = 0.01
 BARABASI = 4; BARABASI_M = 4
 GRIDONMAP = 5
-SHOW = 2
+SHOW = 0
 
 def Play(f, T=1000000, name="game.dat", prob=1):
     '''
@@ -26,7 +26,7 @@ def Play(f, T=1000000, name="game.dat", prob=1):
     '''
 
 
-    name=namegiving(name)
+    name="files/Data/"+namegiving(name)
     target = open(name, "w")
     #for x in range(len(time[::10])):
     #    target.write(str(time[10*x])+"\t"+str(different_words[10*x])+"\t"+str(numberofWords[10*x])+"\n")
@@ -152,7 +152,7 @@ def Play(f, T=1000000, name="game.dat", prob=1):
     differentWords=[]
     numberWords=[]
     for k, line in enumerate(open(name, "r")):
-        if k%100==0:
+        if k%1000==0:
             differentWords.append(int(line.split("\t")[1]))
             numberWords.append(int(line.split("\t")[2]))
 
