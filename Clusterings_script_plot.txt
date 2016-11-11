@@ -1,0 +1,8 @@
+plot "Clusterings.dat" every :::0::0 using 1:(log(1-($2)/114)) w l t "beta=0.003"
+replot "Clusterings.dat" every :::1::1 using 1:(log(1-($2)/114)) w l t "beta=0.004"
+replot "Clusterings.dat" every :::2::2 using 1:(log(1-($2)/114)) w l t "beta=0.005"
+replot "Clusterings.dat" every :::3::3 using 1:(log(1-($2)/114)) w l t "beta=0.006"
+replot "Clusterings.dat" every :::4::4 using 1:(log(1-($2)/114)) w l t "beta=0.007"
+replot "Clusterings.dat" every :::5::5 using 1:(log(1-($2)/114)) w l t "beta=0.008"
+replot "Clusterings.dat" every :::6::6 using 1:(log(1-($2)/114)) w l t "beta=0.009"
+replot "Clusterings.dat" every :::7::7 using 1:(log(1-($2)/114)) w l t "beta=0.010"

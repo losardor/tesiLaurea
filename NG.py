@@ -8,11 +8,11 @@ import numpy as np
 import sys, getopt
 
 def main(argv):
-	outputfile = 'complete_game.dat'
+	outputfile = ''
 	choice = 1
 	beta=0.05
 	prob=1
-	time=50000000
+	time=3000000
 	try:
 		opts, args = getopt.getopt(argv,"ho:c:t:b:p:",["ofile=","choice=", "time=","beta=","prob="])
 	except getopt.GetoptError:
@@ -40,7 +40,7 @@ def main(argv):
 	if outputfile == '':
 		outputfile="gameBeta"+str(beta)+"Prob"+str(prob)+".dat"
 
-	folk=Folk(1000, COMPLETE, choice = choice, Beta = beta)
+	folk=Folk(1000, GRIDONMAP, choice = choice, Beta = beta)
 	Play(folk, time, name=outputfile, prob=prob)
 
 if __name__=="__main__":

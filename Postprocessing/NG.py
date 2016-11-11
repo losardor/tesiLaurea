@@ -9,8 +9,8 @@ import sys, getopt
 
 def main(argv):
 	outputfile = ''
-	choice = 1
-	beta=0.1
+	choice = 0
+	beta=1
 	prob=1
 	try:
 		opts, args = getopt.getopt(argv,"ho:c:t:b:p:",["ofile=","choice=","topology=","beta=","prob="])
@@ -38,7 +38,7 @@ def main(argv):
 		outputfile="gameBeta"+str(beta)+"Prob"+str(prob)+".dat"
 
 	folk=Folk(1000, GRIDONMAP, choice = choice, Beta = beta)
-	Play(folk, 500000, name=outputfile, prob=prob)
+	Play(folk, 10000, name=outputfile, prob=prob)
 
 if __name__=="__main__":
 	main(sys.argv[1:])
