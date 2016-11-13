@@ -10,9 +10,9 @@ import sys, getopt
 def main(argv):
 	outputfile = ''
 	choice = 1
-	beta=0.05
+	beta=0.1
 	prob=1
-	time=3000000
+	time=5000000
 	try:
 		opts, args = getopt.getopt(argv,"ho:c:t:b:p:",["ofile=","choice=", "time=","beta=","prob="])
 	except getopt.GetoptError:

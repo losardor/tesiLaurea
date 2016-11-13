@@ -15,7 +15,7 @@ GRID2DBAND = 3
 GRID2DBAND_p = 0.01
 BARABASI = 4; BARABASI_M = 4
 GRIDONMAP = 5
-SHOW = 0
+SHOW = 1
 
 def Play(f, T=1000000, name="game.dat", prob=1):
     '''

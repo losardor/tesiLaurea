@@ -2,7 +2,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 import matplotlib.cm as cm
 
-betas=[float(x)/100000 for x in range(50,1000, 25)]
+betas=[float(x)/1000 for x in range(3, 51)]
 
 x=[]
 y=[]
@@ -27,7 +27,7 @@ plt.tick_params(axis="both", which="both", bottom="off", top="off",
 colors = cm.rainbow(np.linspace(0, 1, len(x)))
 
 for rank,X in enumerate(list(x)):
-	if rank in range(0,len(x),2):
+	if rank in range(0,len(x)):
 		plt.plot(time, X, color=colors[rank], 
 			label=str(betas[rank]), linewidth=1)
 
@@ -40,12 +40,12 @@ plt.show()
 last=[]
 max=[]
 betaas=[]
-for i in range(19):
-	last.append(x[i][-1])
+for i in range(len(x)):
+	#last.append(x[i][-1])
 	max.append(x[i].max())
 	betaas.append(float(i+1)/100)
 
-plt.scatter(betaas,last, marker='*', color='r', label='the last ndw')
+plt.scatter(betaas,max, marker='*', color='r', label='the maximal NDW')
 plt.xlabel('Beta')
 plt.ylabel('Number of different words')
 plt.legend()
