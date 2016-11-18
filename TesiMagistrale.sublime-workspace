@@ -4,6 +4,18 @@
 		"selected_items":
 		[
 			[
+				"fig",
+				"fig5"
+			],
+			[
+				"l",
+				"lunghezze"
+			],
+			[
+				"x",
+				"x"
+			],
+			[
 				"ch",
 				"choices2"
 			],
@@ -256,10 +268,6 @@
 				"HEIGHT"
 			],
 			[
-				"x",
-				"xrange"
-			],
-			[
 				"lo",
 				"listOfNodes"
 			],
@@ -308,10 +316,6 @@
 				"totalNum"
 			],
 			[
-				"l",
-				"listOfNodes"
-			],
-			[
 				"c",
 				"coarsnes"
 			],
@@ -324,27 +328,29 @@
 	"buffers":
 	[
 		{
-			"file": "mapMakeR/etymologyMaps/generateMap_v1.py",
+			"file": "Selection_prob.py",
 			"settings":
 			{
-				"buffer_size": 3935,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "mapMakeR/etymologyMaps/resources/dictionary_template.txt",
-			"settings":
-			{
-				"buffer_size": 940,
+				"buffer_size": 845,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "mapMakeR/etymologyMaps/resources/language_codes_dictionary.txt",
+			"file": "Postprocessing/analisys.py",
 			"settings":
 			{
-				"buffer_size": 862,
+				"buffer_size": 1254,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "NG.py",
+			"settings":
+			{
+				"buffer_size": 1255,
+				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
@@ -352,7 +358,25 @@
 			"file": "Game.py",
 			"settings":
 			{
-				"buffer_size": 10882,
+				"buffer_size": 11510,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "Agent.py",
+			"settings":
+			{
+				"buffer_size": 8289,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "runner.sh",
+			"settings":
+			{
+				"buffer_size": 99,
+				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		}
@@ -417,6 +441,10 @@
 	],
 	"file_history":
 	[
+		"/home/donrog/tesiLaurea/Selection",
+		"/home/donrog/tesiLaurea/mapMakeR/etymologyMaps/generateMap_v1.py",
+		"/home/donrog/tesiLaurea/mapMakeR/etymologyMaps/resources/dictionary_template.txt",
+		"/home/donrog/tesiLaurea/mapMakeR/etymologyMaps/resources/language_codes_dictionary.txt",
 		"/home/donrog/tesiLaurea/NG.py",
 		"/home/donrog/tesiLaurea/Clusterings_script_plot.txt",
 		"/home/donrog/tesiLaurea/Postprocessing/NG.py",
@@ -479,6 +507,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"hist",
 			":2 ",
 			":2",
 			"plot",
@@ -543,109 +572,114 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 3,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "mapMakeR/etymologyMaps/generateMap_v1.py",
+					"file": "Selection_prob.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3935,
+						"buffer_size": 845,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								845,
+								845
 							]
 						],
 						"settings":
 						{
 							"color_scheme": "Packages/User/Color Highlighter/themes/Material-Theme-Lighter.tmTheme",
-							"syntax": "Packages/Python/Python.sublime-syntax"
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 2520.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "mapMakeR/etymologyMaps/resources/dictionary_template.txt",
+					"file": "Postprocessing/analisys.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 940,
+						"buffer_size": 1254,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								125,
+								125
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
+							"color_scheme": "Packages/User/Color Highlighter/themes/Material-Theme-Lighter.tmTheme",
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "NG.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1255,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1015,
+								1015
+							]
+						],
+						"settings":
+						{
+							"color_scheme": "Packages/User/Color Highlighter/themes/Material-Theme-Lighter.tmTheme",
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 120.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 2,
-					"file": "mapMakeR/etymologyMaps/resources/language_codes_dictionary.txt",
+					"buffer": 3,
+					"file": "Game.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 862,
+						"buffer_size": 11510,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 1080.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "Game.py",
-					"semi_transient": true,
-					"settings":
-					{
-						"buffer_size": 10882,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
+								3620,
+								3620
 							]
 						],
 						"settings":
@@ -656,10 +690,68 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
+						"translation.y": 1108.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "Agent.py",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 8289,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6763,
+								6763
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 4200.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "runner.sh",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 99,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								47,
+								47
+							]
+						],
+						"settings":
+						{
+							"color_scheme": "Packages/User/Color Highlighter/themes/Material-Theme-Lighter.tmTheme",
+							"syntax": "Packages/ShellScript/Shell-Unix-Generic.sublime-syntax"
+						},
+						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 4,
 					"type": "text"
 				}
 			]

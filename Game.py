@@ -15,7 +15,7 @@ GRID2DBAND = 3
 GRID2DBAND_p = 0.01
 BARABASI = 4; BARABASI_M = 4
 GRIDONMAP = 5
-SHOW = 1
+SHOW = 2
 
 def Play(f, T=1000000, name="game.dat", prob=1):
     '''
@@ -40,7 +40,7 @@ def Play(f, T=1000000, name="game.dat", prob=1):
     clustering=[]
     seentimes=[100, 1000, 10000, 100000, 1000000, 1000000, 2000000, 3000000, 4000000, 5000000, 6000000, 7000000, 8000000, 9000000, 10000000, 20000000, 30000000, 40000000, 99999999]
 
-
+    count=0
     for i in range(T):
         
         if i in seentimes and f.topology.tipo != COMPLETE:
@@ -73,16 +73,26 @@ def Play(f, T=1000000, name="game.dat", prob=1):
                     nx.draw_networkx_nodes(f.topology.G, 
                         pos={i:i for i in f.topology.G.nodes()}, node_color=nodeColor, 
                         node_cmap=cm.Colormap("Accent"),
-                        node_size=60)
+                        node_size=10)
                     plt.xlabel('X_grid identifier')
                     plt.ylabel('Y_grid identifier')
                     plt.savefig("word_on_grid_time_"+str(i)) # display
             lunghezze=[len(component) for component in sorted(word_clusters(f.topology), key=len, reverse=True)]
             if len(lunghezze):
+                if max(lunghezze)/30:
+                    binses=[grand for grand in range(0, max(lunghezze), max(lunghezze)/30)]
+                    fig5=plt.figure(figsize=(12,16))
+                    plt.hist(lunghezze, binses, histtype='bar', rwidth=0.8, 
+                        label='cluster sizes')
+                    plt.savefig("Cluster_size:distribution_"+str(i))
                 clustering.append(float(sum(lunghezze))/len(lunghezze))
+                if len(lunghezze)<50 and count == 0:
+                    print "The number of clusters for time "+str(i)+"is close too the current distribution."
+                    count=count+1
             else:
                 clustering.append(0)
-            print clustering[-1]
+            print clustering[-1], len(lunghezze)
+            plt.close("all")
 
 
         [speaker, hearer] = f.Select()
