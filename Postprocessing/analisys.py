@@ -2,7 +2,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 import matplotlib.cm as cm
 
-betas=[float(x)/1000 for x in range(3, 51)]
+betas=[float(x)/1000 for x in range(3, 51, 2)]
 
 x=[]
 y=[]
@@ -26,10 +26,16 @@ plt.tick_params(axis="both", which="both", bottom="off", top="off",
 
 colors = cm.rainbow(np.linspace(0, 1, len(x)))
 
+fit_param=[]
 for rank,X in enumerate(list(x)):
 	if rank in range(0,len(x)):
-		plt.plot(time, X, color=colors[rank], 
-			label=str(betas[rank]), linewidth=1)
+		x_log=np.log(X)
+		time_log=np.log(time)
+		fit_param.append(np.polyfit(time_log[2000:], x_log[2000:], 1))
+		print betas[rank], fit_param[-1]
+		fit=np.poly1d(fit_param[-1])
+		plt.plot(time_log, x_log, label=str(betas[rank]), linewidth=1)
+		plt.plot(range(len(x_log)), [fit(j) for j in range(len(x_log))], ls='dotted')
 
 plt.xlabel('Time Step')
 plt.ylabel('Number of Different Words')

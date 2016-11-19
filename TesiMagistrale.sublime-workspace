@@ -4,6 +4,18 @@
 		"selected_items":
 		[
 			[
+				"fit",
+				"fit_param"
+			],
+			[
+				"X",
+				"x_log"
+			],
+			[
+				"time",
+				"time_log"
+			],
+			[
 				"cl",
 				"clustersizefile"
 			],
@@ -344,7 +356,16 @@
 			"file": "Postprocessing/analisys.py",
 			"settings":
 			{
-				"buffer_size": 1254,
+				"buffer_size": 1507,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "boxplot.py",
+			"settings":
+			{
+				"buffer_size": 1070,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -366,7 +387,6 @@
 			"settings":
 			{
 				"buffer_size": 11813,
-				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
@@ -448,6 +468,7 @@
 	],
 	"file_history":
 	[
+		"/home/donrog/tesiLaurea/mapMakeR/languagesOfTheWorld/archive/glottolog_ipython.py",
 		"/home/donrog/tesiLaurea/Selection",
 		"/home/donrog/tesiLaurea/mapMakeR/etymologyMaps/generateMap_v1.py",
 		"/home/donrog/tesiLaurea/mapMakeR/etymologyMaps/resources/dictionary_template.txt",
@@ -580,7 +601,7 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 2,
 			"sheets":
 			[
 				{
@@ -610,7 +631,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 5,
 					"type": "text"
 				},
 				{
@@ -619,15 +640,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1254,
+						"buffer_size": 1507,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								125,
-								125
+								943,
+								943
 							]
 						],
 						"settings":
@@ -637,14 +658,43 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 200.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
 					"buffer": 2,
+					"file": "boxplot.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1070,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1070,
+								1070
+							]
+						],
+						"settings":
+						{
+							"color_scheme": "Packages/User/Color Highlighter/themes/Material-Theme-Lighter.tmTheme",
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 360.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
 					"file": "NG.py",
 					"semi_transient": false,
 					"settings":
@@ -670,11 +720,11 @@
 						"translation.y": 60.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
+					"buffer": 4,
 					"file": "Game.py",
 					"semi_transient": false,
 					"settings":
@@ -701,11 +751,11 @@
 						"translation.y": 2660.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
+					"buffer": 5,
 					"file": "Agent.py",
 					"semi_transient": true,
 					"settings":
@@ -723,6 +773,7 @@
 						],
 						"settings":
 						{
+							"color_scheme": "Packages/User/Color Highlighter/themes/Material-Theme-Lighter.tmTheme",
 							"syntax": "Packages/Python/Python.sublime-syntax",
 							"translate_tabs_to_spaces": false
 						},
@@ -730,11 +781,11 @@
 						"translation.y": 4200.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
+					"buffer": 6,
 					"file": "runner.sh",
 					"semi_transient": false,
 					"settings":
@@ -759,7 +810,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 6,
 					"type": "text"
 				}
 			]
