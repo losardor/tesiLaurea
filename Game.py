@@ -28,6 +28,8 @@ def Play(f, T=1000000, name="game.dat", prob=1):
 
     name="files/Data/"+namegiving(name)
     target = open(name, "w")
+    clusterfile=open("clustering", "w")
+
     #for x in range(len(time[::10])):
     #    target.write(str(time[10*x])+"\t"+str(different_words[10*x])+"\t"+str(numberofWords[10*x])+"\n")
     time=0
@@ -38,13 +40,14 @@ def Play(f, T=1000000, name="game.dat", prob=1):
     target.write(str(numberofWords)+"\n")
     couples=[]
     clustering=[]
-    seentimes=[100, 1000, 10000, 100000, 1000000, 1000000, 2000000, 3000000, 4000000, 5000000, 6000000, 7000000, 8000000, 9000000, 10000000, 20000000, 30000000, 40000000, 99999999]
-
+    seentimes=[100, 1000, 10000, 100000, 1000000, 1000000, 2000000, 3000000, 4000000, 5000000, 6000000, 7000000, 8000000, 9000000]
+    seentimes.append([t*10000000 for t in range(1,100)])
     count=0
-    for i in range(T):
-        
+    i=0
+    while i<T:
         if i in seentimes and f.topology.tipo != COMPLETE:
             print i
+            clustersizefile=open("Clustersi"+str(i)+".dat", "w")
             if SHOW==2:
                 try:
                     nodeColor=[]
@@ -79,6 +82,7 @@ def Play(f, T=1000000, name="game.dat", prob=1):
                     plt.savefig("word_on_grid_time_"+str(i)) # display
             lunghezze=[len(component) for component in sorted(word_clusters(f.topology), key=len, reverse=True)]
             if len(lunghezze):
+                clustersizefile.writelines([str(lunghezza)+"\n" for lunghezza in lunghezze])
                 if max(lunghezze)/30:
                     binses=[grand for grand in range(0, max(lunghezze), max(lunghezze)/30)]
                     fig5=plt.figure(figsize=(12,16))
@@ -92,6 +96,8 @@ def Play(f, T=1000000, name="game.dat", prob=1):
             else:
                 clustering.append(0)
             print clustering[-1], len(lunghezze)
+            clusterfile.write(str(i)+"\t"+str(clustering[-1])+"\t"+str(len(lunghezze))+"\n")
+
             plt.close("all")
 
 
@@ -156,6 +162,7 @@ def Play(f, T=1000000, name="game.dat", prob=1):
         target.write(str(different_words)+"\t")
         numberofWords+=len(speaker.dict)+len(hearer.dict)-coupleWords
         target.write(str(numberofWords)+"\n")
+        i+=1
        
     target.close()
 

@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"cl",
+				"clustersizefile"
+			],
+			[
+				"clu",
+				"clustering"
+			],
+			[
 				"fig",
 				"fig5"
 			],
@@ -49,10 +57,6 @@
 			],
 			[
 				"cls",
-				"clustering"
-			],
-			[
-				"cl",
 				"clustering"
 			],
 			[
@@ -349,16 +353,19 @@
 			"file": "NG.py",
 			"settings":
 			{
-				"buffer_size": 1255,
+				"buffer_size": 1257,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
 		{
+			"contents": "#def \nimport cPickle as pk\nimport matplotlib.pyplot as plt\nimport networkx as nx\nimport matplotlib.colors as cm\nimport numpy as np\nimport random\nfrom pathlib2 import Path\n\nDEBUG = 0\nCOMPLETE = 0\nERDOS    = 1; ERDOS_p = 0.5\nGRID2D   = 2\nGRID2DBAND = 3\nGRID2DBAND_p = 0.01\nBARABASI = 4; BARABASI_M = 4\nGRIDONMAP = 5\nSHOW = 2\n\ndef Play(f, T=1000000, name=\"game.dat\", prob=1):\n    '''\n    Folk play T timesteps of the naming game. The name variable\n    contains the name of the file where the data will be stored.\n    If prob is not 1 function stocastically updated with probability = prob \n    on a success.\n    '''\n\n\n    name=\"files/Data/\"+namegiving(name)\n    target = open(name, \"w\")\n    clusterfile=open(\"clustering\", \"w\")\n\n    #for x in range(len(time[::10])):\n    #    target.write(str(time[10*x])+\"\\t\"+str(different_words[10*x])+\"\\t\"+str(numberofWords[10*x])+\"\\n\")\n    time=0\n    target.write(str(0)+\"\\t\")\n    different_words=0\n    target.write(str(different_words)+\"\\t\")\n    numberofWords=0\n    target.write(str(numberofWords)+\"\\n\")\n    couples=[]\n    clustering=[]\n    seentimes=[100, 1000, 10000, 100000, 1000000, 1000000, 2000000, 3000000, 4000000, 5000000, 6000000, 7000000, 8000000, 9000000]\n    seentimes.append([t*10000000 for t in range(1,100)])\n    count=0\n    i=0\n    while i<T:\n        if i in seentimes and f.topology.tipo != COMPLETE:\n            print i\n            clustersizefile=open(\"Clustersi\"+str(i)+\".dat\", \"w\")\n            if SHOW==2:\n                try:\n                    nodeColor=[]\n                    for x in f.topology.G.nodes():\n                        if f.topology.G.node[x]['agent'].dict != []:\n                            nodeColor.append(int(f.topology.G.node[x]['agent'].dict[0]))\n                        else:\n                            nodeColor.append(0)\n                    nodeColor=[float(color)/max(nodeColor) for color in nodeColor]\n                except:\n                    print \"the topolgy is complete and has no grid to print\"\n\n\n                if f.topology.tipo == GRIDONMAP:\n                    fig=plt.figure(figsize=(16,12))\n                    fig.patch.set_facecolor('#F8F8ff')\n                    ax=plt.subplot(111)\n                    elarge=[(u,v) for (u,v,d) in f.topology.G.edges(data=True) if d['weight'] >=0.05]\n                    esmall=[(u,v) for (u,v,d) in f.topology.G.edges(data=True) if d['weight'] <0.05]\n                    nx.draw_networkx_edges(f.topology.G, \n                        pos={J:J for J in f.topology.G.nodes()}, edgelist=elarge, \n                        width=1, alpha = 0.5)\n                    nx.draw_networkx_edges(f.topology.G, \n                        pos={J:J for J in f.topology.G.nodes()}, edgelist=esmall, \n                        width=1, alpha=0.5,edge_color='b',style='dashed')\n                    nx.draw_networkx_nodes(f.topology.G, \n                        pos={J:J for J in f.topology.G.nodes()}, node_color=nodeColor, \n                        node_cmap=cm.Colormap(\"Accent\"),\n                        node_size=10)\n                    plt.xlabel('X_grid identifier')\n                    plt.ylabel('Y_grid identifier')\n                    plt.savefig(\"word_on_grid_time_\"+str(i)) # display\n            lunghezze=[len(component) for component in sorted(word_clusters(f.topology), key=len, reverse=True)]\n            if len(lunghezze):\n                clustersizefile.writelines([str(lunghezza)+\"\\n\" for lunghezza in lunghezze])\n                if max(lunghezze)/30:\n                    binses=[grand for grand in range(0, max(lunghezze), max(lunghezze)/30)]\n                    fig5=plt.figure(figsize=(12,16))\n                    plt.hist(lunghezze, binses, histtype='bar', rwidth=0.8, \n                        label='cluster sizes')\n                    plt.savefig(\"Cluster_size:distribution_\"+str(i))\n                clustering.append(float(sum(lunghezze))/len(lunghezze))\n                if len(lunghezze)<50 and count == 0:\n                    print \"The number of clusters for time \"+str(i)+\"is close too the current distribution.\"\n                    count=count+1\n            else:\n                clustering.append(0)\n            print clustering[-1], len(lunghezze)\n            clusterfile.write(str(i)+\"\\t\"+str(clustering[-1])+\"\\t\"+str(len(lunghezze))+\"\\n\")\n\n            plt.close(\"all\")\n\n\n        [speaker, hearer] = f.Select()\n        if f.topology.tipo==COMPLETE:\n        \tcouples.append([speaker.id,hearer.id])\n        if(hearer==None):\n            #print \"Che rumore fa un albero che cade in una foresta disabitata?\"\n            target.write(str(i+1)+\"\\t\")\n            target.write(str(different_words)+\"\\t\")\n            target.write(str(numberofWords)+\"\\n\")\n            continue\n\n\n        if(speaker==None):\n            print \"che rumore fa il battito di una mano sola?\"\n            target.write(str(i+1)+\"\\t\")\n            if speaker.ndw:\n                different_words=speaker.ndw\n                target.write(str(speaker.ndw)+\"\\t\")\n            else:\n                targe.write(str(different_words)+\"\\t\")\n            target.write(str(numberofWords)+\"\\n\")\n            continue\n\n\n        if DEBUG: \n            print \"speaker:\", str(speaker.dict),\" hearer:\",str(hearer.dict)\n\n        coupleWords=len(speaker.dict)+len(hearer.dict)\n        if(len(speaker.dict) == 1 and speaker.dict == hearer.dict): \n            # trivial case\n            #print \"%d %d\" %(i, speaker.ndw)\n            target.write(str(i+1)+\"\\t\")\n            different_words=speaker.ndw\n            target.write(str(different_words)+\"\\t\")\n            numberofWords+=len(speaker.dict)+len(hearer.dict)-coupleWords\n            target.write(str(numberofWords)+\"\\n\")\n            continue\n        \n\n        if not speaker.dict: #if empty\n            w = speaker.NewWord()\n            speaker.AddWord(w)\n        w = speaker.ChooseWord()\n        if w in hearer.dict: # success\n            if DEBUG: \n                print \"w:\",str(w),\"success\"\n            if random.random() < prob:\n                speaker.EraseDict()\n                hearer.EraseDict()\n                speaker.AddWord(w)\n                hearer.AddWord(w)\n        else:\n            if DEBUG: \n                print \"w:\",str(w), \"failure\"\n            hearer.AddWord(w)\n\n\n        target.write(str(i+1)+\"\\t\")\n        different_words=speaker.ndw\n        target.write(str(different_words)+\"\\t\")\n        numberofWords+=len(speaker.dict)+len(hearer.dict)-coupleWords\n        target.write(str(numberofWords)+\"\\n\")\n        i+=1\n       \n    target.close()\n\n    differentWords=[]\n    numberWords=[]\n    for k, line in enumerate(open(name, \"r\")):\n        if k%1000==0:\n            differentWords.append(int(line.split(\"\\t\")[1]))\n            numberWords.append(int(line.split(\"\\t\")[2]))\n\n    print len(differentWords), len(numberWords)\n\n    if SHOW==1:\n        if f.topology.tipo==COMPLETE:\n            x,y=zip(*couples)\n            plt.scatter(x,y)\n\n\n        fig=plt.figure(figsize=(16,12))\n        ax=plt.subplot(111)\n        ax.spines[\"top\"].set_visible(False)\n        ax.spines[\"bottom\"].set_visible(False)\n        ax.spines[\"right\"].set_visible(False)\n        ax.spines[\"left\"].set_visible(False)\n        ax.get_xaxis().tick_bottom()\n        ax.get_yaxis().tick_left()\n        plt.xticks(fontsize=14)\n        plt.tick_params(axis=\"both\", which=\"both\", bottom=\"off\", top=\"off\", \n            labelbottom=\"on\", left=\"off\", right=\"off\", labelleft=\"on\")\n    \n        plt.plot(range(len(differentWords)), differentWords, label='NDW')\n        plt.plot(range(len(numberWords)) , numberWords, label='NW')\n        plt.xlabel('Time Step')\n        plt.ylabel('Number of Different Words')\n        plt.legend()\n        plt.show()\n    \n        fig2=plt.figure(figsize=(16,12))\n        ax2=plt.subplot(111)\n        ax2.spines[\"top\"].set_visible(False)\n        ax2.spines[\"bottom\"].set_visible(False)\n        ax2.spines[\"right\"].set_visible(False)\n        ax2.spines[\"left\"].set_visible(False)\n        ax2.get_xaxis().tick_bottom()\n        ax2.get_yaxis().tick_left()\n        plt.xticks(fontsize=14)\n        plt.tick_params(axis=\"both\", which=\"both\", bottom=\"off\", top=\"off\", \n            labelbottom=\"on\", left=\"off\", right=\"off\", labelleft=\"on\")\n    \n        plt.plot(range(len(numberWords)) , numberWords, label='NW')\n        try:\n            plt.plot(range(len(numberWords)), \n                [len(f.topology.G.nodes()) for i in range(len(numberWords))], \n                \"--\", lw=0.5, color=\"black\", alpha=0.3)\n        except:\n            plt.plot(range(len(numberWords)), [8100 for i in range(len(numberWords))], \n                \"--\", lw=0.5, color=\"black\", alpha=0.3)\n        plt.xlabel('Time Step')\n        plt.ylabel('Number of Words')\n        plt.show()\n\n\n        nodeColor=[]\n        try:\n            for x in f.topology.G.nodes():\n                if f.topology.G.node[x]['agent'].dict != []:\n                    nodeColor.append(int(f.topology.G.node[x]['agent'].dict[0]))\n                else:\n                    nodeColor.append(0)\n            nodeColor=[float(color)/max(nodeColor) for color in nodeColor]\n        except:\n            print \"the topolgy is complete and has no grid to print\"\n\n        \n        if f.topology.tipo == GRIDONMAP:\n            fig2=plt.figure()\n            elarge=[(u,v) for (u,v,d) in f.topology.G.edges(data=True)\\\n             if d['weight'] >=0.05]\n            esmall=[(u,v) for (u,v,d) in f.topology.G.edges(data=True)\\\n             if d['weight'] <0.05]\n            nx.draw_networkx_edges(f.topology.G, \n                pos={i:i for i in f.topology.G.nodes()}, edgelist=elarge, \n                width=1, alpha = 0.5)\n            nx.draw_networkx_edges(f.topology.G, \n                pos={i:i for i in f.topology.G.nodes()}, edgelist=esmall,\n                 width=1, alpha=0.5,edge_color='b',style='dashed')\n            nx.draw_networkx_nodes(f.topology.G, \n                pos={i:i for i in f.topology.G.nodes()}, node_color=nodeColor, \n                node_cmap=cm.Colormap(\"Accent\"), node_size=20)\n            plt.xlabel('X_grid identifier')\n            plt.ylabel('Y_grid identifier')\n            plt.show() # display\n\n\n    if f.topology.tipo == GRIDONMAP:\n        filename=\"final_grid_\"+name\n        with open(filename, \"wb\") as output:\n            pk.dump(f.topology.G, output, pk.HIGHEST_PROTOCOL)\n    \n    elif f.topology.tipo == COMPLETE:\n        print \"finished game\\n\"\n    \n    else:\n        if SHOW==1:\n            fig2=plt.figure()\n            nx.draw(f.topology.G, pos=nx.spring_layout(f.topology.G))\n            plt.show() # display\n        \n    fig9=plt.figure()\n    plt.plot(seentimes[:len(clustering)], clustering)\n    plt.show()\n\n\n    return (differentWords, numberWords)\n\n\n\n\n\n\n\n\n\ndef namegiving(name):\n    '''\n    Checks if the filename name is already in use, and if so adds (n) to the end,\n    where n id the nth version of the file\n    '''\n    \n    if Path(name).is_file():\n    \tif name.endswith(')'):\n    \t\tname=name[:-3]+'('+str(int(name[-2])+1)+')'\n    \telse:\n    \t\tname=name+'(2)'\n    \tif Path(name).is_file():\n    \t\treturn namegiving(name)\n    return name\n\ndef word_clusters(topology):\n    seen={}\n    for v in topology.G:\n        if v not in seen:\n            if topology.G.node[v]['agent'].dict != []:\n                c=sp_length(topology, v, topology.G.node[v]['agent'].dict[0])\n            else:\n                c={}\n            yield list(c)\n            seen.update(c)\n            \ndef sp_length(topology, source, word):\n    seen={}\n    level=0\n    nextlevel={source:1}\n    while nextlevel:\n        thislevel=nextlevel\n        nextlevel={}\n        for v in thislevel:\n            if v not in seen:\n                seen[v]=level\n                nextlevel.update({nbr:topology.G.node[nbr] for nbr in topology.G[v] if word in topology.G.node[nbr]['agent'].dict})\n        level=level+1\n    return seen",
 			"file": "Game.py",
+			"file_size": 11813,
+			"file_write_time": 131239364128191729,
 			"settings":
 			{
-				"buffer_size": 11510,
+				"buffer_size": 11813,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -507,6 +514,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"i",
 			"hist",
 			":2 ",
 			":2",
@@ -641,15 +649,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1255,
+						"buffer_size": 1257,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1015,
-								1015
+								195,
+								195
 							]
 						],
 						"settings":
@@ -659,10 +667,10 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 120.0,
+						"translation.y": 60.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
@@ -671,15 +679,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 11510,
+						"buffer_size": 11813,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3620,
-								3620
+								6511,
+								6511
 							]
 						],
 						"settings":
@@ -690,7 +698,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1108.0,
+						"translation.y": 2660.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -722,7 +730,7 @@
 						"translation.y": 4200.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
