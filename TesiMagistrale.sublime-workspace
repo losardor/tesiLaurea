@@ -4,6 +4,58 @@
 		"selected_items":
 		[
 			[
+				"att",
+				"att4ck"
+			],
+			[
+				"ran",
+				"randint"
+			],
+			[
+				"T",
+				"TpC"
+			],
+			[
+				"a",
+				"att4ck"
+			],
+			[
+				"man",
+				"manganellate"
+			],
+			[
+				"con",
+				"constitution"
+			],
+			[
+				"de",
+				"dexterity"
+			],
+			[
+				"str",
+				"strength"
+			],
+			[
+				"Q",
+				"QtGui"
+			],
+			[
+				"rand",
+				"randint"
+			],
+			[
+				"s",
+				"strength"
+			],
+			[
+				"Qt",
+				"QtGui"
+			],
+			[
+				"window",
+				"Window"
+			],
+			[
 				"ed",
 				"edge_color"
 			],
@@ -138,10 +190,6 @@
 			[
 				"ave",
 				"averageNw"
-			],
-			[
-				"a",
-				"averageNdw"
 			],
 			[
 				"su",
@@ -296,10 +344,6 @@
 				"for\tFor Loop"
 			],
 			[
-				"s",
-				"self"
-			],
-			[
 				"map",
 				"mapInfo"
 			],
@@ -328,10 +372,6 @@
 				"listOfNodes"
 			],
 			[
-				"T",
-				"totalNum"
-			],
-			[
 				"c",
 				"coarsnes"
 			],
@@ -344,28 +384,10 @@
 	"buffers":
 	[
 		{
-			"file": "Selection_prob.py",
+			"file": "/home/donrog/personal_python/RoamTry.py",
 			"settings":
 			{
-				"buffer_size": 845,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "Postprocessing/analisys.py",
-			"settings":
-			{
-				"buffer_size": 1507,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "boxplot.py",
-			"settings":
-			{
-				"buffer_size": 1070,
+				"buffer_size": 4345,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -374,45 +396,39 @@
 			"file": "NG.py",
 			"settings":
 			{
-				"buffer_size": 1257,
+				"buffer_size": 1460,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"contents": "#def \nimport cPickle as pk\nimport matplotlib.pyplot as plt\nimport networkx as nx\nimport matplotlib.colors as cm\nimport numpy as np\nimport random\nfrom pathlib2 import Path\n\nDEBUG = 0\nCOMPLETE = 0\nERDOS    = 1; ERDOS_p = 0.5\nGRID2D   = 2\nGRID2DBAND = 3\nGRID2DBAND_p = 0.01\nBARABASI = 4; BARABASI_M = 4\nGRIDONMAP = 5\nSHOW = 2\n\ndef Play(f, T=1000000, name=\"game.dat\", prob=1):\n    '''\n    Folk play T timesteps of the naming game. The name variable\n    contains the name of the file where the data will be stored.\n    If prob is not 1 function stocastically updated with probability = prob \n    on a success.\n    '''\n\n\n    name=\"files/Data/\"+namegiving(name)\n    target = open(name, \"w\")\n    clusterfile=open(\"clustering\", \"w\")\n\n    #for x in range(len(time[::10])):\n    #    target.write(str(time[10*x])+\"\\t\"+str(different_words[10*x])+\"\\t\"+str(numberofWords[10*x])+\"\\n\")\n    time=0\n    target.write(str(0)+\"\\t\")\n    different_words=0\n    target.write(str(different_words)+\"\\t\")\n    numberofWords=0\n    target.write(str(numberofWords)+\"\\n\")\n    couples=[]\n    clustering=[]\n    seentimes=[100, 1000, 10000, 100000, 1000000, 1000000, 2000000, 3000000, 4000000, 5000000, 6000000, 7000000, 8000000, 9000000]\n    seentimes.append([t*10000000 for t in range(1,100)])\n    count=0\n    i=0\n    while i<T:\n        if i in seentimes and f.topology.tipo != COMPLETE:\n            print i\n            clustersizefile=open(\"Clustersi\"+str(i)+\".dat\", \"w\")\n            if SHOW==2:\n                try:\n                    nodeColor=[]\n                    for x in f.topology.G.nodes():\n                        if f.topology.G.node[x]['agent'].dict != []:\n                            nodeColor.append(int(f.topology.G.node[x]['agent'].dict[0]))\n                        else:\n                            nodeColor.append(0)\n                    nodeColor=[float(color)/max(nodeColor) for color in nodeColor]\n                except:\n                    print \"the topolgy is complete and has no grid to print\"\n\n\n                if f.topology.tipo == GRIDONMAP:\n                    fig=plt.figure(figsize=(16,12))\n                    fig.patch.set_facecolor('#F8F8ff')\n                    ax=plt.subplot(111)\n                    elarge=[(u,v) for (u,v,d) in f.topology.G.edges(data=True) if d['weight'] >=0.05]\n                    esmall=[(u,v) for (u,v,d) in f.topology.G.edges(data=True) if d['weight'] <0.05]\n                    nx.draw_networkx_edges(f.topology.G, \n                        pos={J:J for J in f.topology.G.nodes()}, edgelist=elarge, \n                        width=1, alpha = 0.5)\n                    nx.draw_networkx_edges(f.topology.G, \n                        pos={J:J for J in f.topology.G.nodes()}, edgelist=esmall, \n                        width=1, alpha=0.5,edge_color='b',style='dashed')\n                    nx.draw_networkx_nodes(f.topology.G, \n                        pos={J:J for J in f.topology.G.nodes()}, node_color=nodeColor, \n                        node_cmap=cm.Colormap(\"Accent\"),\n                        node_size=10)\n                    plt.xlabel('X_grid identifier')\n                    plt.ylabel('Y_grid identifier')\n                    plt.savefig(\"word_on_grid_time_\"+str(i)) # display\n            lunghezze=[len(component) for component in sorted(word_clusters(f.topology), key=len, reverse=True)]\n            if len(lunghezze):\n                clustersizefile.writelines([str(lunghezza)+\"\\n\" for lunghezza in lunghezze])\n                if max(lunghezze)/30:\n                    binses=[grand for grand in range(0, max(lunghezze), max(lunghezze)/30)]\n                    fig5=plt.figure(figsize=(12,16))\n                    plt.hist(lunghezze, binses, histtype='bar', rwidth=0.8, \n                        label='cluster sizes')\n                    plt.savefig(\"Cluster_size:distribution_\"+str(i))\n                clustering.append(float(sum(lunghezze))/len(lunghezze))\n                if len(lunghezze)<50 and count == 0:\n                    print \"The number of clusters for time \"+str(i)+\"is close too the current distribution.\"\n                    count=count+1\n            else:\n                clustering.append(0)\n            print clustering[-1], len(lunghezze)\n            clusterfile.write(str(i)+\"\\t\"+str(clustering[-1])+\"\\t\"+str(len(lunghezze))+\"\\n\")\n\n            plt.close(\"all\")\n\n\n        [speaker, hearer] = f.Select()\n        if f.topology.tipo==COMPLETE:\n        \tcouples.append([speaker.id,hearer.id])\n        if(hearer==None):\n            #print \"Che rumore fa un albero che cade in una foresta disabitata?\"\n            target.write(str(i+1)+\"\\t\")\n            target.write(str(different_words)+\"\\t\")\n            target.write(str(numberofWords)+\"\\n\")\n            continue\n\n\n        if(speaker==None):\n            print \"che rumore fa il battito di una mano sola?\"\n            target.write(str(i+1)+\"\\t\")\n            if speaker.ndw:\n                different_words=speaker.ndw\n                target.write(str(speaker.ndw)+\"\\t\")\n            else:\n                targe.write(str(different_words)+\"\\t\")\n            target.write(str(numberofWords)+\"\\n\")\n            continue\n\n\n        if DEBUG: \n            print \"speaker:\", str(speaker.dict),\" hearer:\",str(hearer.dict)\n\n        coupleWords=len(speaker.dict)+len(hearer.dict)\n        if(len(speaker.dict) == 1 and speaker.dict == hearer.dict): \n            # trivial case\n            #print \"%d %d\" %(i, speaker.ndw)\n            target.write(str(i+1)+\"\\t\")\n            different_words=speaker.ndw\n            target.write(str(different_words)+\"\\t\")\n            numberofWords+=len(speaker.dict)+len(hearer.dict)-coupleWords\n            target.write(str(numberofWords)+\"\\n\")\n            continue\n        \n\n        if not speaker.dict: #if empty\n            w = speaker.NewWord()\n            speaker.AddWord(w)\n        w = speaker.ChooseWord()\n        if w in hearer.dict: # success\n            if DEBUG: \n                print \"w:\",str(w),\"success\"\n            if random.random() < prob:\n                speaker.EraseDict()\n                hearer.EraseDict()\n                speaker.AddWord(w)\n                hearer.AddWord(w)\n        else:\n            if DEBUG: \n                print \"w:\",str(w), \"failure\"\n            hearer.AddWord(w)\n\n\n        target.write(str(i+1)+\"\\t\")\n        different_words=speaker.ndw\n        target.write(str(different_words)+\"\\t\")\n        numberofWords+=len(speaker.dict)+len(hearer.dict)-coupleWords\n        target.write(str(numberofWords)+\"\\n\")\n        i+=1\n       \n    target.close()\n\n    differentWords=[]\n    numberWords=[]\n    for k, line in enumerate(open(name, \"r\")):\n        if k%1000==0:\n            differentWords.append(int(line.split(\"\\t\")[1]))\n            numberWords.append(int(line.split(\"\\t\")[2]))\n\n    print len(differentWords), len(numberWords)\n\n    if SHOW==1:\n        if f.topology.tipo==COMPLETE:\n            x,y=zip(*couples)\n            plt.scatter(x,y)\n\n\n        fig=plt.figure(figsize=(16,12))\n        ax=plt.subplot(111)\n        ax.spines[\"top\"].set_visible(False)\n        ax.spines[\"bottom\"].set_visible(False)\n        ax.spines[\"right\"].set_visible(False)\n        ax.spines[\"left\"].set_visible(False)\n        ax.get_xaxis().tick_bottom()\n        ax.get_yaxis().tick_left()\n        plt.xticks(fontsize=14)\n        plt.tick_params(axis=\"both\", which=\"both\", bottom=\"off\", top=\"off\", \n            labelbottom=\"on\", left=\"off\", right=\"off\", labelleft=\"on\")\n    \n        plt.plot(range(len(differentWords)), differentWords, label='NDW')\n        plt.plot(range(len(numberWords)) , numberWords, label='NW')\n        plt.xlabel('Time Step')\n        plt.ylabel('Number of Different Words')\n        plt.legend()\n        plt.show()\n    \n        fig2=plt.figure(figsize=(16,12))\n        ax2=plt.subplot(111)\n        ax2.spines[\"top\"].set_visible(False)\n        ax2.spines[\"bottom\"].set_visible(False)\n        ax2.spines[\"right\"].set_visible(False)\n        ax2.spines[\"left\"].set_visible(False)\n        ax2.get_xaxis().tick_bottom()\n        ax2.get_yaxis().tick_left()\n        plt.xticks(fontsize=14)\n        plt.tick_params(axis=\"both\", which=\"both\", bottom=\"off\", top=\"off\", \n            labelbottom=\"on\", left=\"off\", right=\"off\", labelleft=\"on\")\n    \n        plt.plot(range(len(numberWords)) , numberWords, label='NW')\n        try:\n            plt.plot(range(len(numberWords)), \n                [len(f.topology.G.nodes()) for i in range(len(numberWords))], \n                \"--\", lw=0.5, color=\"black\", alpha=0.3)\n        except:\n            plt.plot(range(len(numberWords)), [8100 for i in range(len(numberWords))], \n                \"--\", lw=0.5, color=\"black\", alpha=0.3)\n        plt.xlabel('Time Step')\n        plt.ylabel('Number of Words')\n        plt.show()\n\n\n        nodeColor=[]\n        try:\n            for x in f.topology.G.nodes():\n                if f.topology.G.node[x]['agent'].dict != []:\n                    nodeColor.append(int(f.topology.G.node[x]['agent'].dict[0]))\n                else:\n                    nodeColor.append(0)\n            nodeColor=[float(color)/max(nodeColor) for color in nodeColor]\n        except:\n            print \"the topolgy is complete and has no grid to print\"\n\n        \n        if f.topology.tipo == GRIDONMAP:\n            fig2=plt.figure()\n            elarge=[(u,v) for (u,v,d) in f.topology.G.edges(data=True)\\\n             if d['weight'] >=0.05]\n            esmall=[(u,v) for (u,v,d) in f.topology.G.edges(data=True)\\\n             if d['weight'] <0.05]\n            nx.draw_networkx_edges(f.topology.G, \n                pos={i:i for i in f.topology.G.nodes()}, edgelist=elarge, \n                width=1, alpha = 0.5)\n            nx.draw_networkx_edges(f.topology.G, \n                pos={i:i for i in f.topology.G.nodes()}, edgelist=esmall,\n                 width=1, alpha=0.5,edge_color='b',style='dashed')\n            nx.draw_networkx_nodes(f.topology.G, \n                pos={i:i for i in f.topology.G.nodes()}, node_color=nodeColor, \n                node_cmap=cm.Colormap(\"Accent\"), node_size=20)\n            plt.xlabel('X_grid identifier')\n            plt.ylabel('Y_grid identifier')\n            plt.show() # display\n\n\n    if f.topology.tipo == GRIDONMAP:\n        filename=\"final_grid_\"+name\n        with open(filename, \"wb\") as output:\n            pk.dump(f.topology.G, output, pk.HIGHEST_PROTOCOL)\n    \n    elif f.topology.tipo == COMPLETE:\n        print \"finished game\\n\"\n    \n    else:\n        if SHOW==1:\n            fig2=plt.figure()\n            nx.draw(f.topology.G, pos=nx.spring_layout(f.topology.G))\n            plt.show() # display\n        \n    fig9=plt.figure()\n    plt.plot(seentimes[:len(clustering)], clustering)\n    plt.show()\n\n\n    return (differentWords, numberWords)\n\n\n\n\n\n\n\n\n\ndef namegiving(name):\n    '''\n    Checks if the filename name is already in use, and if so adds (n) to the end,\n    where n id the nth version of the file\n    '''\n    \n    if Path(name).is_file():\n    \tif name.endswith(')'):\n    \t\tname=name[:-3]+'('+str(int(name[-2])+1)+')'\n    \telse:\n    \t\tname=name+'(2)'\n    \tif Path(name).is_file():\n    \t\treturn namegiving(name)\n    return name\n\ndef word_clusters(topology):\n    seen={}\n    for v in topology.G:\n        if v not in seen:\n            if topology.G.node[v]['agent'].dict != []:\n                c=sp_length(topology, v, topology.G.node[v]['agent'].dict[0])\n            else:\n                c={}\n            yield list(c)\n            seen.update(c)\n            \ndef sp_length(topology, source, word):\n    seen={}\n    level=0\n    nextlevel={source:1}\n    while nextlevel:\n        thislevel=nextlevel\n        nextlevel={}\n        for v in thislevel:\n            if v not in seen:\n                seen[v]=level\n                nextlevel.update({nbr:topology.G.node[nbr] for nbr in topology.G[v] if word in topology.G.node[nbr]['agent'].dict})\n        level=level+1\n    return seen",
-			"file": "Game.py",
-			"file_size": 11813,
-			"file_write_time": 131239364128191729,
-			"settings":
-			{
-				"buffer_size": 11813,
-				"line_ending": "Unix"
-			}
-		},
-		{
+			"contents": "import random\nimport networkx as nx\nfrom math import sqrt\nimport matplotlib.pyplot as plt\nfrom networkx.drawing.nx_agraph import graphviz_layout\nimport numpy as np\nfrom matplotlib import style\nimport matplotlib.cm as cm\nimport cPickle as pk\n\nimport gridItalia as gi\n\n\nCOMPLETE = 0\nERDOS    = 1; ERDOS_p = 0.5\nGRID2D   = 2\nGRID2DBAND = 3\nGRID2DBAND_p = 0.0001\nBARABASI = 4; BARABASI_M = 4\nGRIDONMAP = 5\nSHOW = 0\nWEIGHTED = 1\nDEBUG = 0\n\n\nclass Agent():\n\t'''\n\tBoth speaker and Hearer are reppresented by this agent class.\n\t'''\n\n\tnw = 0 # max id of different words\n\twords = [] # occurrences of single words in the population\n\tndw = 0 # nr of different words\n\t\n\tdef __init__(self, id=0):\n\t\t'''\n\t\tinitializes the class\n\t\t'''\n\n\t\tself.dict = []\n\t\tself.id = id\n\t\n\tdef __str__(self):\n\t\t'''\n\t\tDefnies what to print when asked\n\t\t'''\n\n\t\treturn (\"ID:\" + str(self.id)+ \" L:\" + str(len(self.dict)) + \n\t\t\t\" D:\"+str(self.dict))\n\t\n\tdef NewWord(self):\n\t\t'''\n\t\tThe invention procedure for the speaker\n\t\t'''\n\n\t\tw = Agent.nw\n\t\tAgent.words.append(0) # a new word occurs at last position: create slot\n\t\tif DEBUG: \n\t\t\tprint \"### NewWord: w:%d d:%s\" % (w,str(Agent.words))\n\t\tAgent.nw += 1\n\t\treturn w\n\t\n\tdef AddWord(self, w):\n\t\t'''\n\t\tAdds word w to the dictionary of agent self\n\t\t'''\n\n\t\tself.dict.append(w)\n\t\tif DEBUG:\n\t\t\tprint \"*** AddWord:\", w, \" |words|=\", len(Agent.words)\n\t\tAgent.words[w] += 1\n\t\tif(Agent.words[w]==1):\n\t\t\tAgent.ndw += 1\n\t\treturn w\n\t\n\tdef EraseDict(self):\n\t\t'''\n\t\tSelf removes all words from his dictionary\n\t\t'''\n\n\t\tfor i in self.dict:\n\t\t\tAgent.words[i] -= 1\n\t\t\tif(Agent.words[i]==0):\n\t\t\t\tAgent.ndw -= 1\n\t\tself.dict = []\n\n\tdef ChooseWord(self):\n\t\t'''\n\t\tProcedure for self to chose a word to communicate to the hearer\n\t\t'''\n\n\t\tif(self.dict):\n\t\t\treturn random.choice(self.dict)\n\t\telse:\n\t\t\treturn 999999\n\n\tdef RemoveWord(self, w):\n\t\t'''\n\t\tRemove occurrences of w in self's dictionary\n\t\t'''\n\n\t\twhile(w in self.dict):\n\t\t\tself.dict.remove(w)\n\t\t\tAgent.words[w] -= 1\n\n\nclass Folk():\n\t'''\n\tThe classe defines all properties of the population system:\n\tIt includes all the agents, the topology, and selection procedures.\n\t'''\n\n\tdef __init__(self, N=10, topology=0, choice = 1, Beta = 0.1, sparse = 0):\n\t\t'''\n\t\tInitialization routine for Folk\n\t\t'''\n\n\t\tself.N = N\n\t\tself.agent = []\n\t\tfor i in range(N):\n\t\t\tself.agent.append(Agent(i))\n\t\tself.topology = Topology(self.agent, topology, choice, Beta, sparse)\n\n\tdef __str__(self):\n\t\t'''\n\t\tRoutine defining what to print when asked for folk\n\t\t'''\n\n\t\tag = self.agent[0]\n\t\ts = (\"# Ndw:\" + str(ag.ndw) + \" Nw:\" + str(ag.nw) + \" Words:\" \n\t\t\t+ str(ag.words)+\"\\n\")\n\t\tfor i in range(len(self.agent)):\n\t\t\ts += \"# \"+str(self.agent[i]) + \"\\n\"\n\t\treturn s\n\n\tdef EraseAll(self):\n\t\t'''\n\t\tErases all words in all dictionaries\n\t\t'''\n\n\t\tag = self.ag ent[0]\n\t\tfor i in range(len(self.agent)):\n\t\t\tself.agent[i].EraseDict()\n\t\tag.nw = ag.ndw = 0\n\t\tag.words = []\n\n\tdef Select(self):\n\t\treturn self.topology.Select(self.agent)\n\t\t#return random.sample(self.agent, 2)\n\n\nclass Topology():\n\t'''\n\tDefines the topology class that determines connections between agents,\n\thow to select agent couples and the properties of the links\n\t'''\n\n\tdef __init__(self, agent, id=COMPLETE, choice=1, Beta=0.1, sparse=0):\n\t\tself.tipo = id\n\t\tif id != COMPLETE:\n\t\t\t#competelly connected topology (mean field case)\n\t\t\tN = len(agent)\n\t\t\n\t\tif id == ERDOS:\n\t\t\t#A random erdos-renyi graph with probabilitt ERDOS_P\n\t\t\tself.G = nx.erdos_renyi_graph(N, ERDOS_p)\n\t\t\n\t\telif id == BARABASI:\n\t\t\t#A barabasy-albert social network graph with power M\n\t\t\tself.G = nx.barabasi_albert_graph(N, BARABASI_M)\n\t\t\n\t\telif id == GRID2D:\n\t\t\tL = sqrt(N)\n\t\t\tif (int(L) != L):\n\t\t\t\traise Exception(\"Number of Agents is not a square number\")\n\t\t\tself.G = nx.grid_2d_graph(int(L),int(L),True)\n\t\t\n\t\telif id == GRID2DBAND:\n\t\t\t#A 2d lattice witha centrall barrier\n\t\t\tL = sqrt(N)\n\t\t\tif (int(L) != L):\n\t\t\t\traise Exception(\"Number of Agents is not a square number\")\n\t\t\tself.G = nx.grid_2d_graph(int(L),int(L),False)\n\t\t\tEdge_list = self.G.edges()\n\t\t\tmiddle = int(L/2)\n\t\t\tfor a in Edge_list:\n\t\t\t\tif (a[0][0]==middle and a[1][0]==middle+1) or (a[1][0]==middle \n\t\t\t\t\tand a[0][0]==middle+1):\n\t\t\t\t\tself.G[a[0]][a[1]]['weight'] = GRID2DBAND_p\n\t\t\t\telse:\n\t\t\t\t\tself.G[a[0]][a[1]]['weight'] = 1.0\n\t\t\n\t\telif id == GRIDONMAP:\n\t\t\t#A 2d lattice with weighted links derived from the morphology of \n\t\t\t#the map (normally the italian map)\n\t\t\tnodeColor = []\n\t\t\tlisofrelevantsizes = [i*i*30 for i in range(1,30) if i*i < 10000]\n\t\t\tif N not in lisofrelevantsizes:\n\t\t\t\tprint (\"the number of agents doesn't fit the grid, changing\"\n\t\t\t\t\t\" to closest possibility\\n\")\n\t\t\t\tN = min(lisofrelevantsizes, key=lambda x:abs(x-N))\n\t\t\t\tprint \"the closest number is: \" + str(N) + \"\\n\"\n\t\t\tfilename = \"files/topolgy\" + str(N) + \".pk\"\n\t\t\twith open(filename, 'rb') as input:\n\t\t\t\tself.G = pk.load(input)\n\t\t\t\n\t\t\tif sparse == True:\n\t\t\t\t#Creates a grid with the same histogram of frequency for\n\t\t\t\t#altitude as italian Comuni\n\t\t\t\tvalues = []\n\t\t\t\tremovinglist = []\n\t\t\t\twith open('Comuni_altitudine','r') as file:\n\t\t\t\t\tfor n, line in enumerate(file):\n\t\t\t\t\t\tif n != 0:\n\t\t\t\t\t\t\tvalues.append(int(line.split('\\t')[1]))\n\t\t\t\taltitudini = np.array(values)\n\t\t\t\tlookup = {}\n\t\t\t\thist, bins = np.histogram(altitudini, bins=50, normed=1)\n\t\t\t\tnorm = hist.max()\n\t\t\t\tfor tupla in zip(*np.histogram(altitudini, bins=50, normed=1)):\n\t\t\t\t\tlookup[tupla[1]] = tupla[0]/norm\n\t\t\t\tfor node in self.G.nodes():\n\t\t\t\t\tx = np.random.uniform()\n\t\t\t\t\ty = self.G.node[node]['height']\n\t\t\t\t\tfreq = lookup[min(list(lookup.keys()),\n\t\t\t\t\t\tkey=lambda x:abs(x-y))]\n\t\t\t\t\tif x > freq:\n\t\t\t\t\t\tremovinglist.append(node)\n\t\t\t\tself.G.remove_nodes_from(removinglist)\n\n\t\t\tif choice == WEIGHTED:\n\t\t\t\t#Assignes weight to the links based on their position\n\t\t\t\tfor edge in self.G.edges():\n\t\t\t\t\tself.G[edge[0]][edge[1]]['weight'] = (2.7 \n\t\t\t\t\t\t** (-Beta*abs(self.G.node[edge[0]]['height'] \n\t\t\t\t\t\t\t- self.G.node[edge[1]]['height'])))\n\t\t\t\t\tif DEBUG:\n\t\t\t\t\t\tprint self.G[edge[0]][edge[1]]['weight']\n\t\t\telse:\n\t\t\t\tfor edge in self.G.edges():\n\t\t\t\t\tself.G[edge[0]][edge[1]]['weight']=1\n\n\t\t\tprint (\"the number of edges in this simulation will be \" + \n\t\t\t\tstr(len(self.G.edges())) + \" And the number of agents will be \"\n\t\t\t\t + str(len(self.G.nodes())))\n\n\t\t\tfor x in self.G.nodes():\n\t\t\t\tnodeColor.append(int(self.G.node[x]['height']))\n\t\t\t\n\t\t\tif SHOW == 1:\n\t\t\t\tcolors = cm.rainbow(np.linspace(0, 1, len(nodeColor)))\n\t\t\t\tfig = plt.figure()\n\n\t\t\t\telarge = [(u,v) for (u,v,d) \n\t\t\t\tin self.G.edges(data=True) \n\t\t\t\tif d['weight'] >=0.05]\n\n\t\t\t\tesmall = [(u,v) for (u,v,d) \n\t\t\t\tin self.G.edges(data=True)\n\t\t\t\tif d['weight'] <0.05]\n\n\t\t\t\tnx.draw_networkx_edges(self.G, \n\t\t\t\t\tpos={i:i for i in self.G.nodes()}, \n\t\t\t\t\tedgelist=elarge, \n\t\t\t\t\twidth=2)\n\t\t\t\tnx.draw_networkx_edges(self.G, \n\t\t\t\t\tpos={i:i for i in self.G.nodes()}, \n\t\t\t\t\tedgelist=esmall, width=2, alpha=0.5,edge_color='b',\n\t\t\t\t\tstyle='dashed')\n\t\t\t\t\n\t\t\t\tnx.draw_networkx_nodes(self.G, \n\t\t\t\t\tpos={i:i for i in self.G.nodes()}, node_color=nodeColor, \n\t\t\t\t\tnode_cmap=plt.cm.summer, node_size=20)\n\t\t\t\tplt.xlabel('X_grid identifier')\n\t\t\t\tplt.ylabel('Y_grid identifier')\n\t\t\t\tplt.title('The grid\\nGenerated on the basis of given DEM')\n\t\t\t\tplt.show() # display\n\t\t\tself.len = len(self.G.nodes())\n\t\t\n\n\t\ti = 0\t\n\n\t\tif id != COMPLETE:\n\t\t\t#Associates nodes on the graph with agents\n\n\t\t\tfor n in self.G:\n\t\t\t\tself.G.node[n]['agent'] = agent[i]\n\t\t\t\ti += 1\n\t\t\n\t\tif id == GRIDONMAP:\n\t\t\tif SHOW == 1:\n\t\t\t\t#Shows the edgeweight histogram\n\n\t\t\t\tedgeWeights = [d['weight'] for (u,v,d)\n\t\t\t\tin self.G.edges(data=True)]\n\t\t\t\tbins = np.arange(0.1,1,0.05)\n\t\t\t\tplt.hist(edgeWeights, bins, histtype='bar', rwidth=0.8, \n\t\t\t\t\tlabel='Edge Weights')\n\t\t\t\tplt.xlabel('Edge Weights')\n\t\t\t\tplt.ylabel('Frequency')\n\t\t\t\tplt.title(\"Edge Weights\\nThe frequency with witch a given \"\n\t\t\t\t\t\"weight is assigned given this DEM distribution\")\n\t\t\t\tplt.show()\n\t\t\t\tif DEBUG == 1:\n\t\t\t\t\torderedWeights = sorted(edgeWeights)\n\t\t\t\t\txs = range(len(edgeWeights))\n\t\t\t\t\tfig2 = plt.figure()\n\t\t\t\t\tplt.scatter(xs, orderedWeights)\n\t\t\t\t\tplt.show()\n\t\n\tdef Select(self, agent):\n\t\t'''\n\t\tThe function defines the procedure for the selection of a speaker\n\t\thearer couple\n\t\t'''\n\n\t\tif self.tipo == COMPLETE:\n\t\t\tcouple = random.sample(agent,2)\n\t\t\treturn couple\n\n\t\telif(self.tipo == GRID2DBAND):\n\t\t\ts = random.choice(self.G.nodes())\n\t\t\tif(not self.G.neighbors(s)):\n\t\t\t\treturn [None, None]\n\t\t\tw = self.G.degree(s,'weight')\n\t\t\tr = random.uniform(0.0,w)\n\t\t\tE = self.G.edges(s)\n\t\t\tsum = 0.0\n\t\t\tfor a in E:\n\t\t\t\tsum += self.G[a[0]][a[1]]['weight']\n\t\t\t\tif sum >= r:\n\t\t\t\t\tbreak\n\t\t\tif s == a[0]:\n\t\t\t\th = a[1]\n\t\t\telse:\n\t\t\t\th = a[0]\n\t\t\treturn [ self.G.node[s]['agent'], self.G.node[h]['agent']]\n\t\telif self.tipo == GRIDONMAP:\n\t\t\ts = random.choice(self.G.nodes())\n\t\t\tif(not self.G.neighbors(s)):\n\t\t\t\treturn [None, None]\n\t\t\tmapping={key[:2]: key[2] for key \n\t\t\tin self.G.edges(s, data='weight')}\n\t\t\tlink=nx.utils.random_sequence.weighted_choice(mapping)\n\t\t\tif link[0] == s:\n\t\t\t\th = link[1]\n\t\t\telse:\n\t\t\t\th = link[0]\n\t\telse:\n\t\t\ts = random.choice(self.G.nodes())\n\t\t\tif(not self.G.neighbors(s)):\n\t\t\t\treturn [None, None]\n\t\t\th = random.choice(self.G.neighbors(s))\n\t\treturn [ self.G.node[s]['agent'], self.G.node[h]['agent'] ]",
 			"file": "Agent.py",
+			"file_size": 8289,
+			"file_write_time": 131226348838628957,
 			"settings":
 			{
-				"buffer_size": 8289,
+				"buffer_size": 9103,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "Gpraphplot.py",
+			"file": "Game.py",
 			"settings":
 			{
-				"buffer_size": 1420,
+				"buffer_size": 12279,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "Boxplot_cluster_sizes.py",
+			"file": "/home/donrog/personal_python/textbox.py",
 			"settings":
 			{
-				"buffer_size": 1392,
-				"line_ending": "Unix"
+				"buffer_size": 623,
+				"encoding": "UTF-8",
+				"line_ending": "Unix",
+				"name": "import sys"
 			}
 		}
 	],
@@ -476,8 +492,17 @@
 	],
 	"file_history":
 	[
-		"/home/donrog/tesiLaurea/Gpraphplot.",
+		"/home/donrog/Downloads/Connecting Networks.py",
+		"/home/donrog/tesiLaurea/NG.py",
+		"/home/donrog/tesiLaurea/Game.py",
+		"/home/donrog/personal_python/RoamTry",
+		"/home/donrog/tesiLaurea/Selection_prob.py",
+		"/home/donrog/tesiLaurea/Postprocessing/analisys.py",
+		"/home/donrog/tesiLaurea/boxplot.py",
+		"/home/donrog/tesiLaurea/Gpraphplot.py",
 		"/home/donrog/tesiLaurea/Boxplot_cluster_sizes.py",
+		"/home/donrog/tesiLaurea/NG",
+		"/home/donrog/tesiLaurea/Gpraphplot.",
 		"/home/donrog/tesiLaurea/runner.sh",
 		"/home/donrog/tesiLaurea/plotter.py",
 		"/home/donrog/tesiLaurea/mapMakeR/languagesOfTheWorld/archive/glottolog_ipython.py",
@@ -485,16 +510,13 @@
 		"/home/donrog/tesiLaurea/mapMakeR/etymologyMaps/generateMap_v1.py",
 		"/home/donrog/tesiLaurea/mapMakeR/etymologyMaps/resources/dictionary_template.txt",
 		"/home/donrog/tesiLaurea/mapMakeR/etymologyMaps/resources/language_codes_dictionary.txt",
-		"/home/donrog/tesiLaurea/NG.py",
 		"/home/donrog/tesiLaurea/Clusterings_script_plot.txt",
 		"/home/donrog/tesiLaurea/Postprocessing/NG.py",
 		"/home/donrog/personal_python/Nephero_Game.py",
 		"/home/donrog/tesiLaurea/weightPlot.py",
 		"/home/donrog/tesiLaurea/Agent.py",
-		"/home/donrog/tesiLaurea/Game.py",
 		"/home/donrog/tesiLaurea/objectDump.py",
 		"/home/donrog/tesiLaurea/gridItalia.py",
-		"/home/donrog/tesiLaurea/NG",
 		"/home/donrog/tesiLaurea/Postprocessing/medie.py",
 		"/home/donrog/tesiLaurea/clustreing.dat",
 		"/home/donrog/tesiLaurea/Game.pyc",
@@ -531,7 +553,7 @@
 	],
 	"find":
 	{
-		"height": 36.0
+		"height": 43.0
 	},
 	"find_in_files":
 	{
@@ -545,6 +567,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"i ",
+			"print",
 			"i",
 			"hist",
 			":2 ",
@@ -611,143 +635,24 @@
 	"groups":
 	[
 		{
-			"selected": 7,
+			"selected": 3,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "Selection_prob.py",
+					"file": "/home/donrog/personal_python/RoamTry.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 845,
+						"buffer_size": 4345,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								845,
-								845
-							]
-						],
-						"settings":
-						{
-							"color_scheme": "Packages/User/Color Highlighter/themes/Material-Theme-Lighter.tmTheme",
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 7,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "Postprocessing/analisys.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1507,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								943,
-								943
-							]
-						],
-						"settings":
-						{
-							"color_scheme": "Packages/User/Color Highlighter/themes/Material-Theme-Lighter.tmTheme",
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 200.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "boxplot.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1070,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1070,
-								1070
-							]
-						],
-						"settings":
-						{
-							"color_scheme": "Packages/User/Color Highlighter/themes/Material-Theme-Lighter.tmTheme",
-							"syntax": "Packages/Python/Python.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 360.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "NG.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1257,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								195,
-								195
-							]
-						],
-						"settings":
-						{
-							"color_scheme": "Packages/User/Color Highlighter/themes/Material-Theme-Lighter.tmTheme",
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 60.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "Game.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 11813,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								144,
-								144
+								543,
+								543
 							]
 						],
 						"settings":
@@ -758,97 +663,143 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1140.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "Agent.py",
-					"semi_transient": true,
-					"settings":
-					{
-						"buffer_size": 8289,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								6469,
-								6469
-							]
-						],
-						"settings":
-						{
-							"color_scheme": "Packages/User/Color Highlighter/themes/Material-Theme-Lighter.tmTheme",
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 3540.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 3,
 					"type": "text"
 				},
 				{
-					"buffer": 6,
-					"file": "Gpraphplot.py",
+					"buffer": 1,
+					"file": "NG.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1420,
+						"buffer_size": 1460,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1393,
-								1393
+								1460,
+								1460
 							]
 						],
 						"settings":
 						{
 							"color_scheme": "Packages/User/Color Highlighter/themes/Material-Theme-Lighter.tmTheme",
-							"syntax": "Packages/Python/Python.sublime-syntax"
+							"rulers":
+							[
+								78
+							],
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 602.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "Agent.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 9103,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								7764,
+								7764
+							]
+						],
+						"settings":
+						{
+							"color_scheme": "Packages/User/Color Highlighter/themes/Material-Theme-Lighter.tmTheme",
+							"rulers":
+							[
+								78
+							],
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 7,
-					"file": "Boxplot_cluster_sizes.py",
+					"buffer": 3,
+					"file": "Game.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1392,
+						"buffer_size": 12279,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								8883,
+								8883
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Python/Python.sublime-syntax"
+							"color_scheme": "Packages/User/Color Highlighter/themes/Material-Theme-Lighter.tmTheme",
+							"rulers":
+							[
+								78
+							],
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 540.0,
+						"translation.y": 8640.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "/home/donrog/personal_python/textbox.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 623,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								623,
+								623
+							]
+						],
+						"settings":
+						{
+							"auto_name": "import sys",
+							"color_scheme": "Packages/User/Color Highlighter/themes/Material-Theme-Lighter.tmTheme",
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
 					"type": "text"
 				}
 			]
@@ -856,7 +807,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 26.0
+		"height": 35.0
 	},
 	"input":
 	{
